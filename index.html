@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Application Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Fixed: Using the UMD build of Chart.js for browser compatibility -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 20px; }
@@ -42,6 +43,14 @@
                 <h2 class="text-lg font-semibold text-gray-700 mb-4">Top Locations</h2>
                 <div class="relative h-64 w-full">
                     <canvas id="locationChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Job Titles (New) -->
+            <div class="card md:col-span-2">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Top Job Titles</h2>
+                <div class="relative h-64 w-full">
+                    <canvas id="titleChart"></canvas>
                 </div>
             </div>
 
@@ -218,7 +227,7 @@
             { "title": "GCP Administrator", "company": "Lawlabs Inc.", "location": "Ontario", "status": "Applied", "date_applied": "2025-09-06" },
             { "title": "Information Systems Specialist/Network Administrator", "company": "ERTH Corporation", "location": "Ingersoll, ON", "status": "Application viewed", "date_applied": "2025-09-05" },
             { "title": "Junior Systems Administrator", "company": "Think Logistics Inc.", "location": "Mississauga, ON", "status": "Not selected by employer", "date_applied": "2025-09-05" },
-            { "title": "Datastage Developer - Linux shell scripting\"", "company": "AstraNorth", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
+            { "title": "Datastage Developer - Linux shell scripting", "company": "AstraNorth", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
             { "title": "System Administrator / L2 Production Support", "company": "Atlantis IT group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
             { "title": "DevOps Engineer", "company": "Dyna Info Services", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
             { "title": "Sr. Linux Server Infrastructure Specialist", "company": "Buchanan Technologies", "location": "Brampton, ON", "status": "Applied", "date_applied": "2025-09-05" },
@@ -257,96 +266,139 @@
 
         // 3. Location Analysis (Top 5)
         const locationCounts = applications.reduce((acc, app) => {
-            // Clean up location string if needed
             const loc = app.location || "Unknown";
             acc[loc] = (acc[loc] || 0) + 1;
             return acc;
         }, {});
 
-        // Sort locations by count descending
         const sortedLocations = Object.entries(locationCounts)
             .sort(([, a], [, b]) => b - a)
-            .slice(0, 5); // Take top 5
+            .slice(0, 5); 
         
         const topLocations = sortedLocations.map(([loc]) => loc);
         const topLocationCounts = sortedLocations.map(([, count]) => count);
 
+        // 4. Job Title Analysis (Top 5)
+        const titleCounts = applications.reduce((acc, app) => {
+            const title = app.title || "Unknown";
+            acc[title] = (acc[title] || 0) + 1;
+            return acc;
+        }, {});
+
+        const sortedTitles = Object.entries(titleCounts)
+            .sort(([, a], [, b]) => b - a)
+            .slice(0, 5);
+
+        const topTitles = sortedTitles.map(([t]) => t);
+        const topTitleCounts = sortedTitles.map(([, c]) => c);
+
 
         // --- Chart Renderers ---
+        
+        // Wrapper for safety
+        if (typeof Chart !== 'undefined') {
 
-        // Chart 1: Status Distribution
-        new Chart(document.getElementById('statusChart'), {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(statusCounts),
-                datasets: [{
-                    data: Object.values(statusCounts),
-                    backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#6b7280'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right', labels: { boxWidth: 12 } }
-                }
-            }
-        });
-
-        // Chart 2: Top Locations
-        new Chart(document.getElementById('locationChart'), {
-            type: 'bar',
-            data: {
-                labels: topLocations,
-                datasets: [{
-                    label: 'Applications',
-                    data: topLocationCounts,
-                    backgroundColor: '#8b5cf6',
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                indexAxis: 'y', // Horizontal bar chart
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { beginAtZero: true, grid: { display: false } },
-                    y: { grid: { display: false } }
-                }
-            }
-        });
-
-        // Chart 3: Timeline
-        new Chart(document.getElementById('timelineChart'), {
-            type: 'line',
-            data: {
-                labels: sortedDates,
-                datasets: [{
-                    label: 'Applications per Day',
-                    data: timelineData,
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 4,
-                    pointHoverRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true, ticks: { precision: 0 } },
-                    x: { grid: { display: false } }
+            // Chart 1: Status Distribution
+            new Chart(document.getElementById('statusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        data: Object.values(statusCounts),
+                        backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#6b7280'],
+                        borderWidth: 1
+                    }]
                 },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { intersect: false, mode: 'index' }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 12 } }
+                    }
                 }
-            }
-        });
+            });
+
+            // Chart 2: Top Locations
+            new Chart(document.getElementById('locationChart'), {
+                type: 'bar',
+                data: {
+                    labels: topLocations,
+                    datasets: [{
+                        label: 'Applications',
+                        data: topLocationCounts,
+                        backgroundColor: '#8b5cf6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal bar chart
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, grid: { display: false } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Chart 3: Top Job Titles (New)
+            new Chart(document.getElementById('titleChart'), {
+                type: 'bar',
+                data: {
+                    labels: topTitles,
+                    datasets: [{
+                        label: 'Applications',
+                        data: topTitleCounts,
+                        backgroundColor: '#14b8a6', // Teal
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, grid: { display: false } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Chart 4: Timeline
+            new Chart(document.getElementById('timelineChart'), {
+                type: 'line',
+                data: {
+                    labels: sortedDates,
+                    datasets: [{
+                        label: 'Applications per Day',
+                        data: timelineData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0 } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { intersect: false, mode: 'index' }
+                    }
+                }
+            });
+        } else {
+            console.error('Chart.js failed to load.');
+            document.body.innerHTML += '<div class="fixed bottom-0 right-0 bg-red-500 text-white p-4 m-4 rounded shadow">Error: Chart.js library failed to load. Please check your internet connection.</div>';
+        }
 
     </script>
 </body>
