@@ -19,7 +19,9 @@ The dashboard (`index.html`) provides the following visualizations using Chart.j
 *   **Top Locations:** A bar chart highlighting the most frequent cities you've applied to.
 *   **Top Job Titles:** A bar chart displaying the most common job titles from your applications.
 *   **Daily Application Activity:** A line chart tracking the number of applications submitted daily.
-*   **Interaction Log:** A table that shows applications that have been "viewed" or "not selected" by employers.
+*   **Interaction Log:** A table that shows applications that have been "viewed" or "not selected" by employers. It now includes interactive features:
+    *   **Filter:** Dynamically filter the table by Date, Status, Job Title, or Company.
+    *   **Sort:** Click any column header to sort the table accordingly.
 
 ## 🚀 How to Use
 
