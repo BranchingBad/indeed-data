@@ -1,5 +1,6 @@
 let sortColumn = null;
 let sortDirection = 'asc';
+let eventListenersAttached = false;
 
 export function renderTable(apps) {
     document.getElementById('interaction-count').innerText = apps.length;
@@ -61,6 +62,8 @@ export function applyFiltersAndSort(allApplications) {
 }
 
 export function setupTableEventListeners(allApplications) {
+    if (eventListenersAttached) return;
+    
     document.getElementById('filter-date').addEventListener('input', () => applyFiltersAndSort(allApplications));
     document.getElementById('filter-status').addEventListener('input', () => applyFiltersAndSort(allApplications));
     document.getElementById('filter-title').addEventListener('input', () => applyFiltersAndSort(allApplications));
@@ -77,4 +80,6 @@ export function setupTableEventListeners(allApplications) {
             applyFiltersAndSort(allApplications);
         });
     });
+
+    eventListenersAttached = true;
 }

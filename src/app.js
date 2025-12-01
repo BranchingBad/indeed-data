@@ -5,8 +5,12 @@ import { renderTable, applyFiltersAndSort, setupTableEventListeners } from './js
 document.addEventListener('DOMContentLoaded', async function() {
     console.info("Dashboard script started.");
     
-    // Directly register ChartDataLabels, assuming Chart.js and ChartDataLabels are loaded globally by index.html
-    window.Chart.register(window.ChartDataLabels); 
+    // Add error checking for ChartDataLabels registration
+    if (window.Chart && window.ChartDataLabels) {
+        window.Chart.register(window.ChartDataLabels);
+    } else {
+        console.warn("Chart.js or ChartDataLabels not found, skipping ChartDataLabels registration.");
+    } 
 
     const fileSelector = document.getElementById('file-selector');
     let chartInstances = {};

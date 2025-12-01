@@ -7,14 +7,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logging.info("Starting clean_json.py script.")
 
 try:
-    with open('Indeed meta export date 01-12-2025.json', 'r') as f:
-        logging.info("Reading 'Indeed meta export date 01-12-2025.json'.")
+    with open('../data/indeed-applications.json', 'r') as f:
+        logging.info("Reading '../data/indeed-applications.json'.")
         data = json.load(f)
 except FileNotFoundError:
-    logging.error("'Indeed meta export date 01-12-2025.json' not found.")
+    logging.error("'../data/indeed-applications.json' not found.")
     exit()
 except json.JSONDecodeError:
-    logging.error("Error decoding JSON from 'Indeed meta export date 01-12-2025.json'.")
+    logging.error("Error decoding JSON from '../data/indeed-applications.json'.")
     exit()
 
 
@@ -26,8 +26,8 @@ for application in data['applications']:
         del application['sub_status']
 
 try:
-    with open('indeed-applications.json', 'w') as f:
-        logging.info("Writing cleaned data to 'indeed-applications.json'.")
+    with open('../data/indeed-applications.json', 'w') as f:
+        logging.info("Writing cleaned data to '../data/indeed-applications.json'.")
         json.dump(data, f, indent=2)
 except IOError:
     logging.error("Could not write to 'indeed-applications.json'.")
