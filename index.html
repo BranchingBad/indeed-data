@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Using the UMD build of Chart.js for browser compatibility -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 20px; }
@@ -102,180 +103,1174 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- 1. DATA DEFINITION ---
-            // We define data first so tables can load even if charts fail
+        document.addEventListener('DOMContentLoaded', async function() {
+            Chart.register(ChartDataLabels);
+
             const rawData = {
-              "meta": { "export_date": "2025-12-01", "total_entries": 108 },
-              "applications": [
-                { "title": "Technical Support Associate", "company": "Al Johani Group Canada", "location": "Barrie, ON", "status": "Applied", "date_applied": "2025-12-01" },
-                { "title": "Network & Systems Administrator", "company": "Tecnet Canada Inc", "location": "Victoria, BC", "status": "Not selected by employer", "date_applied": "2025-12-01" },
-                { "title": "Cloud Support/DevOps Engineer", "company": "Toronto Regional Real Estate Board", "location": "North York, ON", "status": "Applied", "date_applied": "2025-12-01" },
-                { "title": "Information Security Analyst", "company": "Canadian Automobile Association", "location": "Remote", "status": "Applied", "date_applied": "2025-12-01" },
-                { "title": "Jr. Product Validation/QA Engineer – Cloud", "company": "Wind River", "location": "Kanata, ON", "status": "Applied", "date_applied": "2025-11-30" },
-                { "title": "Cloud Architecture Specialist", "company": "Nanometrics Inc", "location": "Ottawa, ON", "status": "Applied", "date_applied": "2025-11-30" },
-                { "title": "IT Consultant", "company": "Berniq", "location": "Ottawa, ON", "status": "Applied", "date_applied": "2025-11-30" },
-                { "title": "Hybrid Cloud Specialist - Alberta", "company": "Reliant Technologies Solutions Group", "location": "Edmonton, AB", "status": "Not selected by employer", "date_applied": "2025-11-25" },
-                { "title": "NOC Analyst 1 (Overnight)", "company": "ICON Media Communications Inc.", "location": "Markham, ON", "status": "Not selected by employer", "date_applied": "2025-11-25" },
-                { "title": "Cloud Engineer", "company": "GPL Technologies", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Cloud DevOps Engineer", "company": "Scaleup Innovation Lab Inc", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Security Operation Centre L1", "company": "Nets-international Communication", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Infrastructure Integration 9014-2315", "company": "Foilcon", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Cloud SecOps", "company": "Atlantis IT group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Linux Administartor", "company": "Atlantis IT group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Cloud Engineer", "company": "iTMethods", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "DevOps Platform Support Engineer", "company": "iTMethods", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Configuration Analyst", "company": "Forward Insurance Managers Ltd.", "location": "London, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Technical Support Specialist", "company": "Hartmann Controls", "location": "Barrie, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Implementation Specialist", "company": "Severion Inc", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "L1 Support Technician | SVI Support Team", "company": "StorageVault Canada Inc.", "location": "Gloucester, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Senior Service Desk Technician", "company": "LAN Solutions Corp", "location": "Calgary, AB", "status": "Not selected by employer", "date_applied": "2025-11-25" },
-                { "title": "I.T Support Analyst", "company": "Walters Group", "location": "Hamilton, ON", "status": "Applied", "date_applied": "2025-11-25" },
-                { "title": "Technical Services Analyst", "company": "Horizon School Division #205", "location": "Humboldt, SK", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "Intermediate MSP Analyst", "company": "Vencer Group Inc.", "location": "Calgary, AB", "status": "Application viewed", "date_applied": "2025-11-18" },
-                { "title": "Senior Systems Administrator", "company": "PC eSolutions", "location": "Edmonton, AB", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "IT Support Analyst | Copperleaf | 12-month Contract", "company": "IFS", "location": "Vancouver, BC", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "Technical Support Representative", "company": "Barracuda Networks Inc.", "location": "Ottawa, ON", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "L1 Desktop Support Specialist", "company": "Intega IT", "location": "Ottawa, ON", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "Technical Support Specialist", "company": "AG Globe Services", "location": "Ontario", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "Help Desk Agent", "company": "Render-Up", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "IT Service Desk Analyst", "company": "Horn IT Solutions Inc.", "location": "Greater Toronto Area, ON", "status": "Applied", "date_applied": "2025-11-18" },
-                { "title": "Network and Systems Administrator!", "company": "Confidential", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-11-16" },
-                { "title": "Cloud Infrastructure Engineer", "company": "Embross", "location": "Richmond Hill, ON", "status": "Applied", "date_applied": "2025-11-16" },
-                { "title": "Network Engineer", "company": "Dexterra Group", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-16" },
-                { "title": "Systems & Automation Specialist", "company": "Seasons Retirement Communities LP", "location": "Oakville, ON", "status": "Applied", "date_applied": "2025-11-16" },
-                { "title": "System Administrator, Retail (1 Year Contract)", "company": "Talize", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-16" },
-                { "title": "Network Administrator", "company": "GL2Cloud Inc", "location": "Markham, ON", "status": "Not selected by employer", "date_applied": "2025-11-16" },
-                { "title": "Infrastructure Integration Specialist 9170-1612", "company": "Foilcon", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "L1/ L2 Production Support", "company": "spruceinfotech", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "Cloud Platform Engineer", "company": "League Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "Lab Admin/System Engineer - Linux", "company": "Atlantis IT group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "Senior Cybersecurity Engineer- Offensive", "company": "CAAT Pension Plan", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "IT Technician - Technical Services", "company": "EC Managed IT", "location": "Oakville, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "System Administrator", "company": "Tuor Networks Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "IT Onsite Technician", "company": "Hemmersbach Nordamerika", "location": "Guelph, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "Junior Service Technician", "company": "Canada Computers Inc.", "location": "Unionville, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "IT Solutions Specialist", "company": "Simcotron SecureSolutions Inc", "location": "Toronto, ON", "status": "Not selected by employer", "date_applied": "2025-11-15" },
-                { "title": "Desktop Support Technician", "company": "Pomeroy", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-15" },
-                { "title": "EV Chargers Test Specialist", "company": "United Chargers Inc.", "location": "Richmond Hill, ON", "status": "Application viewed", "date_applied": "2025-11-15" },
-                { "title": "Information Security Risk Specialist", "company": "Beanfield Technologies Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-07" },
-                { "title": "Systems Administrator", "company": "WiseTechGroup Inc.", "location": "Concord, ON", "status": "Applied", "date_applied": "2025-11-07" },
-                { "title": "NOC Analyst, Level 1", "company": "Beanfield Technologies Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-07" },
-                { "title": "Future Workplace Specialist", "company": "Flynn Group of Companies", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-07" },
-                { "title": "Application Support Engineer - 1568", "company": "APPTOZA INC.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-07" },
-                { "title": "Software Support Product Specialist – Product Engineering Group", "company": "Leading Manufacturer of equipment used in Grocery Industry", "location": "Concord, ON", "status": "Applied", "date_applied": "2025-11-07" },
-                { "title": "Network Support Engineer", "company": "MIR Digital Solutions Inc", "location": "Concord, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "LMS Software Support Specialist (1-year Contract)", "company": "Ainsworth Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "Service Desk Analyst", "company": "Commerx Computer Systems", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "Rogers Customer Service Representative", "company": "Mississauga Connect", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "Azure SRE", "company": "E-Solutionts", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "Network Operations Center L1", "company": "Nets-international Communication", "location": "Toronto, ON", "status": "Not selected by employer", "date_applied": "2025-11-06" },
-                { "title": "AI Systems & Automation Specialist", "company": "Deliverect", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "Technical Support Specialist - I", "company": "Connexall", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "DevOps Specialist", "company": "Helm Operations Software inc", "location": "Remote", "status": "Applied", "date_applied": "2025-11-06" },
-                { "title": "Senior LLMOps Engineer -Cloud / AI Infrastructure", "company": "Talent To Hire Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "GCP Data Engineer – Informatica Product 360 , Python , ETL", "company": "APPTOZA INC.", "location": "Scarborough, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Data Analyst #984199", "company": "DISYS", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "IT Technician - Level 1", "company": "Procom", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Test Analyst", "company": "Infosys", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Senior Information Security Analyst", "company": "CAAT Pension Plan", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Technical Implementation Analyst", "company": "Achievers", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Network Analyst", "company": "Imperial Dade", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Network operation Center L2", "company": "Nets-international Communication", "location": "Toronto, ON", "status": "Not selected by employer", "date_applied": "2025-11-05" },
-                { "title": "Jr. Analyst, Infrastructure", "company": "Great Gulf Group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Technical Services Coordinator – Networking Specialist (STF)", "company": "MSP OPERATIONAL CORP", "location": "Guelph, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Network Engineer", "company": "TekFormix", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-11-05" },
-                { "title": "Sr. Analyst, Infrastructure", "company": "Great Gulf Group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "SOC Analyst", "company": "MIR Digital Solutions Inc", "location": "Concord, ON", "status": "Application viewed", "date_applied": "2025-11-05" },
-                { "title": "Analyst, Plant Support", "company": "Samuel, Son & Co.", "location": "Oakville, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Cloud Operations Engineer", "company": "G Adventures", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Application Engineer", "company": "Litmus Automation", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "Senior Developer - Python/SRE", "company": "AstraNorth", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-11-05" },
-                { "title": "DevOps/Infrastructure Engineer", "company": "RideCo", "location": "Waterloo, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "IT Support Specialist", "company": "Gay Lea Foods", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-05" },
-                { "title": "IT Operations, Senior Analyst (2025-8668)", "company": "Grand & Toy", "location": "Vaughan, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Senior Technician – Cybersecurity & IT Services", "company": "PAVLIKS.COM", "location": "Barrie, ON", "status": "Not selected by employer", "date_applied": "2025-11-04" },
-                { "title": "Network and Cloud Admin Instructor", "company": "Metro College of Technology", "location": "North York, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Linux Administrator", "company": "SIMNET Inc", "location": "Whitby, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Cloud Engineer", "company": "Spait Infotech Private Limited", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-11-04" },
-                { "title": "Cyber Security Engineer", "company": "Spait Infotech Private Limited", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-11-04" },
-                { "title": "IT Support Specialist", "company": "Ellainer Food Corp.", "location": "North York, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Sr. Linux Administrator", "company": "SIMNET Inc", "location": "Whitby, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "NOC Analyst 1", "company": "ICON Media Communications Inc.", "location": "Markham, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "IT Administrator", "company": "Flipp", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "IT Support Analyst", "company": "Richardson Wealth Ltd", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Systems Administrator Operations Support Specialist (Junior) 0164-1517", "company": "Foilcon", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "IT Systems Support Analyst", "company": "NORR", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Technical Analyst", "company": "360insights", "location": "Whitby, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "Information Security Engineer", "company": "T&T Supermarket Inc.", "location": "Markham, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "IT Onsite Technician", "company": "Hemmersbach Nordamerika", "location": "Guelph, ON", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "IT Support Specialist", "company": "Maverick InfoSec Solutions Ltd.", "location": "Langley, BC", "status": "Applied", "date_applied": "2025-11-04" },
-                { "title": "IT Support - Systems Administrator", "company": "Rotor Maxx Support Ltd", "location": "Parksville, BC", "status": "Not selected by employer", "date_applied": "2025-11-03" },
-                { "title": "IT Support Analyst (Tier 1)", "company": "Davinci AI Solutions", "location": "Calgary, AB", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Technical IT Consultant", "company": "OfficePort", "location": "Tantallon, NS", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Junior IT Technician", "company": "Alma Mater Society of Queen's University", "location": "Kingston, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Support Engineer in Test", "company": "YuJa Inc.", "location": "North York, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "IT Support Analyst", "company": "SIMNET Inc", "location": "Whitby, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Desktop Support Technician (TAC)", "company": "Leon's Furniture", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Information Technology - IT Generalist", "company": "Wirelessdna", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "IT Support Specialist", "company": "Conpute", "location": "Whitby, ON", "status": "Not selected by employer", "date_applied": "2025-11-03" },
-                { "title": "IT Support Technician — Part-Time / Contract — Toronto, ON", "company": "Brand M3dia Group", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-11-03" },
-                { "title": "IT Systems & Support Specialist", "company": "Goway Travel Limited", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Service Desk Analyst", "company": "McCarthy Tétrault LLP", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Technical Specialist", "company": "a.p.i Alarm Inc", "location": "Etobicoke, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "IT Infrastructure Analyst", "company": "TS Retail Enterprises Inc.", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Cloud & DevOps Engineer (AWS / Azure)", "company": "QBuild Corporation", "location": "Markham, ON", "status": "Not selected by employer", "date_applied": "2025-11-03" },
-                { "title": "Product Support Specialist", "company": "Tracker by The Bridge Network", "location": "North York, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "IT Support Technician", "company": "Continual Energy Inc.", "location": "Greater Toronto Area, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Product Support Specialist", "company": "Jonas Club Software", "location": "Unionville, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Jr. IT Support Technician", "company": "Amico Infrastructures", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "IT Infrastructure Reporting Specialist", "company": "Unio Tech Solutions", "location": "Markham, ON", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Application & Systems Support Technician", "company": "West Canadian Digital Imaging", "location": "Calgary, AB", "status": "Applied", "date_applied": "2025-11-03" },
-                { "title": "Zoom SME", "company": "Dacaro Software Services Inc", "location": "Toronto, ON", "status": "Not selected by employer", "date_applied": "2025-11-02" },
-                { "title": "Cyber Security Analyst", "company": "JumpDEMAND Inc.", "location": "Calgary, AB", "status": "Not selected by employer", "date_applied": "2025-11-02" },
-                { "title": "IT Technical Analyst", "company": "ABM Integrated Solutions", "location": "Dartmouth, NS", "status": "Not selected by employer", "date_applied": "2025-11-02" },
-                { "title": "IT Onsite Technician", "company": "Hemmersbach Nordamerika", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-02" },
-                { "title": "IT System Administrator", "company": "Pricedex Software Inc.", "location": "Brockville, ON", "status": "Not selected by employer", "date_applied": "2025-11-02" },
-                { "title": "Linux Administrator", "company": "GAM Creative Marketing", "location": "Woodbridge, ON", "status": "Applied", "date_applied": "2025-11-02" },
-                { "title": "Cloud Infrastructure Specialist", "company": "Embross", "location": "Richmond Hill, ON", "status": "Applied", "date_applied": "2025-11-02" },
-                { "title": "Support Technician", "company": "Hudson Technology Corp.", "location": "Toronto, ON", "status": "Not selected by employer", "date_applied": "2025-11-02" },
-                { "title": "Service Technician", "company": "Canada Computers Inc.", "location": "Brampton, ON", "status": "Applied", "date_applied": "2025-11-02" },
-                { "title": "Service Technician", "company": "Canada Computers Inc.", "location": "Vaughan, ON", "status": "Applied", "date_applied": "2025-11-02" },
-                { "title": "Tier Two Technical Support", "company": "WaterlooIT", "location": "Waterloo, ON", "status": "Applied", "date_applied": "2025-11-01" },
-                { "title": "Sr. Systems Administrator", "company": "Liftow Limited", "location": "Mississauga, ON", "status": "Applied", "date_applied": "2025-11-01" },
-                { "title": "B2B SaaS Customer Support Specialist", "company": "Hosted~FTP~", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-11-01" },
-                { "title": "Customer Success and Support", "company": "Gnxcor Inc.", "location": "Cambridge, ON", "status": "Not selected by employer", "date_applied": "2025-10-27" },
-                { "title": "Cyber Security Administrator", "company": "Commerx", "location": "Mississauga, ON", "status": "Not selected by employer", "date_applied": "2025-10-27" },
-                { "title": "Systems Administrator", "company": "I3E Information Technology Resources Ltd", "location": "Barrie, ON", "status": "Application viewed", "date_applied": "2025-10-27" },
-                { "title": "Software Support Specialist", "company": "Mondex Corporation", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-10-27" },
-                { "title": "Linux System Administrator", "company": "Commerx", "location": "Mississauga, ON", "status": "Not selected by employer", "date_applied": "2025-10-27" },
-                { "title": "Technical Support Specialist", "company": "MONEXgroup", "location": "North York, ON", "status": "Applied", "date_applied": "2025-10-27" },
-                { "title": "Level 3 Computer & Network Support Technician", "company": "Tier 3 I.T. Solutions", "location": "Edmonton, AB", "status": "Applied", "date_applied": "2025-09-16" },
-                { "title": "Hardware & Networking Engineer - Fortinet", "company": "Ekxpert Placement Services", "location": "Concord, ON", "status": "Applied", "date_applied": "2025-09-16" },
-                { "title": "Infrastructure and Cybersecurity Specialist (Permanent Part-Time)", "company": "International Business University", "location": "Toronto, ON", "status": "Not selected by employer", "date_applied": "2025-09-16" },
-                { "title": "IT Support Specialist - Clear Code", "company": "MC3 Manufacturing Inc", "location": "Ruthven, ON", "status": "Applied", "date_applied": "2025-09-16" },
-                { "title": "IT Systems Engineer", "company": "FutureTel Service Centre", "location": "Markham, ON", "status": "Application viewed", "date_applied": "2025-09-16" },
-                { "title": "Part-Time Technical Support Specialist", "company": "Association of Canadian Occupational Therapy Regulatory Organizations", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-16" },
-                { "title": "SOC Engineer", "company": "AutoTrader.ca", "location": "Greater Toronto Area, ON", "status": "Applied", "date_applied": "2025-09-16" },
-                { "title": "IT Technical Analyst", "company": "Campbellford Memorial Hospital", "location": "Campbellford, ON", "status": "Applied", "date_applied": "2025-09-16" },
-                { "title": "Technical Support", "company": "GlassHouse Systems", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-06" },
-                { "title": "GCP Administrator", "company": "Lawlabs Inc.", "location": "Ontario", "status": "Applied", "date_applied": "2025-09-06" },
-                { "title": "Information Systems Specialist/Network Administrator", "company": "ERTH Corporation", "location": "Ingersoll, ON", "status": "Application viewed", "date_applied": "2025-09-05" },
-                { "title": "Junior Systems Administrator", "company": "Think Logistics Inc.", "location": "Mississauga, ON", "status": "Not selected by employer", "date_applied": "2025-09-05" },
-                { "title": "Datastage Developer - Linux shell scripting", "company": "AstraNorth", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "System Administrator / L2 Production Support", "company": "Atlantis IT group", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "DevOps Engineer", "company": "Dyna Info Services", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "Sr. Linux Server Infrastructure Specialist", "company": "Buchanan Technologies", "location": "Brampton, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "Customer Experience Specialist", "company": "Autolux Ltd Rapid City Transport", "location": "Oshawa, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "Data Technician", "company": "Capital Sewer Services", "location": "Vaughan, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "Cyber Security Engineer", "company": "ISG Search Inc", "location": "Toronto, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "Technical Application Support Analyst", "company": "Pala Interactive Canada", "location": "North York, ON", "status": "Application viewed", "date_applied": "2025-09-05" },
-                { "title": "IT Support Technician", "company": "The Urban Plumber", "location": "Toronto, ON", "status": "Application viewed", "date_applied": "2025-09-05" },
-                { "title": "Microsoft IT Specialist", "company": "Cube Packaging Solutions", "location": "Aurora, ON", "status": "Applied", "date_applied": "2025-09-05" },
-                { "title": "Senior Cloud and Unified Communications Specialist", "company": "Canadian Cancer Society", "location": "Ottawa, ON", "status": "Applied", "date_applied": "2025-12-01" }
-              ]
-            };
-    
+  "meta": {
+    "export_date": "2025-12-01",
+    "source": "Indeed Application History",
+    "total_entries": 108
+  },
+  "applications": [
+    {
+      "title": "Technical Support Associate",
+      "company": "Al Johani Group Canada",
+      "location": "Barrie, ON",
+      "status": "Applied",
+      "date_applied": "2025-12-01"
+    },
+    {
+      "title": "Network & Systems Administrator",
+      "company": "Tecnet Canada Inc",
+      "location": "Victoria, BC",
+      "status": "Not selected by employer",
+      "date_applied": "2025-12-01"
+    },
+    {
+      "title": "Cloud Support/DevOps Engineer",
+      "company": "Toronto Regional Real Estate Board",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-12-01"
+    },
+    {
+      "title": "Information Security Analyst",
+      "company": "Canadian Automobile Association",
+      "location": "Remote",
+      "status": "Applied",
+      "date_applied": "2025-12-01"
+    },
+    {
+      "title": "Jr. Product Validation/QA Engineer – Cloud",
+      "company": "Wind River",
+      "location": "Kanata, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-30"
+    },
+    {
+      "title": "Cloud Architecture Specialist",
+      "company": "Nanometrics Inc",
+      "location": "Ottawa, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-30"
+    },
+    {
+      "title": "IT Consultant",
+      "company": "Berniq",
+      "location": "Ottawa, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-30"
+    },
+    {
+      "title": "Hybrid Cloud Specialist - Alberta",
+      "company": "Reliant Technologies Solutions Group",
+      "location": "Edmonton, AB",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "NOC Analyst 1 (Overnight)",
+      "company": "ICON Media Communications Inc.",
+      "location": "Markham, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Cloud Engineer",
+      "company": "GPL Technologies",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Cloud DevOps Engineer",
+      "company": "Scaleup Innovation Lab Inc",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Security Operation Centre L1",
+      "company": "Nets-international Communication",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Infrastructure Integration 9014-2315",
+      "company": "Foilcon",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Cloud SecOps",
+      "company": "Atlantis IT group",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Linux Administartor",
+      "company": "Atlantis IT group",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Cloud Engineer",
+      "company": "iTMethods",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "DevOps Platform Support Engineer",
+      "company": "iTMethods",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Configuration Analyst",
+      "company": "Forward Insurance Managers Ltd.",
+      "location": "London, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Technical Support Specialist",
+      "company": "Hartmann Controls",
+      "location": "Barrie, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Implementation Specialist",
+      "company": "Severion Inc",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "L1 Support Technician | SVI Support Team",
+      "company": "StorageVault Canada Inc.",
+      "location": "Gloucester, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Senior Service Desk Technician",
+      "company": "LAN Solutions Corp",
+      "location": "Calgary, AB",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "I.T Support Analyst",
+      "company": "Walters Group",
+      "location": "Hamilton, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-25"
+    },
+    {
+      "title": "Technical Services Analyst",
+      "company": "Horizon School Division #205",
+      "location": "Humboldt, SK",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "Intermediate MSP Analyst",
+      "company": "Vencer Group Inc.",
+      "location": "Calgary, AB",
+      "status": "Application viewed",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "Senior Systems Administrator",
+      "company": "PC eSolutions",
+      "location": "Edmonton, AB",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "IT Support Analyst | Copperleaf | 12-month Contract",
+      "company": "IFS",
+      "location": "Vancouver, BC",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "Technical Support Representative",
+      "company": "Barracuda Networks Inc.",
+      "location": "Ottawa, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "L1 Desktop Support Specialist",
+      "company": "Intega IT",
+      "location": "Ottawa, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "Technical Support Specialist",
+      "company": "AG Globe Services",
+      "location": "Ontario",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "Help Desk Agent",
+      "company": "Render-Up",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "IT Service Desk Analyst",
+      "company": "Horn IT Solutions Inc.",
+      "location": "Greater Toronto Area, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-18"
+    },
+    {
+      "title": "Network and Systems Administrator!",
+      "company": "Confidential",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-16"
+    },
+    {
+      "title": "Cloud Infrastructure Engineer",
+      "company": "Embross",
+      "location": "Richmond Hill, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-16"
+    },
+    {
+      "title": "Network Engineer",
+      "company": "Dexterra Group",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-16"
+    },
+    {
+      "title": "Systems & Automation Specialist",
+      "company": "Seasons Retirement Communities LP",
+      "location": "Oakville, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-16"
+    },
+    {
+      "title": "System Administrator, Retail (1 Year Contract)",
+      "company": "Talize",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-16"
+    },
+    {
+      "title": "Network Administrator",
+      "company": "GL2Cloud Inc",
+      "location": "Markham, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-16"
+    },
+    {
+      "title": "Infrastructure Integration Specialist 9170-1612",
+      "company": "Foilcon",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "L1/ L2 Production Support",
+      "company": "spruceinfotech",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "Cloud Platform Engineer",
+      "company": "League Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "Lab Admin/System Engineer - Linux",
+      "company": "Atlantis IT group",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "Senior Cybersecurity Engineer- Offensive",
+      "company": "CAAT Pension Plan",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "IT Technician - Technical Services",
+      "company": "EC Managed IT",
+      "location": "Oakville, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "System Administrator",
+      "company": "Tuor Networks Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "IT Onsite Technician",
+      "company": "Hemmersbach Nordamerika",
+      "location": "Guelph, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "Junior Service Technician",
+      "company": "Canada Computers Inc.",
+      "location": "Unionville, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "IT Solutions Specialist",
+      "company": "Simcotron SecureSolutions Inc",
+      "location": "Toronto, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "Desktop Support Technician",
+      "company": "Pomeroy",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "EV Chargers Test Specialist",
+      "company": "United Chargers Inc.",
+      "location": "Richmond Hill, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-15"
+    },
+    {
+      "title": "Information Security Risk Specialist",
+      "company": "Beanfield Technologies Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-07"
+    },
+    {
+      "title": "Systems Administrator",
+      "company": "WiseTechGroup Inc.",
+      "location": "Concord, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-07"
+    },
+    {
+      "title": "NOC Analyst, Level 1",
+      "company": "Beanfield Technologies Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-07"
+    },
+    {
+      "title": "Future Workplace Specialist",
+      "company": "Flynn Group of Companies",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-07"
+    },
+    {
+      "title": "Application Support Engineer - 1568",
+      "company": "APPTOZA INC.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-07"
+    },
+    {
+      "title": "Software Support Product Specialist – Product Engineering Group",
+      "company": "Leading Manufacturer of equipment used in Grocery Industry",
+      "location": "Concord, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-07"
+    },
+    {
+      "title": "Network Support Engineer",
+      "company": "MIR Digital Solutions Inc",
+      "location": "Concord, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "LMS Software Support Specialist (1-year Contract)",
+      "company": "Ainsworth Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "Service Desk Analyst",
+      "company": "Commerx Computer Systems",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "Rogers Customer Service Representative",
+      "company": "Mississauga Connect",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "Azure SRE",
+      "company": "E-Solutionts",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "Network Operations Center L1",
+      "company": "Nets-international Communication",
+      "location": "Toronto, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "AI Systems & Automation Specialist",
+      "company": "Deliverect",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "Technical Support Specialist - I",
+      "company": "Connexall",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "DevOps Specialist",
+      "company": "Helm Operations Software inc",
+      "location": "Remote",
+      "status": "Applied",
+      "date_applied": "2025-11-06"
+    },
+    {
+      "title": "Senior LLMOps Engineer -Cloud / AI Infrastructure",
+      "company": "Talent To Hire Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "GCP Data Engineer – Informatica Product 360 , Python , ETL",
+      "company": "APPTOZA INC.",
+      "location": "Scarborough, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Data Analyst #984199",
+      "company": "DISYS",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "IT Technician - Level 1",
+      "company": "Procom",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Test Analyst",
+      "company": "Infosys",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Senior Information Security Analyst",
+      "company": "CAAT Pension Plan",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Technical Implementation Analyst",
+      "company": "Achievers",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Network Analyst",
+      "company": "Imperial Dade",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Network operation Center L2",
+      "company": "Nets-international Communication",
+      "location": "Toronto, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Jr. Analyst, Infrastructure",
+      "company": "Great Gulf Group",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Technical Services Coordinator – Networking Specialist (STF)",
+      "company": "MSP OPERATIONAL CORP",
+      "location": "Guelph, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Network Engineer",
+      "company": "TekFormix",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Sr. Analyst, Infrastructure",
+      "company": "Great Gulf Group",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "SOC Analyst",
+      "company": "MIR Digital Solutions Inc",
+      "location": "Concord, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Analyst, Plant Support",
+      "company": "Samuel, Son & Co.",
+      "location": "Oakville, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Cloud Operations Engineer",
+      "company": "G Adventures",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Application Engineer",
+      "company": "Litmus Automation",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "Senior Developer - Python/SRE",
+      "company": "AstraNorth",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "DevOps/Infrastructure Engineer",
+      "company": "RideCo",
+      "location": "Waterloo, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "IT Support Specialist",
+      "company": "Gay Lea Foods",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-05"
+    },
+    {
+      "title": "IT Operations, Senior Analyst (2025-8668)",
+      "company": "Grand & Toy",
+      "location": "Vaughan, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Senior Technician – Cybersecurity & IT Services",
+      "company": "PAVLIKS.COM",
+      "location": "Barrie, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Network and Cloud Admin Instructor",
+      "company": "Metro College of Technology",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Linux Administrator",
+      "company": "SIMNET Inc",
+      "location": "Whitby, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Cloud Engineer",
+      "company": "Spait Infotech Private Limited",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Cyber Security Engineer",
+      "company": "Spait Infotech Private Limited",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Support Specialist",
+      "company": "Ellainer Food Corp.",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Sr. Linux Administrator",
+      "company": "SIMNET Inc",
+      "location": "Whitby, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "NOC Analyst 1",
+      "company": "ICON Media Communications Inc.",
+      "location": "Markham, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Administrator",
+      "company": "Flipp",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Support Analyst",
+      "company": "Richardson Wealth Ltd",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Systems Administrator Operations Support Specialist (Junior) 0164-1517",
+      "company": "Foilcon",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Systems Support Analyst",
+      "company": "NORR",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Technical Analyst",
+      "company": "360insights",
+      "location": "Whitby, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "Information Security Engineer",
+      "company": "T&T Supermarket Inc.",
+      "location": "Markham, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Onsite Technician",
+      "company": "Hemmersbach Nordamerika",
+      "location": "Guelph, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Support Specialist",
+      "company": "Maverick InfoSec Solutions Ltd.",
+      "location": "Langley, BC",
+      "status": "Applied",
+      "date_applied": "2025-11-04"
+    },
+    {
+      "title": "IT Support - Systems Administrator",
+      "company": "Rotor Maxx Support Ltd",
+      "location": "Parksville, BC",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Support Analyst (Tier 1)",
+      "company": "Davinci AI Solutions",
+      "location": "Calgary, AB",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Technical IT Consultant",
+      "company": "OfficePort",
+      "location": "Tantallon, NS",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Junior IT Technician",
+      "company": "Alma Mater Society of Queen's University",
+      "location": "Kingston, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Support Engineer in Test",
+      "company": "YuJa Inc.",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Support Analyst",
+      "company": "SIMNET Inc",
+      "location": "Whitby, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Desktop Support Technician (TAC)",
+      "company": "Leon's Furniture",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Information Technology - IT Generalist",
+      "company": "Wirelessdna",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Support Specialist",
+      "company": "Conpute",
+      "location": "Whitby, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Support Technician — Part-Time / Contract — Toronto, ON",
+      "company": "Brand M3dia Group",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Systems & Support Specialist",
+      "company": "Goway Travel Limited",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Service Desk Analyst",
+      "company": "McCarthy Tétrault LLP",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Technical Specialist",
+      "company": "a.p.i Alarm Inc",
+      "location": "Etobicoke, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Infrastructure Analyst",
+      "company": "TS Retail Enterprises Inc.",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Cloud & DevOps Engineer (AWS / Azure)",
+      "company": "QBuild Corporation",
+      "location": "Markham, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Product Support Specialist",
+      "company": "Tracker by The Bridge Network",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Support Technician",
+      "company": "Continual Energy Inc.",
+      "location": "Greater Toronto Area, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Product Support Specialist",
+      "company": "Jonas Club Software",
+      "location": "Unionville, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Jr. IT Support Technician",
+      "company": "Amico Infrastructures",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "IT Infrastructure Reporting Specialist",
+      "company": "Unio Tech Solutions",
+      "location": "Markham, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Application & Systems Support Technician",
+      "company": "West Canadian Digital Imaging",
+      "location": "Calgary, AB",
+      "status": "Applied",
+      "date_applied": "2025-11-03"
+    },
+    {
+      "title": "Zoom SME",
+      "company": "Dacaro Software Services Inc",
+      "location": "Toronto, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Cyber Security Analyst",
+      "company": "JumpDEMAND Inc.",
+      "location": "Calgary, AB",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "IT Technical Analyst",
+      "company": "ABM Integrated Solutions",
+      "location": "Dartmouth, NS",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "IT Onsite Technician",
+      "company": "Hemmersbach Nordamerika",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "IT System Administrator",
+      "company": "Pricedex Software Inc.",
+      "location": "Brockville, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Linux Administrator",
+      "company": "GAM Creative Marketing",
+      "location": "Woodbridge, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Cloud Infrastructure Specialist",
+      "company": "Embross",
+      "location": "Richmond Hill, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Support Technician",
+      "company": "Hudson Technology Corp.",
+      "location": "Toronto, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Service Technician",
+      "company": "Canada Computers Inc.",
+      "location": "Brampton, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Service Technician",
+      "company": "Canada Computers Inc.",
+      "location": "Vaughan, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-02"
+    },
+    {
+      "title": "Tier Two Technical Support",
+      "company": "WaterlooIT",
+      "location": "Waterloo, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-01"
+    },
+    {
+      "title": "Sr. Systems Administrator",
+      "company": "Liftow Limited",
+      "location": "Mississauga, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-01"
+    },
+    {
+      "title": "B2B SaaS Customer Support Specialist",
+      "company": "Hosted~FTP~",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-11-01"
+    },
+    {
+      "title": "Customer Success and Support",
+      "company": "Gnxcor Inc.",
+      "location": "Cambridge, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-10-27"
+    },
+    {
+      "title": "Cyber Security Administrator",
+      "company": "Commerx",
+      "location": "Mississauga, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-10-27"
+    },
+    {
+      "title": "Systems Administrator",
+      "company": "I3E Information Technology Resources Ltd",
+      "location": "Barrie, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-10-27"
+    },
+    {
+      "title": "Software Support Specialist",
+      "company": "Mondex Corporation",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-10-27"
+    },
+    {
+      "title": "Linux System Administrator",
+      "company": "Commerx",
+      "location": "Mississauga, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-10-27"
+    },
+    {
+      "title": "Technical Support Specialist",
+      "company": "MONEXgroup",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-10-27"
+    },
+    {
+      "title": "Level 3 Computer & Network Support Technician",
+      "company": "Tier 3 I.T. Solutions",
+      "location": "Edmonton, AB",
+      "status": "Applied",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "Hardware & Networking Engineer - Fortinet",
+      "company": "Ekxpert Placement Services",
+      "location": "Concord, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "Infrastructure and Cybersecurity Specialist (Permanent Part-Time)",
+      "company": "International Business University",
+      "location": "Toronto, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "IT Support Specialist - Clear Code",
+      "company": "MC3 Manufacturing Inc",
+      "location": "Ruthven, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "IT Systems Engineer",
+      "company": "FutureTel Service Centre",
+      "location": "Markham, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "Part-Time Technical Support Specialist",
+      "company": "Association of Canadian Occupational Therapy Regulatory Organizations",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "SOC Engineer",
+      "company": "AutoTrader.ca",
+      "location": "Greater Toronto Area, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "IT Technical Analyst",
+      "company": "Campbellford Memorial Hospital",
+      "location": "Campbellford, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-16"
+    },
+    {
+      "title": "Technical Support",
+      "company": "GlassHouse Systems",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-06"
+    },
+    {
+      "title": "GCP Administrator",
+      "company": "Lawlabs Inc.",
+      "location": "Ontario",
+      "status": "Applied",
+      "date_applied": "2025-09-06"
+    },
+    {
+      "title": "Information Systems Specialist/Network Administrator",
+      "company": "ERTH Corporation",
+      "location": "Ingersoll, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Junior Systems Administrator",
+      "company": "Think Logistics Inc.",
+      "location": "Mississauga, ON",
+      "status": "Not selected by employer",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Datastage Developer - Linux shell scripting",
+      "company": "AstraNorth",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "System Administrator / L2 Production Support",
+      "company": "Atlantis IT group",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "DevOps Engineer",
+      "company": "Dyna Info Services",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Sr. Linux Server Infrastructure Specialist",
+      "company": "Buchanan Technologies",
+      "location": "Brampton, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Customer Experience Specialist",
+      "company": "Autolux Ltd Rapid City Transport",
+      "location": "Oshawa, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Data Technician",
+      "company": "Capital Sewer Services",
+      "location": "Vaughan, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Cyber Security Engineer",
+      "company": "ISG Search Inc",
+      "location": "Toronto, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Technical Application Support Analyst",
+      "company": "Pala Interactive Canada",
+      "location": "North York, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "IT Support Technician",
+      "company": "The Urban Plumber",
+      "location": "Toronto, ON",
+      "status": "Application viewed",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Microsoft IT Specialist",
+      "company": "Cube Packaging Solutions",
+      "location": "Aurora, ON",
+      "status": "Applied",
+      "date_applied": "2025-09-05"
+    },
+    {
+      "title": "Senior Cloud and Unified Communications Specialist",
+      "company": "Canadian Cancer Society",
+      "location": "Ottawa, ON",
+      "status": "Applied",
+      "date_applied": "2025-12-01"
+    }
+  ]
+};
+
             const applications = rawData.applications;
             // 2. RENDER TABLE (Always safe)
             if (applications) {
@@ -368,7 +1363,37 @@
                         labels: Object.keys(statusCounts),
                         datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#6b7280'], borderWidth: 1 }]
                     },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12 } } } }
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { position: 'right', labels: { boxWidth: 12 } },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw;
+                                        const total = context.chart.getDatasetMeta(0).total;
+                                        const percentage = ((value / total) * 100).toFixed(2) + '%';
+                                        return `${label}: ${value} (${percentage})`;
+                                    }
+                                }
+                            },
+                            datalabels: {
+                                formatter: (value, ctx) => {
+                                    let sum = 0;
+                                    let dataArr = ctx.chart.data.datasets[0].data;
+                                    dataArr.map(data => {
+                                        sum += data;
+                                    });
+                                    let percentage = (value*100 / sum).toFixed(2)+"%";
+                                    return percentage;
+                                },
+                                color: '#fff',
+                            }
+                        } 
+                    },
+                    plugins: [ChartDataLabels],
                 });
 
                 new Chart(document.getElementById('locationChart'), {
