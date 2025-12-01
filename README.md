@@ -4,8 +4,11 @@ This repository contains a personal export of job application data from Indeed a
 
 ## 📂 Repository Contents
 
-*   `Indeed meta export date 01-12-2025.json`: The raw dataset containing 108 job application entries, including company names, locations, application status, and dates.
+*   `indeed-applications.json`: The raw dataset containing 108 job application entries, including company names, locations, application status, and dates.
+*   `example.json`: A sample file containing a single application entry, useful for understanding the data structure.
 *   `index.html`: A single-page dashboard that parses the JSON data embedded within it and renders analytics charts.
+*   `fix_json.py`: A Python script to fix common issues in the JSON data.
+*   `clean_json.py`: A Python script to clean and process the JSON data.
 
 ## 📊 Features
 
