@@ -49,6 +49,22 @@ Due to browser security policies (CORS), opening the `index.html` file directly 
     http://localhost:8000/src/index.html
     ```
 
+### Using Python
+
+1. Make sure you have [Python](https://www.python.org/) installed.
+2. Open your terminal and navigate to the project's `src` directory:
+    ```bash
+    cd path/to/indeed-data/src
+    ```
+3. Start the server with the following command:
+    ```bash
+    python3 -m http.server 8000
+    ```
+4. Open your web browser and navigate to:
+    ```
+    http://localhost:8000
+    ```
+
 
 ## 📄 License
 
