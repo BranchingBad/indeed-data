@@ -10,8 +10,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     } 
 
     const fileSelector = document.getElementById('file-selector');
+    const dropZone = document.getElementById('drop-zone');
     let chartInstances = {};
     let allApplications = [];
+
+    // --- Core Logic ---
 
     function updateKPIs(applications) {
         if (!applications || applications.length === 0) {
@@ -20,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             return;
         }
         
-        // Response Rate: Anything NOT "Applied" (e.g. "Viewed", "Not Selected", "Interview")
         const responsiveOutcomes = applications.filter(app => {
             const s = (app.status || "").toLowerCase();
             return s !== 'applied' && s !== 'unknown';
@@ -32,45 +34,112 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.getElementById('response-rate').innerText = `${rate}%`;
     }
 
-    async function updateDashboard(fileName) {
-        // 1. Show Loading Indicator
+    // Handles both Filename (fetching) and Raw Data Object (drag & drop)
+    async function updateDashboard(input) {
         const loadingIndicator = document.getElementById('loading-indicator');
         if (loadingIndicator) loadingIndicator.classList.remove('hidden');
 
-        // Artificial delay (optional: remove in production) to show spinner on fast local loads
-        // await new Promise(r => setTimeout(r, 300));
+        let rawData = null;
 
-        const rawData = await fetchData(fileName);
-        
-        if (!rawData) {
-            console.error("Stopping script due to data loading failure.");
-            if (loadingIndicator) loadingIndicator.classList.add('hidden');
-            return;
-        }
+        try {
+            if (typeof input === 'string') {
+                // It's a filename, fetch it
+                rawData = await fetchData(input);
+            } else if (typeof input === 'object') {
+                // It's already parsed data
+                rawData = input;
+            }
 
-        destroyCharts(chartInstances);
+            if (!rawData) {
+                throw new Error("No data received");
+            }
 
-        const applications = rawData.applications;
-        
-        if (applications) {
-            console.info("Processing data...");
-            allApplications = [...applications].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
+            destroyCharts(chartInstances);
+
+            const applications = rawData.applications;
             
-            // Render UI
-            updateKPIs(allApplications);
-            renderTable(allApplications); // Initial render
-            setupTableEventListeners(allApplications);
-            initializeCharts(applications, chartInstances);
+            if (applications) {
+                console.info("Processing data...");
+                // Sort by date descending
+                allApplications = [...applications].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
+                
+                // Render UI
+                updateKPIs(allApplications);
+                renderTable(allApplications); 
+                setupTableEventListeners(allApplications);
+                initializeCharts(applications, chartInstances);
+            }
+        } catch (error) {
+            console.error("Dashboard Update Error:", error);
+        } finally {
+            if (loadingIndicator) loadingIndicator.classList.add('hidden');
         }
-
-        // 2. Hide Loading Indicator
-        if (loadingIndicator) loadingIndicator.classList.add('hidden');
     }
 
+    // --- Event Listeners ---
+
+    // 1. Drop Zone & File Input
+    if (dropZone) {
+        // Highlight on drag
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.add('border-indigo-500', 'bg-indigo-50');
+            }, false);
+        });
+
+        // Remove highlight
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
+            }, false);
+        });
+
+        // Handle Drop
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }, false);
+
+        // Handle Click (fallback to file input)
+        const fileInput = document.getElementById('file-upload-input');
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+    }
+
+    function handleFiles(files) {
+        if (files.length === 0) return;
+        const file = files[0];
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const json = JSON.parse(e.target.result);
+                // Update file selector UI to show "Custom File"
+                // (Optional visual tweak)
+                updateDashboard(json);
+            } catch (err) {
+                alert("Error parsing JSON file: " + err.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // 2. Existing Selector
     fileSelector.addEventListener('change', (event) => {
-        updateDashboard(event.target.value);
+        if (event.target.value) {
+            updateDashboard(event.target.value);
+        }
     });
 
+    // 3. Export
     const exportBtn = document.getElementById('export-btn');
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {

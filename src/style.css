@@ -11,6 +11,12 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
     animation: spin 1s linear infinite;
 }
 
+/* Drop Zone Active State */
+#drop-zone.drag-over {
+    border-color: #6366f1; /* Indigo-500 */
+    background-color: #e0e7ff; /* Indigo-50 */
+}
+
 /* Mobile Card View Transformation */
 @media (max-width: 768px) {
     /* Hide the standard table header */

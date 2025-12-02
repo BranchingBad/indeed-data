@@ -1,3 +1,14 @@
+// Configuration for Status Colors
+// Keys are matched (case-insensitive) against the status string.
+const STATUS_CONFIG = {
+    'viewed':       { bg: 'bg-blue-200', text: 'text-blue-900' },
+    'not selected': { bg: 'bg-red-200', text: 'text-red-900' },
+    'applied':      { bg: 'bg-green-200', text: 'text-green-900' },
+    'interview':    { bg: 'bg-purple-200', text: 'text-purple-900' },
+    'offer':        { bg: 'bg-yellow-200', text: 'text-yellow-900' },
+    'default':      { bg: 'bg-gray-100', text: 'text-gray-800' }
+};
+
 let sortColumn = null;
 let sortDirection = 'asc';
 let eventListenersAttached = false;
@@ -9,7 +20,6 @@ let currentFilteredApps = [];
 
 export function renderTable(apps, isUpdate = false) {
     if (!isUpdate) {
-        // Reset to first page on new data or new filter
         currentFilteredApps = apps;
         currentPage = 1; 
     }
@@ -29,14 +39,13 @@ export function renderTable(apps, isUpdate = false) {
     if (totalItems === 0) {
         if (tableSection) tableSection.classList.add('hidden');
         if (emptyState) emptyState.classList.remove('hidden');
-        if (emptyState) emptyState.style.display = 'flex'; // Ensure flex layout for centering
-        return; // Stop rendering
+        if (emptyState) emptyState.style.display = 'flex';
+        return;
     } else {
         if (tableSection) tableSection.classList.remove('hidden');
         if (emptyState) emptyState.classList.add('hidden');
         if (emptyState) emptyState.style.display = 'none';
     }
-    // -------------------------
 
     // Calculate Slice
     const start = (currentPage - 1) * rowsPerPage;
@@ -55,64 +64,66 @@ export function renderTable(apps, isUpdate = false) {
 
     const tableBody = document.getElementById('interactionTableBody');
     if (tableBody) {
-        tableBody.innerHTML = ''; // Clear current content
+        tableBody.innerHTML = ''; // Clear rows
 
         paginatedItems.forEach(app => {
             const row = document.createElement('tr');
             
-            // --- Helper for creating cells ---
-            const createCell = (content, label, isHtml = false, customClasses = "") => {
+            // --- Helper for creating Text cells (Safe) ---
+            const createTextCell = (content, label, customClasses = "") => {
                 const td = document.createElement('td');
-                td.setAttribute('data-label', label); // Critical for Mobile View
+                td.setAttribute('data-label', label);
                 td.className = "px-5 py-5 border-b border-gray-200 bg-white text-sm";
                 
-                if (isHtml) {
-                    td.innerHTML = content;
-                } else {
-                    const p = document.createElement('p');
-                    p.className = customClasses || "text-gray-900 whitespace-no-wrap";
-                    p.textContent = content; // Safe injection
-                    td.appendChild(p);
-                }
+                const p = document.createElement('p');
+                p.className = customClasses || "text-gray-900 whitespace-no-wrap";
+                p.textContent = content || ""; // Safe injection via textContent
+                td.appendChild(p);
                 return td;
             };
 
             // 1. Date Cell
-            row.appendChild(createCell(app.date_applied, "Date"));
+            row.appendChild(createTextCell(app.date_applied, "Date"));
 
-            // 2. Status Cell
-            const status = (app.status || "").trim();
-            let statusBg = "bg-gray-100";
-            let statusText = "text-gray-900";
-            const sLower = status.toLowerCase();
-
-            if (sLower.includes('viewed')) {
-                statusBg = "bg-blue-200";
-                statusText = "text-blue-900";
-            } else if (sLower.includes('not selected')) {
-                statusBg = "bg-red-200";
-                statusText = "text-red-900";
-            } else if (sLower === 'applied') {
-                statusBg = "bg-green-200";
-                statusText = "text-green-900";
+            // 2. Status Cell (Programmatic DOM creation - XSS Safe)
+            const statusTd = document.createElement('td');
+            statusTd.setAttribute('data-label', "Status");
+            statusTd.className = "px-5 py-5 border-b border-gray-200 bg-white text-sm";
+            
+            const statusRaw = (app.status || "Unknown").trim();
+            const statusLower = statusRaw.toLowerCase();
+            
+            // Determine color from config
+            let theme = STATUS_CONFIG['default'];
+            for (const key in STATUS_CONFIG) {
+                if (statusLower.includes(key)) {
+                    theme = STATUS_CONFIG[key];
+                    break;
+                }
             }
 
-            // Using simple innerHTML here for the badge structure, but inserting text safely via variable
-            // Note: We escape the status text just in case, though logically it's often safe.
-            const safeStatus = status.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            const badgeHtml = `
-                <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-                    <span aria-hidden class="absolute inset-0 ${statusBg} opacity-50 rounded-full"></span>
-                    <span class="relative ${statusText}">${safeStatus}</span>
-                </span>
-            `;
-            row.appendChild(createCell(badgeHtml, "Status", true));
+            // Create Badge Structure
+            const badgeContainer = document.createElement('span');
+            badgeContainer.className = "relative inline-block px-3 py-1 font-semibold leading-tight";
+
+            const badgeBg = document.createElement('span');
+            badgeBg.className = `absolute inset-0 ${theme.bg} opacity-50 rounded-full`;
+            badgeBg.setAttribute('aria-hidden', 'true');
+
+            const badgeText = document.createElement('span');
+            badgeText.className = `relative ${theme.text}`;
+            badgeText.textContent = statusRaw; // Safe text injection
+
+            badgeContainer.appendChild(badgeBg);
+            badgeContainer.appendChild(badgeText);
+            statusTd.appendChild(badgeContainer);
+            row.appendChild(statusTd);
 
             // 3. Title Cell
-            row.appendChild(createCell(app.title, "Job Title", false, "text-gray-900 whitespace-no-wrap font-medium"));
+            row.appendChild(createTextCell(app.title, "Job Title", "text-gray-900 whitespace-no-wrap font-medium"));
 
             // 4. Company Cell
-            row.appendChild(createCell(app.company, "Company", false));
+            row.appendChild(createTextCell(app.company, "Company"));
 
             tableBody.appendChild(row);
         });
@@ -120,18 +131,33 @@ export function renderTable(apps, isUpdate = false) {
 }
 
 export function applyFiltersAndSort(allApplications) {
-    const filterDate = document.getElementById('filter-date').value.toLowerCase();
+    // Inputs
+    const startDateVal = document.getElementById('filter-date-start').value;
+    const endDateVal = document.getElementById('filter-date-end').value;
     const filterStatus = document.getElementById('filter-status').value.toLowerCase();
     const filterTitle = document.getElementById('filter-title').value.toLowerCase();
     const filterCompany = document.getElementById('filter-company').value.toLowerCase();
 
     let filteredApps = allApplications.filter(app => {
-        return (app.date_applied || '').toLowerCase().includes(filterDate) &&
-               (app.status || '').toLowerCase().includes(filterStatus) &&
-               (app.title || '').toLowerCase().includes(filterTitle) &&
-               (app.company || '').toLowerCase().includes(filterCompany);
+        // Date Logic
+        const appDate = app.date_applied || '';
+        let dateMatch = true;
+        if (startDateVal) {
+            if (appDate < startDateVal) dateMatch = false;
+        }
+        if (endDateVal && dateMatch) { // Only check if still true
+            if (appDate > endDateVal) dateMatch = false;
+        }
+
+        // Text Logic
+        const statusMatch = (app.status || '').toLowerCase().includes(filterStatus);
+        const titleMatch = (app.title || '').toLowerCase().includes(filterTitle);
+        const companyMatch = (app.company || '').toLowerCase().includes(filterCompany);
+
+        return dateMatch && statusMatch && titleMatch && companyMatch;
     });
 
+    // Sorting
     if (sortColumn) {
         filteredApps.sort((a, b) => {
             const aValue = (a[sortColumn] || '').toString().toLowerCase();
@@ -142,7 +168,6 @@ export function applyFiltersAndSort(allApplications) {
         });
     }
 
-    // False flag resets page to 1
     renderTable(filteredApps, false);
 }
 
@@ -150,7 +175,7 @@ export function setupTableEventListeners(allApplications) {
     if (eventListenersAttached) return;
     
     // Filter Inputs
-    ['filter-date', 'filter-status', 'filter-title', 'filter-company'].forEach(id => {
+    ['filter-date-start', 'filter-date-end', 'filter-status', 'filter-title', 'filter-company'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener('input', () => applyFiltersAndSort(allApplications));
@@ -179,7 +204,7 @@ export function setupTableEventListeners(allApplications) {
         prevBtn.addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
-                renderTable(currentFilteredApps, true); // true = keep current filter set
+                renderTable(currentFilteredApps, true);
             }
         });
     }
@@ -203,17 +228,15 @@ export function exportToCSV() {
         return;
     }
 
-    // Define headers
     const headers = ["ID", "Title", "Company", "Location", "Status", "Date Applied"];
     
-    // Map data to CSV rows
     const csvRows = [
-        headers.join(','), // Header row
+        headers.join(','),
         ...currentFilteredApps.map(app => {
             return [
                 app.id,
-                `"${(app.title || '').replace(/"/g, '""')}"`,     // Handle quotes in content
-                `"${(app.company || '').replace(/"/g, '""')}"`,   // Handle quotes in content
+                `"${(app.title || '').replace(/"/g, '""')}"`,
+                `"${(app.company || '').replace(/"/g, '""')}"`,
                 `"${(app.location || '').replace(/"/g, '""')}"`,
                 `"${(app.status || '').replace(/"/g, '""')}"`,
                 app.date_applied
@@ -221,7 +244,6 @@ export function exportToCSV() {
         })
     ];
 
-    // Create file and trigger download
     const csvString = csvRows.join('\n');
     const blob = new Blob([csvString], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
