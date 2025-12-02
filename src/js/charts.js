@@ -69,7 +69,6 @@ export function initializeCharts(applications, chartInstances) {
         const hasViewedData = Object.keys(viewedLocCounts).length > 0;
 
         // 6. Rejected by Location Data
-        // Matches "not selected" statuses
         const rejectedApps = applications.filter(app => (app.status || '').toLowerCase().includes('not selected'));
         const rejectedLocCounts = countByLocation(rejectedApps);
         const hasRejectedData = Object.keys(rejectedLocCounts).length > 0;
@@ -126,8 +125,8 @@ export function initializeCharts(applications, chartInstances) {
                 labels: Object.keys(statusCounts),
                 datasets: [{ data: Object.values(statusCounts), backgroundColor: standardColors, borderWidth: 1 }]
             },
-            options: pieOptions,
-            plugins: [ChartDataLabels],
+            options: pieOptions
+            // Removed local plugins: [ChartDataLabels] to rely on global registration
         });
 
         // Location Chart (Bar)
@@ -172,8 +171,7 @@ export function initializeCharts(applications, chartInstances) {
                     borderWidth: 0
                 }]
             },
-            options: getPieOptions(hasViewedData),
-            plugins: [ChartDataLabels]
+            options: getPieOptions(hasViewedData)
         });
 
         // NEW: Rejected by Location Chart (Pie)
@@ -195,8 +193,7 @@ export function initializeCharts(applications, chartInstances) {
                     borderWidth: 0
                 }]
             },
-            options: getPieOptions(hasRejectedData),
-            plugins: [ChartDataLabels]
+            options: getPieOptions(hasRejectedData)
         });
 
         // Title Chart
@@ -238,7 +235,6 @@ export function initializeCharts(applications, chartInstances) {
 
     } catch (e) {
         console.error("Chart Render Error:", e);
-        // Ensure we unhide errors if IDs exist (added new ones too)
         ['statusChartError', 'locationChartError', 'titleChartError', 'timelineChartError'].forEach(id => {
             const el = document.getElementById(id);
             if(el) el.classList.remove('hidden');

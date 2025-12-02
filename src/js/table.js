@@ -139,8 +139,8 @@ export function renderTable(apps, isUpdate = false) {
 }
 
 export function applyFiltersAndSort(allApplications) {
-    // Safety check - use cached if provided array is empty
-    const apps = allApplications && allApplications.length > 0 ? allApplications : cachedAllApplications;
+    // FIX: If no arguments provided, use the cached data (fixes closure staleness)
+    const apps = allApplications || cachedAllApplications;
     
     if (!apps || apps.length === 0) {
         console.warn('No applications data available');
@@ -192,7 +192,6 @@ export function applyFiltersAndSort(allApplications) {
         filteredApps.sort((a, b) => {
             // Helper to get value based on sort column
             const getValue = (obj, col) => {
-                // Fix: Return number for ID column to ensure numeric sorting
                 if (col === 'id') {
                     return Number(obj[col]);
                 }
@@ -215,14 +214,14 @@ export function applyFiltersAndSort(allApplications) {
 }
 
 export function setupTableEventListeners(allApplications) {
+    // FIX: Always update the cache, even if listeners are already attached
+    cachedAllApplications = allApplications;
+
     // Prevent duplicate setup
     if (eventListenersAttached) {
-        console.log('Event listeners already attached');
+        console.log('Event listeners already attached - Data updated');
         return;
     }
-    
-    // Cache the applications for later use
-    cachedAllApplications = allApplications;
     
     // Check if all required elements exist
     const requiredIds = [
@@ -249,7 +248,8 @@ export function setupTableEventListeners(allApplications) {
     filterIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
-            el.addEventListener('input', () => applyFiltersAndSort(allApplications));
+            // FIX: Call without args to force using cachedAllApplications
+            el.addEventListener('input', () => applyFiltersAndSort());
         } else {
             console.warn(`Filter element '${id}' not found`);
         }
@@ -267,7 +267,8 @@ export function setupTableEventListeners(allApplications) {
                     sortColumn = newSortColumn;
                     sortDirection = 'asc';
                 }
-                applyFiltersAndSort(allApplications);
+                // FIX: Call without args
+                applyFiltersAndSort();
             });
         });
     } else {
