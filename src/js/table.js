@@ -134,3 +134,41 @@ export function setupTableEventListeners(allApplications) {
 
     eventListenersAttached = true;
 }
+
+export function exportToCSV() {
+    if (!currentFilteredApps || currentFilteredApps.length === 0) {
+        alert("No data to export!");
+        return;
+    }
+
+    // Define headers
+    const headers = ["ID", "Title", "Company", "Location", "Status", "Date Applied"];
+    
+    // Map data to CSV rows
+    const csvRows = [
+        headers.join(','), // Header row
+        ...currentFilteredApps.map(app => {
+            return [
+                app.id,
+                `"${(app.title || '').replace(/"/g, '""')}"`,     // Handle quotes in content
+                `"${(app.company || '').replace(/"/g, '""')}"`,   // Handle quotes in content
+                `"${(app.location || '').replace(/"/g, '""')}"`,
+                `"${(app.status || '').replace(/"/g, '""')}"`,
+                app.date_applied
+            ].join(',');
+        })
+    ];
+
+    // Create file and trigger download
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'indeed_applications_export.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}

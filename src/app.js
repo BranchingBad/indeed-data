@@ -1,6 +1,7 @@
 import { fetchData } from './js/api.js';
 import { destroyCharts, initializeCharts } from './js/charts.js';
-import { renderTable, setupTableEventListeners } from './js/table.js';
+// Updated Import: Added exportToCSV
+import { renderTable, setupTableEventListeners, exportToCSV } from './js/table.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
     console.info("Dashboard script started.");
@@ -55,6 +56,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     fileSelector.addEventListener('change', (event) => {
         updateDashboard(event.target.value);
     });
+
+    // NEW: Attach Export Button Listener
+    const exportBtn = document.getElementById('export-btn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            exportToCSV();
+        });
+    }
 
     // Initial Load
     updateDashboard(fileSelector.value);
