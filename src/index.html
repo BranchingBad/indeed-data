@@ -11,7 +11,6 @@
 </head>
 <body class="p-6 relative text-gray-800">
 
-    <!-- Loading Indicator -->
     <div id="loading-indicator" class="fixed inset-0 bg-gray-900 bg-opacity-40 flex items-center justify-center z-50 hidden backdrop-blur-sm">
         <div class="bg-white p-5 rounded-lg shadow-xl flex flex-col items-center">
             <div class="spinner border-4 border-gray-200 rounded-full w-12 h-12 mb-3"></div>
@@ -26,12 +25,10 @@
 
     <div class="max-w-7xl mx-auto space-y-6">
         
-        <!-- Header & Controls -->
         <div class="bg-white p-6 rounded-lg shadow">
             <h1 class="text-2xl font-bold mb-4 text-gray-800">Indeed Application Dashboard</h1>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Drop Zone -->
                 <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 transition bg-gray-50">
                     <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
@@ -41,7 +38,6 @@
                     <input type="file" id="file-upload-input" class="hidden" accept=".json">
                 </div>
 
-                <!-- Fallback Selector -->
                 <div>
                     <label for="file-selector" class="block text-sm font-medium text-gray-700 mb-2">Or select example data:</label>
                     <select id="file-selector" class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
@@ -63,7 +59,6 @@
             </div>
         </div>
 
-        <!-- Charts Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="card min-w-0">
                 <h2 class="text-lg font-semibold text-gray-700 mb-4">Application Status</h2>
@@ -71,18 +66,35 @@
                     <canvas id="statusChart"></canvas>
                 </div>
             </div>
+
             <div class="card min-w-0">
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">Top Locations</h2>
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Top Locations (All)</h2>
                 <div class="relative h-64 w-full">
                     <canvas id="locationChart"></canvas>
                 </div>
             </div>
+
+            <div class="card min-w-0">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Viewed by Location</h2>
+                <div class="relative h-64 w-full">
+                    <canvas id="viewedLocationChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card min-w-0">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Rejected by Location</h2>
+                <div class="relative h-64 w-full">
+                    <canvas id="rejectedLocationChart"></canvas>
+                </div>
+            </div>
+
             <div class="card md:col-span-2 min-w-0">
                 <h2 class="text-lg font-semibold text-gray-700 mb-4">Top Job Titles</h2>
                 <div class="relative h-64 w-full">
                     <canvas id="titleChart"></canvas>
                 </div>
             </div>
+
             <div class="card md:col-span-2 min-w-0">
                 <h2 class="text-lg font-semibold text-gray-700 mb-4">Activity Timeline</h2>
                 <div class="relative h-80 w-full">
@@ -90,7 +102,6 @@
                 </div>
             </div>
 
-            <!-- Table Card -->
             <div class="card md:col-span-2 min-w-0">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-lg font-semibold text-gray-700">Application Log</h2>
@@ -105,7 +116,6 @@
                     </div>
                 </div>
                 
-                <!-- Filters -->
                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
                     <p class="text-xs font-bold text-gray-400 uppercase mb-2">Filters</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -136,7 +146,6 @@
                     </div>
                 </div>
                 
-                <!-- Table -->
                 <div id="table-section">
                     <div class="overflow-x-auto border rounded-lg">
                         <table class="min-w-full leading-normal">
@@ -150,8 +159,7 @@
                                 </tr>
                             </thead>
                             <tbody id="interactionTableBody">
-                                <!-- JS Populated -->
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
 
@@ -170,7 +178,6 @@
                     </div>
                 </div>
 
-                <!-- Empty State -->
                 <div id="empty-state" class="hidden flex-col items-center justify-center py-16 text-center">
                     <div class="bg-gray-100 p-4 rounded-full mb-4">
                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
