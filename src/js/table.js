@@ -167,10 +167,11 @@ export function applyFiltersAndSort(allApplications) {
             if (appDate > endDateVal) dateMatch = false;
         }
 
-        // Text Logic
-        const statusMatch = (app.status || '').toLowerCase().includes(filterStatus);
-        const titleMatch = (app.title || '').toLowerCase().includes(filterTitle);
-        const companyMatch = (app.company || '').toLowerCase().includes(filterCompany);
+        // Text Logic - using partial match for all fields
+        // Empty filter means show all (no filtering on that field)
+        const statusMatch = !filterStatus || (app.status || '').toLowerCase().includes(filterStatus);
+        const titleMatch = !filterTitle || (app.title || '').toLowerCase().includes(filterTitle);
+        const companyMatch = !filterCompany || (app.company || '').toLowerCase().includes(filterCompany);
 
         return dateMatch && statusMatch && titleMatch && companyMatch;
     });
