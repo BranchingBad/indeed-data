@@ -17,6 +17,7 @@ let eventListenersAttached = false;
 let currentPage = 1;
 const rowsPerPage = 10;
 let currentFilteredApps = []; 
+let cachedAllApplications = []; // Cache to avoid issues
 
 export function renderTable(apps, isUpdate = false) {
     if (!isUpdate) {
@@ -53,8 +54,10 @@ export function renderTable(apps, isUpdate = false) {
     const paginatedItems = currentFilteredApps.slice(start, end);
 
     // Update 'Showing X to Y' text
-    document.getElementById('page-start').innerText = start + 1;
-    document.getElementById('page-end').innerText = Math.min(end, totalItems);
+    const pageStartEl = document.getElementById('page-start');
+    const pageEndEl = document.getElementById('page-end');
+    if (pageStartEl) pageStartEl.innerText = start + 1;
+    if (pageEndEl) pageEndEl.innerText = Math.min(end, totalItems);
 
     // Update Button State
     const prevBtn = document.getElementById('prev-btn');
@@ -131,21 +134,36 @@ export function renderTable(apps, isUpdate = false) {
 }
 
 export function applyFiltersAndSort(allApplications) {
-    // Inputs
-    const startDateVal = document.getElementById('filter-date-start').value;
-    const endDateVal = document.getElementById('filter-date-end').value;
-    const filterStatus = document.getElementById('filter-status').value.toLowerCase();
-    const filterTitle = document.getElementById('filter-title').value.toLowerCase();
-    const filterCompany = document.getElementById('filter-company').value.toLowerCase();
+    // Safety check - use cached if provided array is empty
+    const apps = allApplications && allApplications.length > 0 ? allApplications : cachedAllApplications;
+    
+    if (!apps || apps.length === 0) {
+        console.warn('No applications data available');
+        return;
+    }
 
-    let filteredApps = allApplications.filter(app => {
+    // Get all filter elements with null checks
+    const startDateEl = document.getElementById('filter-date-start');
+    const endDateEl = document.getElementById('filter-date-end');
+    const statusEl = document.getElementById('filter-status');
+    const titleEl = document.getElementById('filter-title');
+    const companyEl = document.getElementById('filter-company');
+
+    // Get values safely with fallbacks
+    const startDateVal = startDateEl?.value || '';
+    const endDateVal = endDateEl?.value || '';
+    const filterStatus = (statusEl?.value || '').toLowerCase();
+    const filterTitle = (titleEl?.value || '').toLowerCase();
+    const filterCompany = (companyEl?.value || '').toLowerCase();
+
+    let filteredApps = apps.filter(app => {
         // Date Logic
         const appDate = app.date_applied || '';
         let dateMatch = true;
         if (startDateVal) {
             if (appDate < startDateVal) dateMatch = false;
         }
-        if (endDateVal && dateMatch) { // Only check if still true
+        if (endDateVal && dateMatch) {
             if (appDate > endDateVal) dateMatch = false;
         }
 
@@ -172,29 +190,63 @@ export function applyFiltersAndSort(allApplications) {
 }
 
 export function setupTableEventListeners(allApplications) {
-    if (eventListenersAttached) return;
+    // Prevent duplicate setup
+    if (eventListenersAttached) {
+        console.log('Event listeners already attached');
+        return;
+    }
     
-    // Filter Inputs
-    ['filter-date-start', 'filter-date-end', 'filter-status', 'filter-title', 'filter-company'].forEach(id => {
+    // Cache the applications for later use
+    cachedAllApplications = allApplications;
+    
+    // Check if all required elements exist
+    const requiredIds = [
+        'filter-date-start', 
+        'filter-date-end', 
+        'filter-status', 
+        'filter-title', 
+        'filter-company',
+        'prev-btn',
+        'next-btn'
+    ];
+    
+    const missingElements = requiredIds.filter(id => !document.getElementById(id));
+    
+    if (missingElements.length > 0) {
+        console.warn('Missing elements:', missingElements);
+        console.warn('Event listeners not fully attached. Some features may not work.');
+        // Continue anyway - attach what we can
+    }
+
+    // Filter Inputs - with individual null checks
+    const filterIds = ['filter-date-start', 'filter-date-end', 'filter-status', 'filter-title', 'filter-company'];
+    filterIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener('input', () => applyFiltersAndSort(allApplications));
+        } else {
+            console.warn(`Filter element '${id}' not found`);
         }
     });
 
     // Sorting Headers
-    document.querySelectorAll('th[data-sort]').forEach(header => {
-        header.addEventListener('click', () => {
-            const newSortColumn = header.getAttribute('data-sort');
-            if (sortColumn === newSortColumn) {
-                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                sortColumn = newSortColumn;
-                sortDirection = 'asc';
-            }
-            applyFiltersAndSort(allApplications);
+    const sortHeaders = document.querySelectorAll('th[data-sort]');
+    if (sortHeaders.length > 0) {
+        sortHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const newSortColumn = header.getAttribute('data-sort');
+                if (sortColumn === newSortColumn) {
+                    sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortColumn = newSortColumn;
+                    sortDirection = 'asc';
+                }
+                applyFiltersAndSort(allApplications);
+            });
         });
-    });
+    } else {
+        console.warn('No sortable headers found');
+    }
 
     // Pagination Buttons
     const prevBtn = document.getElementById('prev-btn');
@@ -207,6 +259,8 @@ export function setupTableEventListeners(allApplications) {
                 renderTable(currentFilteredApps, true);
             }
         });
+    } else {
+        console.warn('Previous button not found');
     }
 
     if (nextBtn) {
@@ -217,9 +271,12 @@ export function setupTableEventListeners(allApplications) {
                 renderTable(currentFilteredApps, true);
             }
         });
+    } else {
+        console.warn('Next button not found');
     }
 
     eventListenersAttached = true;
+    console.log('Table event listeners setup complete');
 }
 
 export function exportToCSV() {

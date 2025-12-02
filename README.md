@@ -63,6 +63,8 @@ A modern, interactive web dashboard for visualizing and analyzing job applicatio
    - Drag and drop your `indeed-applications.json` file into the drop zone
    - Or use the dropdown to select example data files
 
+> **Note on Tailwind CDN**: This project uses the Tailwind CSS CDN for simplicity and ease of setup. While the browser console may show a warning about production use, this is perfectly fine for personal projects and local development. The CDN warning does not affect functionality. For production deployments, you may want to install Tailwind CSS locally using npm and build the CSS file. See the [Production Deployment](#-production-deployment) section for details.
+
 ## 📂 Project Structure
 
 ```
@@ -169,6 +171,49 @@ Applications are automatically grouped by month (YYYY-MM format) to reveal trend
 - Updates counters dynamically
 - Disables navigation buttons at boundaries
 
+## 🚢 Production Deployment
+
+If you want to deploy this dashboard to production and eliminate the Tailwind CDN warning:
+
+1. **Install Tailwind CSS locally**:
+   ```bash
+   npm install -D tailwindcss
+   npx tailwindcss init
+   ```
+
+2. **Create a `tailwind.config.js`**:
+   ```js
+   module.exports = {
+     content: ["./src/**/*.{html,js}"],
+     theme: { extend: {} },
+     plugins: [],
+   }
+   ```
+
+3. **Create an input CSS file** (`src/input.css`):
+   ```css
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   
+   body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+   .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 20px; }
+   /* Add your custom styles here */
+   ```
+
+4. **Build the CSS**:
+   ```bash
+   npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+   ```
+
+5. **Update `index.html`** to use the built CSS:
+   ```html
+   <!-- Replace CDN link with: -->
+   <link rel="stylesheet" href="output.css">
+   ```
+
+For most personal use cases, the CDN version works perfectly fine!
+
 ## 🐛 Troubleshooting
 
 ### Dashboard won't load
@@ -190,6 +235,10 @@ Applications are automatically grouped by month (YYYY-MM format) to reveal trend
 - ✅ Clear all filter inputs to reset
 - ✅ Reload the page (F5)
 - ✅ Confirm data file loaded successfully
+
+### Console shows "Filter elements not found" warning
+- ✅ This is normal during initial load - it resolves automatically
+- ✅ If it persists, ensure all HTML elements have correct IDs
 
 ## 💼 Use Cases
 
