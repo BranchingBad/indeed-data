@@ -192,6 +192,10 @@ export function applyFiltersAndSort(allApplications) {
         filteredApps.sort((a, b) => {
             // Helper to get value based on sort column
             const getValue = (obj, col) => {
+                // Fix: Return number for ID column to ensure numeric sorting
+                if (col === 'id') {
+                    return Number(obj[col]);
+                }
                 if (col === 'location') {
                     return (obj.location || obj.Location || '').toString().toLowerCase();
                 }
