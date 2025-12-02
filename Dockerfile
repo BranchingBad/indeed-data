@@ -12,8 +12,7 @@ RUN pip install --no-cache-dir beautifulsoup4
 FROM nginx:alpine
 
 # Install Python for the extraction script
-RUN apk add --no-cache python3 py3-pip && \
-    pip3 install --no-cache-dir beautifulsoup4
+RUN apk add --no-cache python3 py3-beautifulsoup4
 
 # Copy application files
 COPY src/ /usr/share/nginx/html/
