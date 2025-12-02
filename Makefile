@@ -26,6 +26,7 @@ help:
 ## build: Build Docker image
 build:
 	@echo "$(CYAN)Building Docker image...$(NC)"
+	mkdir -p extract
 	docker build -t $(IMAGE_NAME) .
 	@echo "$(GREEN)✓ Build complete$(NC)"
 
