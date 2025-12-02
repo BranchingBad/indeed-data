@@ -79,7 +79,8 @@ export function renderTable(apps, isUpdate = false) {
                 td.className = "px-5 py-5 border-b border-gray-200 bg-white text-sm";
                 
                 const p = document.createElement('p');
-                p.className = customClasses || "text-gray-900 whitespace-no-wrap";
+                // Fix: Updated whitespace-no-wrap to whitespace-nowrap (Tailwind v3 standard)
+                p.className = customClasses || "text-gray-900 whitespace-nowrap";
                 p.textContent = content || ""; // Safe injection via textContent
                 td.appendChild(p);
                 return td;
@@ -123,10 +124,15 @@ export function renderTable(apps, isUpdate = false) {
             row.appendChild(statusTd);
 
             // 3. Title Cell
-            row.appendChild(createTextCell(app.title, "Job Title", "text-gray-900 whitespace-no-wrap font-medium"));
+            row.appendChild(createTextCell(app.title, "Job Title", "text-gray-900 whitespace-nowrap font-medium"));
 
             // 4. Company Cell
             row.appendChild(createTextCell(app.company, "Company"));
+
+            // 5. Location Cell (Robust Check)
+            // Checks for 'location' (lowercase) OR 'Location' (capitalized)
+            const locationText = app.location || app.Location || "";
+            row.appendChild(createTextCell(locationText, "Location"));
 
             tableBody.appendChild(row);
         });
@@ -148,6 +154,7 @@ export function applyFiltersAndSort(allApplications) {
     const statusEl = document.getElementById('filter-status');
     const titleEl = document.getElementById('filter-title');
     const companyEl = document.getElementById('filter-company');
+    const locationEl = document.getElementById('filter-location');
 
     // Get values safely with fallbacks
     const startDateVal = startDateEl?.value || '';
@@ -155,6 +162,7 @@ export function applyFiltersAndSort(allApplications) {
     const filterStatus = (statusEl?.value || '').toLowerCase();
     const filterTitle = (titleEl?.value || '').toLowerCase();
     const filterCompany = (companyEl?.value || '').toLowerCase();
+    const filterLocation = (locationEl?.value || '').toLowerCase();
 
     let filteredApps = apps.filter(app => {
         // Date Logic
@@ -172,15 +180,28 @@ export function applyFiltersAndSort(allApplications) {
         const statusMatch = !filterStatus || (app.status || '').toLowerCase().includes(filterStatus);
         const titleMatch = !filterTitle || (app.title || '').toLowerCase().includes(filterTitle);
         const companyMatch = !filterCompany || (app.company || '').toLowerCase().includes(filterCompany);
+        
+        // Robust Location Check
+        const loc = app.location || app.Location || '';
+        const locationMatch = !filterLocation || loc.toLowerCase().includes(filterLocation);
 
-        return dateMatch && statusMatch && titleMatch && companyMatch;
+        return dateMatch && statusMatch && titleMatch && companyMatch && locationMatch;
     });
 
     // Sorting
     if (sortColumn) {
         filteredApps.sort((a, b) => {
-            const aValue = (a[sortColumn] || '').toString().toLowerCase();
-            const bValue = (b[sortColumn] || '').toString().toLowerCase();
+            // Helper to get value based on sort column
+            const getValue = (obj, col) => {
+                if (col === 'location') {
+                    return (obj.location || obj.Location || '').toString().toLowerCase();
+                }
+                return (obj[col] || '').toString().toLowerCase();
+            };
+
+            const aValue = getValue(a, sortColumn);
+            const bValue = getValue(b, sortColumn);
+
             if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
             if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
             return 0;
@@ -207,6 +228,7 @@ export function setupTableEventListeners(allApplications) {
         'filter-status', 
         'filter-title', 
         'filter-company',
+        'filter-location',
         'prev-btn',
         'next-btn'
     ];
@@ -220,7 +242,7 @@ export function setupTableEventListeners(allApplications) {
     }
 
     // Filter Inputs - with individual null checks
-    const filterIds = ['filter-date-start', 'filter-date-end', 'filter-status', 'filter-title', 'filter-company'];
+    const filterIds = ['filter-date-start', 'filter-date-end', 'filter-status', 'filter-title', 'filter-company', 'filter-location'];
     filterIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
@@ -291,11 +313,12 @@ export function exportToCSV() {
     const csvRows = [
         headers.join(','),
         ...currentFilteredApps.map(app => {
+            const loc = app.location || app.Location || '';
             return [
                 app.id,
                 `"${(app.title || '').replace(/"/g, '""')}"`,
                 `"${(app.company || '').replace(/"/g, '""')}"`,
-                `"${(app.location || '').replace(/"/g, '""')}"`,
+                `"${loc.replace(/"/g, '""')}"`,
                 `"${(app.status || '').replace(/"/g, '""')}"`,
                 app.date_applied
             ].join(',');
