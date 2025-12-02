@@ -25,7 +25,7 @@ RUN mkdir -p /app/data /app/extract && \
     chmod +x /app/scripts/*.py
 
 # Copy extract directory if it exists (optional)
-COPY extract/ /app/extract/ 2>/dev/null || true
+COPY extract/ /app/extract/
 
 # Copy custom nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
