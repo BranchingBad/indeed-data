@@ -88,6 +88,30 @@ export function initializeCharts(applications, chartInstances) {
         };
 
         const standardColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#6366f1', '#ec4899', '#6b7280'];
+        
+        // Cool tones (Blues/Teals/Purples) for "Viewed"
+        const viewedColors = [
+            '#2DD4BF', // Teal 400
+            '#60A5FA', // Blue 400
+            '#818CF8', // Indigo 400
+            '#A78BFA', // Violet 400
+            '#38BDF8', // Sky 400
+            '#34D399', // Emerald 400
+            '#C084FC', // Purple 400
+            '#22D3EE'  // Cyan 400
+        ];
+
+        // Warm tones (Reds/Oranges/Pinks) for "Rejected"
+        const rejectedColors = [
+            '#F87171', // Red 400
+            '#FB923C', // Orange 400
+            '#F472B6', // Pink 400
+            '#FBBF24', // Amber 400
+            '#E879F9', // Fuchsia 400
+            '#FB7185', // Rose 400
+            '#FCA5A5', // Red 300
+            '#FDBA74'  // Orange 300
+        ];
 
         // Status Chart
         chartInstances.statusChart = new Chart(document.getElementById('statusChart'), {
@@ -114,7 +138,7 @@ export function initializeCharts(applications, chartInstances) {
                 labels: Object.keys(viewedLocCounts),
                 datasets: [{ 
                     data: Object.values(viewedLocCounts), 
-                    backgroundColor: standardColors,
+                    backgroundColor: viewedColors,
                     borderWidth: 1 
                 }]
             },
@@ -129,7 +153,7 @@ export function initializeCharts(applications, chartInstances) {
                 labels: Object.keys(rejectedLocCounts),
                 datasets: [{ 
                     data: Object.values(rejectedLocCounts), 
-                    backgroundColor: standardColors,
+                    backgroundColor: rejectedColors,
                     borderWidth: 1 
                 }]
             },
