@@ -60,6 +60,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             if (applications) {
                 console.info("Processing data...");
+                
+                // Update Timestamp logic
+                if (rawData.meta && rawData.meta.creation_timestamp) {
+                    const tsEl = document.getElementById('creation-timestamp');
+                    if (tsEl) {
+                        const date = new Date(rawData.meta.creation_timestamp);
+                        tsEl.textContent = date.toLocaleString('en-US', { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric', 
+                            hour: 'numeric', 
+                            minute: '2-digit' 
+                        });
+                    }
+                } else {
+                     // Fallback if not present
+                    const tsEl = document.getElementById('creation-timestamp');
+                    if (tsEl) tsEl.textContent = "N/A";
+                }
+
                 // Sort by date descending
                 allApplications = [...applications].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
                 
