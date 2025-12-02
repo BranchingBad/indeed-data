@@ -1,5 +1,6 @@
 import json
 import logging
+import datetime
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -19,6 +20,14 @@ except json.JSONDecodeError:
 
 
 logging.info(f"Processing {len(data['applications'])} applications.")
+
+# Add creation timestamp to meta
+if 'meta' not in data:
+    data['meta'] = {}
+
+data['meta']['creation_timestamp'] = datetime.datetime.now().isoformat()
+logging.info(f"Added creation_timestamp: {data['meta']['creation_timestamp']}")
+
 for application in data['applications']:
     if 'original_date_text' in application:
         del application['original_date_text']
