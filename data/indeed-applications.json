@@ -1,14 +1,14 @@
 {
   "meta": {
     "export_date": "2025-12-01",
-    "source": "Indeed Application History",
+    "source": "Indeed Application History (HTML Extract)",
     "total_entries": 189,
-    "creation_timestamp": "2025-12-01T21:05:00"
+    "creation_timestamp": "2025-12-01T21:51:08.511684"
   },
   "applications": [
     {
       "id": 1,
-      "title": "Technical Service Agent",
+      "title": "Technical Service Agentjob description opens in a new window",
       "company": "FavordMail Logistics",
       "location": "Pickering, ON",
       "status": "Applied",
@@ -16,7 +16,7 @@
     },
     {
       "id": 2,
-      "title": "Technical Support Associate",
+      "title": "Technical Support Associatejob description opens in a new window",
       "company": "Al Johani Group Canada",
       "location": "Barrie, ON",
       "status": "Applied",
@@ -24,15 +24,15 @@
     },
     {
       "id": 3,
-      "title": "Network & Systems Administrator",
+      "title": "Network & Systems Administratorjob description opens in a new window",
       "company": "Tecnet Canada Inc",
       "location": "Victoria, BC",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-12-01"
     },
     {
       "id": 4,
-      "title": "Cloud Support/DevOps Engineer",
+      "title": "Cloud Support/DevOps Engineerjob description opens in a new window",
       "company": "Toronto Regional Real Estate Board",
       "location": "North York, ON",
       "status": "Applied",
@@ -40,7 +40,7 @@
     },
     {
       "id": 5,
-      "title": "Senior Cloud and Unified Communications Specialist",
+      "title": "Senior Cloud and Unified Communications Specialistjob description opens in a new window",
       "company": "Canadian Cancer Society",
       "location": "Ottawa, ON",
       "status": "Applied",
@@ -48,7 +48,7 @@
     },
     {
       "id": 6,
-      "title": "Information Security Analyst",
+      "title": "Information Security Analystjob description opens in a new window",
       "company": "Canadian Automobile Association",
       "location": "Remote",
       "status": "Applied",
@@ -56,7 +56,7 @@
     },
     {
       "id": 7,
-      "title": "Jr. Product Validation/QA Engineer – Cloud",
+      "title": "Jr. Product Validation/QA Engineer \u2013 Cloudjob description opens in a new window",
       "company": "Wind River",
       "location": "Kanata, ON",
       "status": "Applied",
@@ -64,7 +64,7 @@
     },
     {
       "id": 8,
-      "title": "Cloud Architecture Specialist",
+      "title": "Cloud Architecture Specialistjob description opens in a new window",
       "company": "Nanometrics Inc",
       "location": "Ottawa, ON",
       "status": "Applied",
@@ -72,7 +72,7 @@
     },
     {
       "id": 9,
-      "title": "IT Consultant",
+      "title": "IT Consultantjob description opens in a new window",
       "company": "Berniq",
       "location": "Ottawa, ON",
       "status": "Applied",
@@ -80,23 +80,23 @@
     },
     {
       "id": 10,
-      "title": "Hybrid Cloud Specialist - Alberta",
+      "title": "Hybrid Cloud Specialist - Albertajob description opens in a new window",
       "company": "Reliant Technologies Solutions Group",
       "location": "Edmonton, AB",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-25"
     },
     {
       "id": 11,
-      "title": "NOC Analyst 1 (Overnight)",
+      "title": "NOC Analyst 1 (Overnight)job description opens in a new window",
       "company": "ICON Media Communications Inc.",
       "location": "Markham, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-25"
     },
     {
       "id": 12,
-      "title": "Cloud Engineer",
+      "title": "Cloud Engineerjob description opens in a new window",
       "company": "GPL Technologies",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -104,7 +104,7 @@
     },
     {
       "id": 13,
-      "title": "Cloud DevOps Engineer",
+      "title": "Cloud DevOps Engineerjob description opens in a new window",
       "company": "Scaleup Innovation Lab Inc",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -112,7 +112,7 @@
     },
     {
       "id": 14,
-      "title": "Security Operation Centre L1",
+      "title": "Security Operation Centre L1job description opens in a new window",
       "company": "Nets-international Communication",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -120,7 +120,7 @@
     },
     {
       "id": 15,
-      "title": "Infrastructure Integration 9014-2315",
+      "title": "Infrastructure Integration 9014-2315job description opens in a new window",
       "company": "Foilcon",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -128,7 +128,7 @@
     },
     {
       "id": 16,
-      "title": "Cloud SecOps",
+      "title": "Cloud SecOpsjob description opens in a new window",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -136,7 +136,7 @@
     },
     {
       "id": 17,
-      "title": "Linux Administartor",
+      "title": "Linux Administartorjob description opens in a new window",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -144,7 +144,7 @@
     },
     {
       "id": 18,
-      "title": "Cloud Engineer",
+      "title": "Cloud Engineerjob description opens in a new window",
       "company": "iTMethods",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -152,7 +152,7 @@
     },
     {
       "id": 19,
-      "title": "DevOps Platform Support Engineer",
+      "title": "DevOps Platform Support Engineerjob description opens in a new window",
       "company": "iTMethods",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -160,7 +160,7 @@
     },
     {
       "id": 20,
-      "title": "Configuration Analyst",
+      "title": "Configuration Analystjob description opens in a new window",
       "company": "Forward Insurance Managers Ltd.",
       "location": "London, ON",
       "status": "Applied",
@@ -168,7 +168,7 @@
     },
     {
       "id": 21,
-      "title": "Technical Support Specialist",
+      "title": "Technical Support Specialistjob description opens in a new window",
       "company": "Hartmann Controls",
       "location": "Barrie, ON",
       "status": "Applied",
@@ -176,7 +176,7 @@
     },
     {
       "id": 22,
-      "title": "Implementation Specialist",
+      "title": "Implementation Specialistjob description opens in a new window",
       "company": "Severion Inc",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -184,7 +184,7 @@
     },
     {
       "id": 23,
-      "title": "L1 Support Technician | SVI Support Team",
+      "title": "L1 Support Technician | SVI Support Teamjob description opens in a new window",
       "company": "StorageVault Canada Inc.",
       "location": "Gloucester, ON",
       "status": "Applied",
@@ -192,15 +192,15 @@
     },
     {
       "id": 24,
-      "title": "Senior Service Desk Technician",
+      "title": "Senior Service Desk Technicianjob description opens in a new window",
       "company": "LAN Solutions Corp",
       "location": "Calgary, AB",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-25"
     },
     {
       "id": 25,
-      "title": "I.T Support Analyst",
+      "title": "I.T Support Analystjob description opens in a new window",
       "company": "Walters Group",
       "location": "Hamilton, ON",
       "status": "Applied",
@@ -208,23 +208,23 @@
     },
     {
       "id": 26,
-      "title": "Technical Services Analyst",
+      "title": "Technical Services Analystjob description opens in a new window",
       "company": "Horizon School Division #205",
       "location": "Humboldt, SK",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-18"
     },
     {
       "id": 27,
-      "title": "Intermediate MSP Analyst",
+      "title": "Intermediate MSP Analystjob description opens in a new window",
       "company": "Vencer Group Inc.",
       "location": "Calgary, AB",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-18"
     },
     {
       "id": 28,
-      "title": "Senior Systems Administrator",
+      "title": "Senior Systems Administratorjob description opens in a new window",
       "company": "PC eSolutions",
       "location": "Edmonton, AB",
       "status": "Applied",
@@ -232,7 +232,7 @@
     },
     {
       "id": 29,
-      "title": "IT Support Analyst | Copperleaf | 12-month Contract",
+      "title": "IT Support Analyst | Copperleaf | 12-month Contractjob description opens in a new window",
       "company": "IFS",
       "location": "Vancouver, BC",
       "status": "Applied",
@@ -240,7 +240,7 @@
     },
     {
       "id": 30,
-      "title": "Technical Support Representative",
+      "title": "Technical Support Representativejob description opens in a new window",
       "company": "Barracuda Networks Inc.",
       "location": "Ottawa, ON",
       "status": "Applied",
@@ -248,7 +248,7 @@
     },
     {
       "id": 31,
-      "title": "L1 Desktop Support Specialist",
+      "title": "L1 Desktop Support Specialistjob description opens in a new window",
       "company": "Intega IT",
       "location": "Ottawa, ON",
       "status": "Applied",
@@ -256,7 +256,7 @@
     },
     {
       "id": 32,
-      "title": "Technical Support Specialist",
+      "title": "Technical Support Specialistjob description opens in a new window",
       "company": "AG Globe Services",
       "location": "Ontario",
       "status": "Applied",
@@ -264,7 +264,7 @@
     },
     {
       "id": 33,
-      "title": "Help Desk Agent",
+      "title": "Help Desk Agentjob description opens in a new window",
       "company": "Render-Up",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -272,7 +272,7 @@
     },
     {
       "id": 34,
-      "title": "IT Service Desk Analyst",
+      "title": "IT Service Desk Analystjob description opens in a new window",
       "company": "Horn IT Solutions Inc.",
       "location": "Greater Toronto Area, ON",
       "status": "Applied",
@@ -280,7 +280,7 @@
     },
     {
       "id": 35,
-      "title": "Help Desk Specialist",
+      "title": "Help Desk Specialistjob description opens in a new window",
       "company": "Hoya Vision Care",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -288,15 +288,15 @@
     },
     {
       "id": 36,
-      "title": "Network and Systems Administrator!",
+      "title": "Network and Systems Administrator!job description opens in a new window",
       "company": "Confidential",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-16"
     },
     {
       "id": 37,
-      "title": "Cloud Infrastructure Engineer",
+      "title": "Cloud Infrastructure Engineerjob description opens in a new window",
       "company": "Embross",
       "location": "Richmond Hill, ON",
       "status": "Applied",
@@ -304,7 +304,7 @@
     },
     {
       "id": 38,
-      "title": "Network Engineer",
+      "title": "Network Engineerjob description opens in a new window",
       "company": "Dexterra Group",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -312,7 +312,7 @@
     },
     {
       "id": 39,
-      "title": "Systems & Automation Specialist",
+      "title": "Systems & Automation Specialistjob description opens in a new window",
       "company": "Seasons Retirement Communities LP",
       "location": "Oakville, ON",
       "status": "Applied",
@@ -320,7 +320,7 @@
     },
     {
       "id": 40,
-      "title": "System Administrator, Retail (1 Year Contract)",
+      "title": "System Administrator, Retail (1 Year Contract)job description opens in a new window",
       "company": "Talize",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -328,15 +328,15 @@
     },
     {
       "id": 41,
-      "title": "Network Administrator",
+      "title": "Network Administratorjob description opens in a new window",
       "company": "GL2Cloud Inc",
       "location": "Markham, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-16"
     },
     {
       "id": 42,
-      "title": "Infrastructure Integration Specialist 9170-1612",
+      "title": "Infrastructure Integration Specialist 9170-1612job description opens in a new window",
       "company": "Foilcon",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -344,7 +344,7 @@
     },
     {
       "id": 43,
-      "title": "L1/ L2 Production Support",
+      "title": "L1/ L2 Production Supportjob description opens in a new window",
       "company": "spruceinfotech",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -352,7 +352,7 @@
     },
     {
       "id": 44,
-      "title": "Cloud Platform Engineer",
+      "title": "Cloud Platform Engineerjob description opens in a new window",
       "company": "League Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -360,7 +360,7 @@
     },
     {
       "id": 45,
-      "title": "Lab Admin/System Engineer - Linux",
+      "title": "Lab Admin/System Engineer - Linuxjob description opens in a new window",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -368,7 +368,7 @@
     },
     {
       "id": 46,
-      "title": "Senior Cybersecurity Engineer- Offensive",
+      "title": "Senior Cybersecurity Engineer- Offensivejob description opens in a new window",
       "company": "CAAT Pension Plan",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -376,7 +376,7 @@
     },
     {
       "id": 47,
-      "title": "IT Technician - Technical Services",
+      "title": "IT Technician - Technical Servicesjob description opens in a new window",
       "company": "EC Managed IT",
       "location": "Oakville, ON",
       "status": "Applied",
@@ -384,7 +384,7 @@
     },
     {
       "id": 48,
-      "title": "System Administrator",
+      "title": "System Administratorjob description opens in a new window",
       "company": "Tuor Networks Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -392,7 +392,7 @@
     },
     {
       "id": 49,
-      "title": "IT Onsite Technician",
+      "title": "IT Onsite Technicianjob description opens in a new window",
       "company": "Hemmersbach Nordamerika",
       "location": "Guelph, ON",
       "status": "Applied",
@@ -400,7 +400,7 @@
     },
     {
       "id": 50,
-      "title": "Junior Service Technician",
+      "title": "Junior Service Technicianjob description opens in a new window",
       "company": "Canada Computers Inc.",
       "location": "Unionville, ON",
       "status": "Applied",
@@ -408,15 +408,15 @@
     },
     {
       "id": 51,
-      "title": "IT Solutions Specialist",
+      "title": "IT Solutions Specialistjob description opens in a new window",
       "company": "Simcotron SecureSolutions Inc",
       "location": "Toronto, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-15"
     },
     {
       "id": 52,
-      "title": "Desktop Support Technician",
+      "title": "Desktop Support Technicianjob description opens in a new window",
       "company": "Pomeroy",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -424,15 +424,15 @@
     },
     {
       "id": 53,
-      "title": "EV Chargers Test Specialist",
+      "title": "EV Chargers Test Specialistjob description opens in a new window",
       "company": "United Chargers Inc.",
       "location": "Richmond Hill, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-15"
     },
     {
       "id": 54,
-      "title": "Platform DevSecOps Engineer",
+      "title": "Platform DevSecOps Engineerjob description opens in a new window",
       "company": "KUBRA",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -440,7 +440,7 @@
     },
     {
       "id": 55,
-      "title": "Information Security Risk Specialist",
+      "title": "Information Security Risk Specialistjob description opens in a new window",
       "company": "Beanfield Technologies Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -448,7 +448,7 @@
     },
     {
       "id": 56,
-      "title": "Systems Administrator",
+      "title": "Systems Administratorjob description opens in a new window",
       "company": "WiseTechGroup Inc.",
       "location": "Concord, ON",
       "status": "Applied",
@@ -456,7 +456,7 @@
     },
     {
       "id": 57,
-      "title": "Information Security Operations Specialist",
+      "title": "Information Security Operations Specialistjob description opens in a new window",
       "company": "Beanfield Technologies Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -464,7 +464,7 @@
     },
     {
       "id": 58,
-      "title": "NOC Analyst, Level 1",
+      "title": "NOC Analyst, Level 1job description opens in a new window",
       "company": "Beanfield Technologies Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -472,7 +472,7 @@
     },
     {
       "id": 59,
-      "title": "Future Workplace Specialist",
+      "title": "Future Workplace Specialistjob description opens in a new window",
       "company": "Flynn Group of Companies",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -480,7 +480,7 @@
     },
     {
       "id": 60,
-      "title": "Application Support Engineer - 1568",
+      "title": "Application Support Engineer - 1568job description opens in a new window",
       "company": "APPTOZA INC.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -488,7 +488,7 @@
     },
     {
       "id": 61,
-      "title": "Cloud Engineer",
+      "title": "Cloud Engineerjob description opens in a new window",
       "company": "Robert Half",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -496,7 +496,7 @@
     },
     {
       "id": 62,
-      "title": "Software Support Product Specialist – Product Engineering Group",
+      "title": "Software Support Product Specialist \u2013 Product Engineering Groupjob description opens in a new window",
       "company": "Leading Manufacturer of equipment used in Grocery Industry",
       "location": "Concord, ON",
       "status": "Applied",
@@ -504,7 +504,7 @@
     },
     {
       "id": 63,
-      "title": "IT Security Analyst",
+      "title": "IT Security Analystjob description opens in a new window",
       "company": "Tekstaff IT Solutions",
       "location": "Scarborough, ON",
       "status": "Applied",
@@ -512,7 +512,7 @@
     },
     {
       "id": 64,
-      "title": "IT Support Technician",
+      "title": "IT Support Technicianjob description opens in a new window",
       "company": "Jungbunzlauer Canada Inc.",
       "location": "Port Colborne, ON",
       "status": "Applied",
@@ -520,7 +520,7 @@
     },
     {
       "id": 65,
-      "title": "Network Support Engineer",
+      "title": "Network Support Engineerjob description opens in a new window",
       "company": "MIR Digital Solutions Inc",
       "location": "Concord, ON",
       "status": "Applied",
@@ -528,7 +528,7 @@
     },
     {
       "id": 66,
-      "title": "LMS Software Support Specialist (1-year Contract)",
+      "title": "LMS Software Support Specialist (1-year Contract)job description opens in a new window",
       "company": "Ainsworth Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -536,7 +536,7 @@
     },
     {
       "id": 67,
-      "title": "Service Desk Analyst",
+      "title": "Service Desk Analystjob description opens in a new window",
       "company": "Commerx Computer Systems",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -544,7 +544,7 @@
     },
     {
       "id": 68,
-      "title": "Rogers Customer Service Representative",
+      "title": "Rogers Customer Service Representativejob description opens in a new window",
       "company": "Mississauga Connect",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -552,7 +552,7 @@
     },
     {
       "id": 69,
-      "title": "Azure SRE",
+      "title": "Azure SREjob description opens in a new window",
       "company": "E-Solutionts",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -560,15 +560,15 @@
     },
     {
       "id": 70,
-      "title": "Network Operations Center L1",
+      "title": "Network Operations Center L1job description opens in a new window",
       "company": "Nets-international Communication",
       "location": "Toronto, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-06"
     },
     {
       "id": 71,
-      "title": "AI Systems & Automation Specialist",
+      "title": "AI Systems & Automation Specialistjob description opens in a new window",
       "company": "Deliverect",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -576,7 +576,7 @@
     },
     {
       "id": 72,
-      "title": "Technical Support Specialist - I",
+      "title": "Technical Support Specialist - Ijob description opens in a new window",
       "company": "Connexall",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -584,7 +584,7 @@
     },
     {
       "id": 73,
-      "title": "DevOps Specialist",
+      "title": "DevOps Specialistjob description opens in a new window",
       "company": "Helm Operations Software inc",
       "location": "Remote",
       "status": "Applied",
@@ -592,7 +592,7 @@
     },
     {
       "id": 74,
-      "title": "SENIOR NETWORK INFRASTRUCTURE SPECIALIST",
+      "title": "SENIOR NETWORK INFRASTRUCTURE SPECIALISTjob description opens in a new window",
       "company": "Buchanan Technologies",
       "location": "Brampton, ON",
       "status": "Applied",
@@ -600,7 +600,7 @@
     },
     {
       "id": 75,
-      "title": "Cloud/Data Migration Engineer",
+      "title": "Cloud/Data Migration Engineerjob description opens in a new window",
       "company": "Procom",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -608,7 +608,7 @@
     },
     {
       "id": 76,
-      "title": "Senior LLMOps Engineer -Cloud / AI Infrastructure",
+      "title": "Senior LLMOps Engineer -Cloud / AI Infrastructurejob description opens in a new window",
       "company": "Talent To Hire Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -616,7 +616,7 @@
     },
     {
       "id": 77,
-      "title": "GCP Data Engineer – Informatica Product 360 , Python , ETL",
+      "title": "GCP Data Engineer \u2013 Informatica Product 360 , Python , ETLjob description opens in a new window",
       "company": "APPTOZA INC.",
       "location": "Scarborough, ON",
       "status": "Applied",
@@ -624,7 +624,7 @@
     },
     {
       "id": 78,
-      "title": "Auto Parts Incoming Call Center Agent",
+      "title": "Auto Parts Incoming Call Center Agentjob description opens in a new window",
       "company": "Auto Parts Centres (APC)",
       "location": "London, ON",
       "status": "Applied",
@@ -632,7 +632,7 @@
     },
     {
       "id": 79,
-      "title": "Data Analyst #984199",
+      "title": "Data Analyst #984199job description opens in a new window",
       "company": "DISYS",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -640,7 +640,7 @@
     },
     {
       "id": 80,
-      "title": "IT Technician - Level 1",
+      "title": "IT Technician - Level 1job description opens in a new window",
       "company": "Procom",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -648,7 +648,7 @@
     },
     {
       "id": 81,
-      "title": "Test Analyst",
+      "title": "Test Analystjob description opens in a new window",
       "company": "Infosys",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -656,7 +656,7 @@
     },
     {
       "id": 82,
-      "title": "Senior Information Security Analyst",
+      "title": "Senior Information Security Analystjob description opens in a new window",
       "company": "CAAT Pension Plan",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -664,7 +664,7 @@
     },
     {
       "id": 83,
-      "title": "Technical Implementation Analyst",
+      "title": "Technical Implementation Analystjob description opens in a new window",
       "company": "Achievers",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -672,7 +672,7 @@
     },
     {
       "id": 84,
-      "title": "Network Analyst",
+      "title": "Network Analystjob description opens in a new window",
       "company": "Imperial Dade",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -680,15 +680,15 @@
     },
     {
       "id": 85,
-      "title": "Network operation Center L2",
+      "title": "Network operation Center L2job description opens in a new window",
       "company": "Nets-international Communication",
       "location": "Toronto, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-05"
     },
     {
       "id": 86,
-      "title": "Jr. Analyst, Infrastructure",
+      "title": "Jr. Analyst, Infrastructurejob description opens in a new window",
       "company": "Great Gulf Group",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -696,7 +696,7 @@
     },
     {
       "id": 87,
-      "title": "Technical Services Coordinator – Networking Specialist (STF)",
+      "title": "Technical Services Coordinator \u2013 Networking Specialist (STF)job description opens in a new window",
       "company": "MSP OPERATIONAL CORP",
       "location": "Guelph, ON",
       "status": "Applied",
@@ -704,15 +704,15 @@
     },
     {
       "id": 88,
-      "title": "Network Engineer",
+      "title": "Network Engineerjob description opens in a new window",
       "company": "TekFormix",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-05"
     },
     {
       "id": 89,
-      "title": "Sr. Analyst, Infrastructure",
+      "title": "Sr. Analyst, Infrastructurejob description opens in a new window",
       "company": "Great Gulf Group",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -720,15 +720,15 @@
     },
     {
       "id": 90,
-      "title": "SOC Analyst",
+      "title": "SOC Analystjob description opens in a new window",
       "company": "MIR Digital Solutions Inc",
       "location": "Concord, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-05"
     },
     {
       "id": 91,
-      "title": "Infrastructure Automation and Scripting Specialist",
+      "title": "Infrastructure Automation and Scripting Specialistjob description opens in a new window",
       "company": "Flynn Group of Companies",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -736,7 +736,7 @@
     },
     {
       "id": 92,
-      "title": "Analyst, Plant Support",
+      "title": "Analyst, Plant Supportjob description opens in a new window",
       "company": "Samuel, Son & Co.",
       "location": "Oakville, ON",
       "status": "Applied",
@@ -744,7 +744,7 @@
     },
     {
       "id": 93,
-      "title": "Cloud Operations Engineer",
+      "title": "Cloud Operations Engineerjob description opens in a new window",
       "company": "G Adventures",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -752,7 +752,7 @@
     },
     {
       "id": 94,
-      "title": "Application Engineer",
+      "title": "Application Engineerjob description opens in a new window",
       "company": "Litmus Automation",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -760,15 +760,15 @@
     },
     {
       "id": 95,
-      "title": "Senior Developer - Python/SRE",
+      "title": "Senior Developer - Python/SREjob description opens in a new window",
       "company": "AstraNorth",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-05"
     },
     {
       "id": 96,
-      "title": "DevOps Specialist",
+      "title": "DevOps Specialistjob description opens in a new window",
       "company": "Kepler Communications",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -776,7 +776,7 @@
     },
     {
       "id": 97,
-      "title": "DevOps/Infrastructure Engineer",
+      "title": "DevOps/Infrastructure Engineerjob description opens in a new window",
       "company": "RideCo",
       "location": "Waterloo, ON",
       "status": "Applied",
@@ -784,7 +784,7 @@
     },
     {
       "id": 98,
-      "title": "IT Support Specialist",
+      "title": "IT Support Specialistjob description opens in a new window",
       "company": "Gay Lea Foods",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -792,7 +792,7 @@
     },
     {
       "id": 99,
-      "title": "IT Operations, Senior Analyst (2025-8668)",
+      "title": "IT Operations, Senior Analyst (2025-8668)job description opens in a new window",
       "company": "Grand & Toy",
       "location": "Vaughan, ON",
       "status": "Applied",
@@ -800,15 +800,15 @@
     },
     {
       "id": 100,
-      "title": "Senior Technician – Cybersecurity & IT Services",
+      "title": "Senior Technician \u2013 Cybersecurity & IT Servicesjob description opens in a new window",
       "company": "PAVLIKS.COM",
       "location": "Barrie, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-04"
     },
     {
       "id": 101,
-      "title": "Network and Cloud Admin Instructor",
+      "title": "Network and Cloud Admin Instructorjob description opens in a new window",
       "company": "Metro College of Technology",
       "location": "North York, ON",
       "status": "Applied",
@@ -816,7 +816,7 @@
     },
     {
       "id": 102,
-      "title": "Linux Administrator",
+      "title": "Linux Administratorjob description opens in a new window",
       "company": "SIMNET Inc",
       "location": "Whitby, ON",
       "status": "Applied",
@@ -824,23 +824,23 @@
     },
     {
       "id": 103,
-      "title": "Cloud Engineer",
+      "title": "Cloud Engineerjob description opens in a new window",
       "company": "Spait Infotech Private Limited",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-04"
     },
     {
       "id": 104,
-      "title": "Cyber Security Engineer",
+      "title": "Cyber Security Engineerjob description opens in a new window",
       "company": "Spait Infotech Private Limited",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-04"
     },
     {
       "id": 105,
-      "title": "Network Analyst",
+      "title": "Network Analystjob description opens in a new window",
       "company": "QHR Technologies Inc",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -848,7 +848,7 @@
     },
     {
       "id": 106,
-      "title": "IT Support Specialist",
+      "title": "IT Support Specialistjob description opens in a new window",
       "company": "Ellainer Food Corp.",
       "location": "North York, ON",
       "status": "Applied",
@@ -856,7 +856,7 @@
     },
     {
       "id": 107,
-      "title": "Sr. Linux Administrator",
+      "title": "Sr. Linux Administratorjob description opens in a new window",
       "company": "SIMNET Inc",
       "location": "Whitby, ON",
       "status": "Applied",
@@ -864,7 +864,7 @@
     },
     {
       "id": 108,
-      "title": "NOC Analyst 1",
+      "title": "NOC Analyst 1job description opens in a new window",
       "company": "ICON Media Communications Inc.",
       "location": "Markham, ON",
       "status": "Applied",
@@ -872,7 +872,7 @@
     },
     {
       "id": 109,
-      "title": "Network Administrator",
+      "title": "Network Administratorjob description opens in a new window",
       "company": "Sanctuary AI",
       "location": "Vancouver, BC",
       "status": "Applied",
@@ -880,7 +880,7 @@
     },
     {
       "id": 110,
-      "title": "IT Administrator",
+      "title": "IT Administratorjob description opens in a new window",
       "company": "Flipp",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -888,7 +888,7 @@
     },
     {
       "id": 111,
-      "title": "IT Support Analyst",
+      "title": "IT Support Analystjob description opens in a new window",
       "company": "Richardson Wealth Ltd",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -896,7 +896,7 @@
     },
     {
       "id": 112,
-      "title": "Systems Administrator Operations Support Specialist (Junior) 0164-1517",
+      "title": "Systems Administrator Operations Support Specialist (Junior) 0164-1517job description opens in a new window",
       "company": "Foilcon",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -904,7 +904,7 @@
     },
     {
       "id": 113,
-      "title": "IT Systems Support Analyst",
+      "title": "IT Systems Support Analystjob description opens in a new window",
       "company": "NORR",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -912,7 +912,7 @@
     },
     {
       "id": 114,
-      "title": "Technical Analyst",
+      "title": "Technical Analystjob description opens in a new window",
       "company": "360insights",
       "location": "Whitby, ON",
       "status": "Applied",
@@ -920,7 +920,7 @@
     },
     {
       "id": 115,
-      "title": "Information Security Engineer",
+      "title": "Information Security Engineerjob description opens in a new window",
       "company": "T&T Supermarket Inc.",
       "location": "Markham, ON",
       "status": "Applied",
@@ -928,7 +928,7 @@
     },
     {
       "id": 116,
-      "title": "Network Engineer",
+      "title": "Network Engineerjob description opens in a new window",
       "company": "ISG Search Inc",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -936,7 +936,7 @@
     },
     {
       "id": 117,
-      "title": "IT Onsite Technician",
+      "title": "IT Onsite Technicianjob description opens in a new window",
       "company": "Hemmersbach Nordamerika",
       "location": "Guelph, ON",
       "status": "Applied",
@@ -944,7 +944,7 @@
     },
     {
       "id": 118,
-      "title": "IT Support Specialist",
+      "title": "IT Support Specialistjob description opens in a new window",
       "company": "Maverick InfoSec Solutions Ltd.",
       "location": "Langley, BC",
       "status": "Applied",
@@ -952,15 +952,15 @@
     },
     {
       "id": 119,
-      "title": "Application Support Analyst",
+      "title": "Application Support Analystjob description opens in a new window",
       "company": "Alliance Search Partners",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-04"
     },
     {
       "id": 120,
-      "title": "IT Onsite Technician",
+      "title": "IT Onsite Technicianjob description opens in a new window",
       "company": "Hemmersbach Nordamerika",
       "location": "Markham, ON",
       "status": "Applied",
@@ -968,15 +968,15 @@
     },
     {
       "id": 121,
-      "title": "IT Support - Systems Administrator",
+      "title": "IT Support - Systems Administratorjob description opens in a new window",
       "company": "Rotor Maxx Support Ltd",
       "location": "Parksville, BC",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-03"
     },
     {
       "id": 122,
-      "title": "IT Support Analyst (Tier 1)",
+      "title": "IT Support Analyst (Tier 1)job description opens in a new window",
       "company": "Davinci AI Solutions",
       "location": "Calgary, AB",
       "status": "Applied",
@@ -984,7 +984,7 @@
     },
     {
       "id": 123,
-      "title": "IT Support Technician Tier 1",
+      "title": "IT Support Technician Tier 1job description opens in a new window",
       "company": "Stubbe's Workforce Inc",
       "location": "Harley, ON",
       "status": "Applied",
@@ -992,7 +992,7 @@
     },
     {
       "id": 124,
-      "title": "Technical IT Consultant",
+      "title": "Technical IT Consultantjob description opens in a new window",
       "company": "OfficePort",
       "location": "Tantallon, NS",
       "status": "Applied",
@@ -1000,7 +1000,7 @@
     },
     {
       "id": 125,
-      "title": "Junior IT Technician",
+      "title": "Junior IT Technicianjob description opens in a new window",
       "company": "Alma Mater Society of Queen's University",
       "location": "Kingston, ON",
       "status": "Applied",
@@ -1008,7 +1008,7 @@
     },
     {
       "id": 126,
-      "title": "Support Engineer in Test",
+      "title": "Support Engineer in Testjob description opens in a new window",
       "company": "YuJa Inc.",
       "location": "North York, ON",
       "status": "Applied",
@@ -1016,7 +1016,7 @@
     },
     {
       "id": 127,
-      "title": "IT Support Analyst",
+      "title": "IT Support Analystjob description opens in a new window",
       "company": "SIMNET Inc",
       "location": "Whitby, ON",
       "status": "Applied",
@@ -1024,7 +1024,7 @@
     },
     {
       "id": 128,
-      "title": "Desktop Support Technician (TAC)",
+      "title": "Desktop Support Technician (TAC)job description opens in a new window",
       "company": "Leon's Furniture",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1032,7 +1032,7 @@
     },
     {
       "id": 129,
-      "title": "Information Technology - IT Generalist",
+      "title": "Information Technology - IT Generalistjob description opens in a new window",
       "company": "Wirelessdna",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1040,23 +1040,23 @@
     },
     {
       "id": 130,
-      "title": "IT Support Specialist",
+      "title": "IT Support Specialistjob description opens in a new window",
       "company": "Conpute",
       "location": "Whitby, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-03"
     },
     {
       "id": 131,
-      "title": "IT Support Technician — Part-Time / Contract — Toronto, ON",
+      "title": "IT Support Technician \u2014 Part-Time / Contract \u2014 Toronto, ONjob description opens in a new window",
       "company": "Brand M3dia Group",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-11-03"
     },
     {
       "id": 132,
-      "title": "IT Systems & Support Specialist",
+      "title": "IT Systems & Support Specialistjob description opens in a new window",
       "company": "Goway Travel Limited",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1064,15 +1064,15 @@
     },
     {
       "id": 133,
-      "title": "Service Desk Analyst",
-      "company": "McCarthy Tétrault LLP",
+      "title": "Service Desk Analystjob description opens in a new window",
+      "company": "McCarthy T\u00e9trault LLP",
       "location": "Toronto, ON",
       "status": "Applied",
       "date_applied": "2025-11-03"
     },
     {
       "id": 134,
-      "title": "Technical Specialist",
+      "title": "Technical Specialistjob description opens in a new window",
       "company": "a.p.i Alarm Inc",
       "location": "Etobicoke, ON",
       "status": "Applied",
@@ -1080,7 +1080,7 @@
     },
     {
       "id": 135,
-      "title": "IT Infrastructure Analyst",
+      "title": "IT Infrastructure Analystjob description opens in a new window",
       "company": "TS Retail Enterprises Inc.",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1088,15 +1088,15 @@
     },
     {
       "id": 136,
-      "title": "Cloud & DevOps Engineer (AWS / Azure)",
+      "title": "Cloud & DevOps Engineer (AWS / Azure)job description opens in a new window",
       "company": "QBuild Corporation",
       "location": "Markham, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-03"
     },
     {
       "id": 137,
-      "title": "Product Support Specialist",
+      "title": "Product Support Specialistjob description opens in a new window",
       "company": "Tracker by The Bridge Network",
       "location": "North York, ON",
       "status": "Applied",
@@ -1104,7 +1104,7 @@
     },
     {
       "id": 138,
-      "title": "IT Support Technician",
+      "title": "IT Support Technicianjob description opens in a new window",
       "company": "Continual Energy Inc.",
       "location": "Greater Toronto Area, ON",
       "status": "Applied",
@@ -1112,7 +1112,7 @@
     },
     {
       "id": 139,
-      "title": "Product Support Specialist",
+      "title": "Product Support Specialistjob description opens in a new window",
       "company": "Jonas Club Software",
       "location": "Unionville, ON",
       "status": "Applied",
@@ -1120,7 +1120,7 @@
     },
     {
       "id": 140,
-      "title": "Jr. IT Support Technician",
+      "title": "Jr. IT Support Technicianjob description opens in a new window",
       "company": "Amico Infrastructures",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -1128,7 +1128,7 @@
     },
     {
       "id": 141,
-      "title": "IT Infrastructure Reporting Specialist",
+      "title": "IT Infrastructure Reporting Specialistjob description opens in a new window",
       "company": "Unio Tech Solutions",
       "location": "Markham, ON",
       "status": "Applied",
@@ -1136,7 +1136,7 @@
     },
     {
       "id": 142,
-      "title": "Application & Systems Support Technician",
+      "title": "Application & Systems Support Technicianjob description opens in a new window",
       "company": "West Canadian Digital Imaging",
       "location": "Calgary, AB",
       "status": "Applied",
@@ -1144,31 +1144,31 @@
     },
     {
       "id": 143,
-      "title": "Zoom SME",
+      "title": "Zoom SMEjob description opens in a new window",
       "company": "Dacaro Software Services Inc",
       "location": "Toronto, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-02"
     },
     {
       "id": 144,
-      "title": "Cyber Security Analyst",
+      "title": "Cyber Security Analystjob description opens in a new window",
       "company": "JumpDEMAND Inc.",
       "location": "Calgary, AB",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-02"
     },
     {
       "id": 145,
-      "title": "IT Technical Analyst",
+      "title": "IT Technical Analystjob description opens in a new window",
       "company": "ABM Integrated Solutions",
       "location": "Dartmouth, NS",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-02"
     },
     {
       "id": 146,
-      "title": "IT Onsite Technician",
+      "title": "IT Onsite Technicianjob description opens in a new window",
       "company": "Hemmersbach Nordamerika",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1176,15 +1176,15 @@
     },
     {
       "id": 147,
-      "title": "IT System Administrator",
+      "title": "IT System Administratorjob description opens in a new window",
       "company": "Pricedex Software Inc.",
       "location": "Brockville, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-02"
     },
     {
       "id": 148,
-      "title": "Linux Administrator",
+      "title": "Linux Administratorjob description opens in a new window",
       "company": "GAM Creative Marketing",
       "location": "Woodbridge, ON",
       "status": "Applied",
@@ -1192,7 +1192,7 @@
     },
     {
       "id": 149,
-      "title": "Cloud Infrastructure Specialist",
+      "title": "Cloud Infrastructure Specialistjob description opens in a new window",
       "company": "Embross",
       "location": "Richmond Hill, ON",
       "status": "Applied",
@@ -1200,15 +1200,15 @@
     },
     {
       "id": 150,
-      "title": "Support Technician",
+      "title": "Support Technicianjob description opens in a new window",
       "company": "Hudson Technology Corp.",
       "location": "Toronto, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-11-02"
     },
     {
       "id": 151,
-      "title": "Service Technician",
+      "title": "Service Technicianjob description opens in a new window",
       "company": "Canada Computers Inc.",
       "location": "Brampton, ON",
       "status": "Applied",
@@ -1216,7 +1216,7 @@
     },
     {
       "id": 152,
-      "title": "Service Technician",
+      "title": "Service Technicianjob description opens in a new window",
       "company": "Canada Computers Inc.",
       "location": "Vaughan, ON",
       "status": "Applied",
@@ -1224,7 +1224,7 @@
     },
     {
       "id": 153,
-      "title": "Cloud Security Engineer",
+      "title": "Cloud Security Engineerjob description opens in a new window",
       "company": "The Printing House",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1232,7 +1232,7 @@
     },
     {
       "id": 154,
-      "title": "Tier Two Technical Support",
+      "title": "Tier Two Technical Supportjob description opens in a new window",
       "company": "WaterlooIT",
       "location": "Waterloo, ON",
       "status": "Applied",
@@ -1240,7 +1240,7 @@
     },
     {
       "id": 155,
-      "title": "Sr. Systems Administrator",
+      "title": "Sr. Systems Administratorjob description opens in a new window",
       "company": "Liftow Limited",
       "location": "Mississauga, ON",
       "status": "Applied",
@@ -1248,7 +1248,7 @@
     },
     {
       "id": 156,
-      "title": "B2B SaaS Customer Support Specialist",
+      "title": "B2B SaaS Customer Support Specialistjob description opens in a new window",
       "company": "Hosted~FTP~",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1256,18 +1256,18 @@
     },
     {
       "id": 157,
-      "title": "Customer Success and Support",
+      "title": "Customer Success and Supportjob description opens in a new window",
       "company": "Gnxcor Inc.",
       "location": "Cambridge, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-10-27"
     },
     {
       "id": 158,
-      "title": "Cyber Security Administrator",
+      "title": "Cyber Security Administratorjob description opens in a new window",
       "company": "Commerx",
       "location": "Mississauga, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-10-27"
     },
     {
@@ -1275,12 +1275,12 @@
       "title": "Systems Administrator",
       "company": "I3E Information Technology Resources Ltd",
       "location": "Barrie, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-10-27"
     },
     {
       "id": 160,
-      "title": "Software Support Specialist",
+      "title": "Software Support Specialistjob description opens in a new window",
       "company": "Mondex Corporation",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1288,15 +1288,15 @@
     },
     {
       "id": 161,
-      "title": "Linux System Administrator",
+      "title": "Linux System Administratorjob description opens in a new window",
       "company": "Commerx",
       "location": "Mississauga, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-10-27"
     },
     {
       "id": 162,
-      "title": "Technical Support Specialist",
+      "title": "Technical Support Specialistjob description opens in a new window",
       "company": "MONEXgroup",
       "location": "North York, ON",
       "status": "Applied",
@@ -1304,15 +1304,15 @@
     },
     {
       "id": 163,
-      "title": "Technical Support Analyst – Payment Systems",
+      "title": "Technical Support Analyst \u2013 Payment Systemsjob description opens in a new window",
       "company": "Advanced Mobile Payment (AMP)",
       "location": "Markham, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-10-19"
     },
     {
       "id": 164,
-      "title": "Level 3 Computer & Network Support Technician",
+      "title": "Level 3 Computer & Network Support Technicianjob description opens in a new window",
       "company": "Tier 3 I.T. Solutions",
       "location": "Edmonton, AB",
       "status": "Applied",
@@ -1320,7 +1320,7 @@
     },
     {
       "id": 165,
-      "title": "Hardware & Networking Engineer - Fortinet",
+      "title": "Hardware & Networking Engineer - Fortinetjob description opens in a new window",
       "company": "Ekxpert Placement Services",
       "location": "Concord, ON",
       "status": "Applied",
@@ -1328,15 +1328,15 @@
     },
     {
       "id": 166,
-      "title": "Infrastructure and Cybersecurity Specialist (Permanent Part-Time)",
+      "title": "Infrastructure and Cybersecurity Specialist (Permanent Part-Time)job description opens in a new window",
       "company": "International Business University",
       "location": "Toronto, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-09-16"
     },
     {
       "id": 167,
-      "title": "IT Support Specialist - Clear Code",
+      "title": "IT Support Specialist - Clear Codejob description opens in a new window",
       "company": "MC3 Manufacturing Inc",
       "location": "Ruthven, ON",
       "status": "Applied",
@@ -1344,15 +1344,15 @@
     },
     {
       "id": 168,
-      "title": "IT Systems Engineer",
+      "title": "IT Systems Engineerjob description opens in a new window",
       "company": "FutureTel Service Centre",
       "location": "Markham, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-09-16"
     },
     {
       "id": 169,
-      "title": "Part-Time Technical Support Specialist",
+      "title": "Part-Time Technical Support Specialistjob description opens in a new window",
       "company": "Association of Canadian Occupational Therapy Regulatory Organizations",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1360,7 +1360,7 @@
     },
     {
       "id": 170,
-      "title": "SOC Engineer",
+      "title": "SOC Engineerjob description opens in a new window",
       "company": "AutoTrader.ca",
       "location": "Greater Toronto Area, ON",
       "status": "Applied",
@@ -1368,7 +1368,7 @@
     },
     {
       "id": 171,
-      "title": "IT Technical Analyst",
+      "title": "IT Technical Analystjob description opens in a new window",
       "company": "Campbellford Memorial Hospital",
       "location": "Campbellford, ON",
       "status": "Applied",
@@ -1376,7 +1376,7 @@
     },
     {
       "id": 172,
-      "title": "IT Operations Specialist",
+      "title": "IT Operations Specialistjob description opens in a new window",
       "company": "Embross",
       "location": "Richmond Hill, ON",
       "status": "Applied",
@@ -1384,7 +1384,7 @@
     },
     {
       "id": 173,
-      "title": "Technical Support",
+      "title": "Technical Supportjob description opens in a new window",
       "company": "GlassHouse Systems",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1392,7 +1392,7 @@
     },
     {
       "id": 174,
-      "title": "GCP Administrator",
+      "title": "GCP Administratorjob description opens in a new window",
       "company": "Lawlabs Inc.",
       "location": "Ontario",
       "status": "Applied",
@@ -1400,23 +1400,23 @@
     },
     {
       "id": 175,
-      "title": "Information Systems Specialist/Network Administrator",
+      "title": "Information Systems Specialist/Network Administratorjob description opens in a new window",
       "company": "ERTH Corporation",
       "location": "Ingersoll, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-09-05"
     },
     {
       "id": 176,
-      "title": "Junior Systems Administrator",
+      "title": "Junior Systems Administratorjob description opens in a new window",
       "company": "Think Logistics Inc.",
       "location": "Mississauga, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-09-05"
     },
     {
       "id": 177,
-      "title": "Datastage Developer - Linux shell scripting\"",
+      "title": "Datastage Developer - Linux shell scripting\"job description opens in a new window",
       "company": "AstraNorth",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1424,7 +1424,7 @@
     },
     {
       "id": 178,
-      "title": "System Administrator / L2 Production Support",
+      "title": "System Administrator / L2 Production Supportjob description opens in a new window",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1432,7 +1432,7 @@
     },
     {
       "id": 179,
-      "title": "DevOps Engineer",
+      "title": "DevOps Engineerjob description opens in a new window",
       "company": "Dyna Info Services",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1440,7 +1440,7 @@
     },
     {
       "id": 180,
-      "title": "AWS Cloud Administrator",
+      "title": "AWS Cloud Administratorjob description opens in a new window",
       "company": "Chemtrade",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1448,7 +1448,7 @@
     },
     {
       "id": 181,
-      "title": "Sr. Linux Server Infrastructure Specialist",
+      "title": "Sr. Linux Server Infrastructure Specialistjob description opens in a new window",
       "company": "Buchanan Technologies",
       "location": "Brampton, ON",
       "status": "Applied",
@@ -1456,15 +1456,15 @@
     },
     {
       "id": 182,
-      "title": "Murex Environment support consultant",
+      "title": "Murex Environment support consultantjob description opens in a new window",
       "company": "Jconnect Infotech Pvt. Ltd",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-09-05"
     },
     {
       "id": 183,
-      "title": "Customer Experience Specialist",
+      "title": "Customer Experience Specialistjob description opens in a new window",
       "company": "Autolux Ltd Rapid City Transport",
       "location": "Oshawa, ON",
       "status": "Applied",
@@ -1472,7 +1472,7 @@
     },
     {
       "id": 184,
-      "title": "Data Technician",
+      "title": "Data Technicianjob description opens in a new window",
       "company": "Capital Sewer Services",
       "location": "Vaughan, ON",
       "status": "Applied",
@@ -1480,15 +1480,15 @@
     },
     {
       "id": 185,
-      "title": "Cloud Support Analyst",
+      "title": "Cloud Support Analystjob description opens in a new window",
       "company": "Charger Logistics Inc",
       "location": "Brampton, ON",
-      "status": "Not Selected",
+      "status": "Not selected by employer",
       "date_applied": "2025-09-05"
     },
     {
       "id": 186,
-      "title": "Cyber Security Engineer",
+      "title": "Cyber Security Engineerjob description opens in a new window",
       "company": "ISG Search Inc",
       "location": "Toronto, ON",
       "status": "Applied",
@@ -1496,23 +1496,23 @@
     },
     {
       "id": 187,
-      "title": "Technical Application Support Analyst",
+      "title": "Technical Application Support Analystjob description opens in a new window",
       "company": "Pala Interactive Canada",
       "location": "North York, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-09-05"
     },
     {
       "id": 188,
-      "title": "IT Support Technician",
+      "title": "IT Support Technicianjob description opens in a new window",
       "company": "The Urban Plumber",
       "location": "Toronto, ON",
-      "status": "Viewed",
+      "status": "Application viewed",
       "date_applied": "2025-09-05"
     },
     {
       "id": 189,
-      "title": "Microsoft IT Specialist",
+      "title": "Microsoft IT Specialistjob description opens in a new window",
       "company": "Cube Packaging Solutions",
       "location": "Aurora, ON",
       "status": "Applied",
