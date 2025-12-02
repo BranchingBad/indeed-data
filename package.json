@@ -4,8 +4,8 @@
   "description": "A dashboard for visualizing indeed job application data.",
   "main": "src/app.js",
   "scripts": {
-    "dev": "python3 -m http.server 8000 --directory src",
-    "clean": "python scripts/clean_json.py"
+    "dev": "python3 -m http.server 8000",
+    "clean": "python3 scripts/clean_json.py"
   },
   "keywords": [
     "indeed",

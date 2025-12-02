@@ -5,7 +5,11 @@ IMAGE_NAME := indeed-dashboard
 CONTAINER_NAME := indeed-dashboard
 PORT := 8080
 REGISTRY := ghcr.io
-USERNAME := $(shell git config user.name | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+# Try to get username from git config, otherwise default to 'indeed-user'
+GIT_USER := $(shell git config user.name | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+USERNAME := $(if $(GIT_USER),$(GIT_USER),indeed-user)
+
 IMAGE_TAG := $(REGISTRY)/$(USERNAME)/$(IMAGE_NAME):latest
 
 # Colors for output
