@@ -59,14 +59,15 @@ export function initializeCharts(applications, chartInstances) {
         const sortedDates = Object.keys(timelineCounts).sort();
         const timelineData = sortedDates.map(date => timelineCounts[date]);
 
-        // 5. Viewed by Location Data (New)
-        const viewedApps = applications.filter(app => (app.status || '').toLowerCase() === 'viewed');
+        // 5. Viewed by Location Data (FIXED)
+        // Changed === 'viewed' to .includes('viewed') to match "Application viewed"
+        const viewedApps = applications.filter(app => (app.status || '').toLowerCase().includes('viewed'));
         const viewedLocCounts = countByLocation(viewedApps);
         const hasViewedData = Object.keys(viewedLocCounts).length > 0;
 
-        // 6. Rejected by Location Data (New)
-        // Matches "Not Selected" case-insensitively
-        const rejectedApps = applications.filter(app => (app.status || '').toLowerCase() === 'not selected');
+        // 6. Rejected by Location Data (FIXED)
+        // Changed === 'not selected' to .includes('not selected') to match "Not selected by employer"
+        const rejectedApps = applications.filter(app => (app.status || '').toLowerCase().includes('not selected'));
         const rejectedLocCounts = countByLocation(rejectedApps);
         const hasRejectedData = Object.keys(rejectedLocCounts).length > 0;
 
