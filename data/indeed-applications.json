@@ -1,9 +1,9 @@
 {
   "meta": {
-    "export_date": "2025-12-01",
+    "export_date": "2025-12-02",
     "source": "Indeed Application History (HTML Extract)",
     "total_entries": 189,
-    "creation_timestamp": "2025-12-01T22:05:26.434798"
+    "creation_timestamp": "2025-12-02T10:30:53.144036"
   },
   "applications": [
     {
@@ -12,7 +12,7 @@
       "company": "FavordMail Logistics",
       "location": "Pickering, ON",
       "status": "Applied",
-      "date_applied": "2025-12-01"
+      "date_applied": "m"
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
       "company": "Al Johani Group Canada",
       "location": "Barrie, ON",
       "status": "Applied",
-      "date_applied": "2025-12-01"
+      "date_applied": "m"
     },
     {
       "id": 3,
@@ -28,7 +28,7 @@
       "company": "Tecnet Canada Inc",
       "location": "Victoria, BC",
       "status": "Not selected by employer",
-      "date_applied": "2025-12-01"
+      "date_applied": "m"
     },
     {
       "id": 4,
@@ -36,7 +36,7 @@
       "company": "Toronto Regional Real Estate Board",
       "location": "North York, ON",
       "status": "Applied",
-      "date_applied": "2025-12-01"
+      "date_applied": "m"
     },
     {
       "id": 5,
@@ -44,7 +44,7 @@
       "company": "Canadian Cancer Society",
       "location": "Ottawa, ON",
       "status": "Applied",
-      "date_applied": "2025-12-01"
+      "date_applied": "m"
     },
     {
       "id": 6,
@@ -52,7 +52,7 @@
       "company": "Canadian Automobile Association",
       "location": "Remote",
       "status": "Applied",
-      "date_applied": "2025-12-01"
+      "date_applied": "m"
     },
     {
       "id": 7,
