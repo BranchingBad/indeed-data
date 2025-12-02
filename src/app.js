@@ -1,6 +1,5 @@
 import { fetchData } from './js/api.js';
 import { destroyCharts, initializeCharts } from './js/charts.js';
-// Updated Import: Added exportToCSV
 import { renderTable, setupTableEventListeners, exportToCSV } from './js/table.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -15,7 +14,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     let allApplications = [];
 
     function updateKPIs(applications) {
-        if (!applications || applications.length === 0) return;
+        if (!applications || applications.length === 0) {
+            document.getElementById('total-count').innerText = "0";
+            document.getElementById('response-rate').innerText = "0%";
+            return;
+        }
         
         // Response Rate: Anything NOT "Applied" (e.g. "Viewed", "Not Selected", "Interview")
         const responsiveOutcomes = applications.filter(app => {
@@ -30,9 +33,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     async function updateDashboard(fileName) {
+        // 1. Show Loading Indicator
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+
+        // Artificial delay (optional: remove in production) to show spinner on fast local loads
+        // await new Promise(r => setTimeout(r, 300));
+
         const rawData = await fetchData(fileName);
+        
         if (!rawData) {
             console.error("Stopping script due to data loading failure.");
+            if (loadingIndicator) loadingIndicator.classList.add('hidden');
             return;
         }
 
@@ -48,16 +60,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             updateKPIs(allApplications);
             renderTable(allApplications); // Initial render
             setupTableEventListeners(allApplications);
+            initializeCharts(applications, chartInstances);
         }
 
-        initializeCharts(applications, chartInstances);
+        // 2. Hide Loading Indicator
+        if (loadingIndicator) loadingIndicator.classList.add('hidden');
     }
 
     fileSelector.addEventListener('change', (event) => {
         updateDashboard(event.target.value);
     });
 
-    // NEW: Attach Export Button Listener
     const exportBtn = document.getElementById('export-btn');
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {

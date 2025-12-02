@@ -17,8 +17,26 @@ export function renderTable(apps, isUpdate = false) {
     const totalItems = currentFilteredApps.length;
     
     // Update counters
-    document.getElementById('interaction-count').innerText = totalItems;
-    document.getElementById('total-entries').innerText = totalItems;
+    const countEl = document.getElementById('interaction-count');
+    const totalEl = document.getElementById('total-entries');
+    if(countEl) countEl.innerText = totalItems;
+    if(totalEl) totalEl.innerText = totalItems;
+
+    // --- Empty State Logic ---
+    const tableSection = document.getElementById('table-section');
+    const emptyState = document.getElementById('empty-state');
+
+    if (totalItems === 0) {
+        if (tableSection) tableSection.classList.add('hidden');
+        if (emptyState) emptyState.classList.remove('hidden');
+        if (emptyState) emptyState.style.display = 'flex'; // Ensure flex layout for centering
+        return; // Stop rendering
+    } else {
+        if (tableSection) tableSection.classList.remove('hidden');
+        if (emptyState) emptyState.classList.add('hidden');
+        if (emptyState) emptyState.style.display = 'none';
+    }
+    // -------------------------
 
     // Calculate Slice
     const start = (currentPage - 1) * rowsPerPage;
@@ -26,44 +44,78 @@ export function renderTable(apps, isUpdate = false) {
     const paginatedItems = currentFilteredApps.slice(start, end);
 
     // Update 'Showing X to Y' text
-    document.getElementById('page-start').innerText = totalItems === 0 ? 0 : start + 1;
+    document.getElementById('page-start').innerText = start + 1;
     document.getElementById('page-end').innerText = Math.min(end, totalItems);
 
     // Update Button State
-    document.getElementById('prev-btn').disabled = currentPage === 1;
-    document.getElementById('next-btn').disabled = end >= totalItems;
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    if(prevBtn) prevBtn.disabled = currentPage === 1;
+    if(nextBtn) nextBtn.disabled = end >= totalItems;
 
     const tableBody = document.getElementById('interactionTableBody');
     if (tableBody) {
-        tableBody.innerHTML = paginatedItems.map(app => {
-            let statusClass = "text-gray-900";
-            let statusBg = "bg-gray-100";
-            const status = (app.status || "").trim().toLowerCase();
+        tableBody.innerHTML = ''; // Clear current content
+
+        paginatedItems.forEach(app => {
+            const row = document.createElement('tr');
             
-            if (status.includes('viewed')) {
-                statusClass = "text-blue-900";
+            // --- Helper for creating cells ---
+            const createCell = (content, label, isHtml = false, customClasses = "") => {
+                const td = document.createElement('td');
+                td.setAttribute('data-label', label); // Critical for Mobile View
+                td.className = "px-5 py-5 border-b border-gray-200 bg-white text-sm";
+                
+                if (isHtml) {
+                    td.innerHTML = content;
+                } else {
+                    const p = document.createElement('p');
+                    p.className = customClasses || "text-gray-900 whitespace-no-wrap";
+                    p.textContent = content; // Safe injection
+                    td.appendChild(p);
+                }
+                return td;
+            };
+
+            // 1. Date Cell
+            row.appendChild(createCell(app.date_applied, "Date"));
+
+            // 2. Status Cell
+            const status = (app.status || "").trim();
+            let statusBg = "bg-gray-100";
+            let statusText = "text-gray-900";
+            const sLower = status.toLowerCase();
+
+            if (sLower.includes('viewed')) {
                 statusBg = "bg-blue-200";
-            } else if (status.includes('not selected')) {
-                statusClass = "text-red-900";
+                statusText = "text-blue-900";
+            } else if (sLower.includes('not selected')) {
                 statusBg = "bg-red-200";
-            } else if (status === 'applied') {
-                statusClass = "text-green-900";
+                statusText = "text-red-900";
+            } else if (sLower === 'applied') {
                 statusBg = "bg-green-200";
+                statusText = "text-green-900";
             }
-            return `
-                <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><p class="text-gray-900 whitespace-no-wrap">${app.date_applied}</p></td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-                            <span aria-hidden class="absolute inset-0 ${statusBg} opacity-50 rounded-full"></span>
-                            <span class="relative ${statusClass}">${status}</span>
-                        </span>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><p class="text-gray-900 whitespace-no-wrap font-medium">${app.title}</p></td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><p class="text-gray-900 whitespace-no-wrap">${app.company}</p></td>
-                </tr>
+
+            // Using simple innerHTML here for the badge structure, but inserting text safely via variable
+            // Note: We escape the status text just in case, though logically it's often safe.
+            const safeStatus = status.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const badgeHtml = `
+                <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
+                    <span aria-hidden class="absolute inset-0 ${statusBg} opacity-50 rounded-full"></span>
+                    <span class="relative ${statusText}">${safeStatus}</span>
+                </span>
             `;
-        }).join('');
+            row.appendChild(createCell(badgeHtml, "Status", true));
+
+            // 3. Title Cell
+            row.appendChild(createCell(app.title, "Job Title", false, "text-gray-900 whitespace-no-wrap font-medium"));
+
+            // 4. Company Cell
+            row.appendChild(createCell(app.company, "Company", false));
+
+            tableBody.appendChild(row);
+        });
     }
 }
 
@@ -99,7 +151,10 @@ export function setupTableEventListeners(allApplications) {
     
     // Filter Inputs
     ['filter-date', 'filter-status', 'filter-title', 'filter-company'].forEach(id => {
-        document.getElementById(id).addEventListener('input', () => applyFiltersAndSort(allApplications));
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => applyFiltersAndSort(allApplications));
+        }
     });
 
     // Sorting Headers
@@ -117,20 +172,27 @@ export function setupTableEventListeners(allApplications) {
     });
 
     // Pagination Buttons
-    document.getElementById('prev-btn').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderTable(currentFilteredApps, true); // true = keep current filter set
-        }
-    });
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
 
-    document.getElementById('next-btn').addEventListener('click', () => {
-        const totalPages = Math.ceil(currentFilteredApps.length / rowsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderTable(currentFilteredApps, true);
-        }
-    });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable(currentFilteredApps, true); // true = keep current filter set
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(currentFilteredApps.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable(currentFilteredApps, true);
+            }
+        });
+    }
 
     eventListenersAttached = true;
 }

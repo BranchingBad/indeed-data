@@ -1,4 +1,61 @@
 body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
 .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 20px; }
 #error-message { display: none; }
-/* Removed conflicting canvas CSS to allow Chart.js to manage responsiveness */
+
+/* Loading Spinner Animation */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.spinner {
+    border-top-color: #3b82f6; /* Tailwind blue-500 */
+    animation: spin 1s linear infinite;
+}
+
+/* Mobile Card View Transformation */
+@media (max-width: 768px) {
+    /* Hide the standard table header */
+    thead { display: none; }
+    
+    /* Make table block-level */
+    table, tbody { display: block; width: 100%; }
+
+    /* Turn rows into cards */
+    tr {
+        display: block;
+        background: white;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem; /* rounded-lg */
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        border: 1px solid #e5e7eb;
+    }
+
+    /* Adjust cells to be flex rows */
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f3f4f6;
+        text-align: right;
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    /* Inject label from data-label attribute */
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #4b5563; /* gray-600 */
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        margin-right: 1rem;
+    }
+    
+    /* Ensure content inside td aligns right */
+    td > * {
+        text-align: right;
+    }
+}
