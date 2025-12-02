@@ -7,9 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="p-6 relative text-gray-800">
+
+    <py-config>
+        packages = ["beautifulsoup4"]
+    </py-config>
 
     <div id="loading-indicator" class="fixed inset-0 bg-gray-900 bg-opacity-40 flex items-center justify-center z-50 hidden backdrop-blur-sm">
         <div class="bg-white p-5 rounded-lg shadow-xl flex flex-col items-center">
@@ -29,36 +37,48 @@
             <h1 class="text-2xl font-bold mb-4 text-gray-800">Indeed Application Dashboard</h1>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 transition bg-gray-50">
-                    <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                    </svg>
-                    <p class="text-sm text-gray-600 text-center font-medium">Drag & Drop <code class="bg-gray-200 px-1 rounded">indeed_data.json</code> here</p>
-                    <p class="text-xs text-gray-500 mt-1">or click to browse</p>
-                    <input type="file" id="file-upload-input" class="hidden" accept=".json">
+                <div class="flex flex-col gap-4">
+                    <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 transition bg-gray-50 flex-grow">
+                        <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <p class="text-sm text-gray-600 text-center font-medium">Drag & Drop <code class="bg-gray-200 px-1 rounded">indeed_data.json</code> here</p>
+                        <p class="text-xs text-gray-500 mt-1">or click to browse</p>
+                        <input type="file" id="file-upload-input" class="hidden" accept=".json">
+                    </div>
                 </div>
 
-                <div>
-                    <label for="file-selector" class="block text-sm font-medium text-gray-700 mb-2">Or select example data:</label>
-                    <select id="file-selector" class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-                        <option value="indeed-applications.json">indeed-applications.json (Demo)</option>
-                        <option value="example.json">example.json (Small)</option>
-                    </select>
-                    
-                    <div class="mt-4 grid grid-cols-2 gap-4">
-                         <div class="bg-blue-50 p-3 rounded border border-blue-100">
-                            <p class="text-xs text-blue-600 font-bold uppercase">Total</p>
-                            <span id="total-count" class="text-2xl font-bold text-blue-800">--</span>
-                        </div>
-                        <div class="bg-green-50 p-3 rounded border border-green-100">
-                            <p class="text-xs text-green-600 font-bold uppercase">Response Rate</p>
-                            <span id="response-rate" class="text-2xl font-bold text-green-800">--%</span>
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <label for="file-selector" class="block text-sm font-medium text-gray-700 mb-2">Or select example data:</label>
+                        <select id="file-selector" class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+                            <option value="indeed-applications.json">indeed-applications.json (Demo)</option>
+                            <option value="example.json">example.json (Small)</option>
+                        </select>
+
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Import "My jobs" HTML File:</label>
+                            <p class="text-xs text-gray-500 mb-2">Select your saved <code>My jobs _ Indeed.html</code> to convert it instantly.</p>
+                            <input type="file" id="html-upload" accept=".html" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"/>
+                            <p id="py-status" class="text-xs text-blue-600 mt-1 hidden">Processing Python script...</p>
                         </div>
                     </div>
+                    
+                    <div>
+                        <div class="mt-4 grid grid-cols-2 gap-4">
+                             <div class="bg-blue-50 p-3 rounded border border-blue-100">
+                                <p class="text-xs text-blue-600 font-bold uppercase">Total</p>
+                                <span id="total-count" class="text-2xl font-bold text-blue-800">--</span>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded border border-green-100">
+                                <p class="text-xs text-green-600 font-bold uppercase">Response Rate</p>
+                                <span id="response-rate" class="text-2xl font-bold text-green-800">--%</span>
+                            </div>
+                        </div>
 
-                    <!-- Added Creation Timestamp Display -->
-                    <div class="mt-3 text-right">
-                        <p class="text-xs text-gray-500">Data as of: <span id="creation-timestamp" class="font-medium text-gray-600">--</span></p>
+                        <div class="mt-3 text-right">
+                            <p class="text-xs text-gray-500">Data as of: <span id="creation-timestamp" class="font-medium text-gray-600">--</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,5 +217,158 @@
     </div>
 
     <script type="module" src="./app.js"></script>
+
+    <script type="py">
+import json
+import re
+from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
+from pyscript import document
+from js import JSON, File, DataTransfer, DragEvent
+
+def get_date_from_text(text):
+    """
+    Replicates the date parsing logic from the original python script.
+    """
+    today = datetime.now()
+    text = text.lower()
+    clean_text = text.replace("applied", "").replace("on indeed", "").replace("on", "").strip()
+    
+    try:
+        if "today" in clean_text:
+            return today.strftime("%Y-%m-%d")
+        if "yesterday" in clean_text:
+            d = today - timedelta(days=1)
+            return d.strftime("%Y-%m-%d")
+
+        try:
+            dt = datetime.strptime(clean_text, "%b %d")
+            dt = dt.replace(year=today.year)
+            if dt > today:
+                dt = dt.replace(year=today.year - 1)
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+
+        days_of_week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+        clean_text_abbr = clean_text[:3]
+        if clean_text_abbr in days_of_week:
+            target_idx = days_of_week.index(clean_text_abbr)
+            current_idx = today.weekday()
+            days_ago = (current_idx - target_idx) % 7
+            if days_ago == 0:
+                days_ago = 7
+            d = today - timedelta(days=days_ago)
+            return d.strftime("%Y-%m-%d")
+
+    except Exception:
+        pass
+    
+    return clean_text or datetime.now().strftime("%Y-%m-%d")
+
+async def process_html_file(event):
+    """
+    Triggered when the user uploads an HTML file.
+    Parses the HTML and simulates a 'drop' event with the generated JSON.
+    """
+    status_el = document.getElementById("py-status")
+    status_el.classList.remove("hidden")
+    status_el.innerText = "Parsing HTML with Python..."
+
+    try:
+        # Get the file from the input event
+        files = event.target.files
+        if not files or files.length == 0:
+            return
+        
+        file = files.item(0)
+        html_content = await file.text()
+        
+        # --- Extraction Logic ---
+        soup = BeautifulSoup(html_content, 'html.parser')
+        cards = soup.find_all(class_='atw-AppCard')
+        
+        apps_list = []
+        
+        for index, card in enumerate(cards, 1):
+            app_data = {}
+            app_data['id'] = index
+            
+            # Title
+            title_elem = card.find(class_='atw-JobInfo-jobTitle')
+            if title_elem:
+                raw_title = title_elem.get_text(strip=True)
+                app_data['title'] = raw_title.replace("job description opens in a new window", "").strip()
+            else:
+                app_data['title'] = "Unknown Title"
+            
+            # Company/Location
+            company_loc = card.find(class_='atw-JobInfo-companyLocation')
+            if company_loc:
+                spans = company_loc.find_all('span')
+                app_data['company'] = spans[0].get_text(strip=True) if len(spans) >= 1 else "Unknown"
+                app_data['location'] = spans[1].get_text(strip=True) if len(spans) >= 2 else "Remote/Unknown"
+            else:
+                app_data['company'] = "Unknown"
+                app_data['location'] = "Unknown"
+
+            # Status
+            status_elem = card.find(class_='atw-StatusTag-description')
+            app_data['status'] = status_elem.get_text(strip=True) if status_elem else "Applied"
+
+            # Date
+            date_elem = card.find(attrs={"data-testid": "jobStatusDateShort"})
+            raw_date = date_elem.get_text(strip=True) if date_elem else "today"
+            app_data['date_applied'] = get_date_from_text(raw_date)
+
+            apps_list.append(app_data)
+
+        # Create Final JSON Structure
+        final_data = {
+            "meta": {
+                "export_date": datetime.now().strftime("%Y-%m-%d"),
+                "source": "Indeed HTML (Browser Extracted)",
+                "total_entries": len(apps_list),
+                "creation_timestamp": datetime.now().isoformat()
+            },
+            "applications": apps_list
+        }
+
+        # --- Bridge to JavaScript ---
+        # 1. Convert Dict to JSON string
+        json_str = json.dumps(final_data)
+        
+        # 2. Create a JS File object (blob)
+        # Using pyodide's js interface to invoke JS constructors
+        js_file = File.new([json_str], "extracted_data.json", { "type": "application/json" })
+        
+        # 3. Create a DataTransfer object and add the file
+        dt = DataTransfer.new()
+        dt.items.add(js_file)
+        
+        # 4. Dispatch a 'drop' event to the existing drop-zone
+        # This tricks app.js into thinking a JSON file was dropped by the user
+        drop_event = DragEvent.new("drop", { 
+            "bubbles": True, 
+            "cancelable": True, 
+            "dataTransfer": dt 
+        })
+        
+        drop_zone = document.getElementById("drop-zone")
+        drop_zone.dispatchEvent(drop_event)
+
+        status_el.innerText = f"Success! Loaded {len(apps_list)} applications."
+
+    except Exception as e:
+        status_el.innerText = f"Error: {str(e)}"
+        print(f"Python Error: {e}")
+
+# Bind the function to the HTML input element
+from pyscript import when
+@when("change", "#html-upload")
+async def handle_upload(event):
+    await process_html_file(event)
+
+    </script>
 </body>
 </html>
