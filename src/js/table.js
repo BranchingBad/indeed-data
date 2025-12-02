@@ -79,7 +79,6 @@ export function renderTable(apps, isUpdate = false) {
                 td.className = "px-5 py-5 border-b border-gray-200 bg-white text-sm";
                 
                 const p = document.createElement('p');
-                // Fix: Updated whitespace-no-wrap to whitespace-nowrap (Tailwind v3 standard)
                 p.className = customClasses || "text-gray-900 whitespace-nowrap";
                 p.textContent = content || ""; // Safe injection via textContent
                 td.appendChild(p);

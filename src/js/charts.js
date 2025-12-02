@@ -62,11 +62,13 @@ export function initializeCharts(applications, chartInstances) {
         // 5. Viewed by Location Data (New)
         const viewedApps = applications.filter(app => (app.status || '').toLowerCase() === 'viewed');
         const viewedLocCounts = countByLocation(viewedApps);
+        const hasViewedData = Object.keys(viewedLocCounts).length > 0;
 
         // 6. Rejected by Location Data (New)
         // Matches "Not Selected" case-insensitively
         const rejectedApps = applications.filter(app => (app.status || '').toLowerCase() === 'not selected');
         const rejectedLocCounts = countByLocation(rejectedApps);
+        const hasRejectedData = Object.keys(rejectedLocCounts).length > 0;
 
         // --- Render Charts ---
 
@@ -131,33 +133,65 @@ export function initializeCharts(applications, chartInstances) {
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, grid: { display: false } }, y: { grid: { display: false } } } }
         });
 
+        // Helper function to generate options for Viewed/Rejected charts
+        const getPieOptions = (hasData) => {
+            if (hasData) return pieOptions;
+            
+            // Return options that hide tooltips and labels for "No Data" state
+            return {
+                ...pieOptions,
+                plugins: {
+                    ...pieOptions.plugins,
+                    tooltip: { enabled: false },
+                    datalabels: { display: false },
+                    legend: { display: false }
+                }
+            };
+        };
+
         // NEW: Viewed by Location Chart (Pie)
         chartInstances.viewedLocationChart = new Chart(document.getElementById('viewedLocationChart'), {
             type: 'pie',
-            data: {
+            data: hasViewedData ? {
                 labels: Object.keys(viewedLocCounts),
                 datasets: [{ 
                     data: Object.values(viewedLocCounts), 
                     backgroundColor: viewedColors,
                     borderWidth: 1 
                 }]
+            } : {
+                // Placeholder Data
+                labels: ['No Data'],
+                datasets: [{
+                    data: [1],
+                    backgroundColor: ['#e5e7eb'], // Gray 200
+                    borderWidth: 0
+                }]
             },
-            options: pieOptions,
+            options: getPieOptions(hasViewedData),
             plugins: [ChartDataLabels]
         });
 
         // NEW: Rejected by Location Chart (Pie)
         chartInstances.rejectedLocationChart = new Chart(document.getElementById('rejectedLocationChart'), {
             type: 'pie',
-            data: {
+            data: hasRejectedData ? {
                 labels: Object.keys(rejectedLocCounts),
                 datasets: [{ 
                     data: Object.values(rejectedLocCounts), 
                     backgroundColor: rejectedColors,
                     borderWidth: 1 
                 }]
+            } : {
+                // Placeholder Data
+                labels: ['No Data'],
+                datasets: [{
+                    data: [1],
+                    backgroundColor: ['#e5e7eb'], // Gray 200
+                    borderWidth: 0
+                }]
             },
-            options: pieOptions,
+            options: getPieOptions(hasRejectedData),
             plugins: [ChartDataLabels]
         });
 
