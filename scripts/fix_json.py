@@ -7,7 +7,9 @@ import sys
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-TARGET_FILE = '../data/indeed-applications.json'
+# Determine the absolute path to the data file relative to this script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TARGET_FILE = os.path.join(BASE_DIR, '../data/indeed-applications.json')
 
 def clean_json_string(content):
     """

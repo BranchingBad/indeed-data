@@ -1,21 +1,26 @@
 import json
 import logging
 import datetime
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 logging.info("Starting clean_json.py script.")
 
+# Determine the absolute path to the data file relative to this script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(BASE_DIR, '../data/indeed-applications.json')
+
 try:
-    with open('../data/indeed-applications.json', 'r') as f:
-        logging.info("Reading '../data/indeed-applications.json'.")
+    with open(DATA_FILE, 'r') as f:
+        logging.info(f"Reading '{DATA_FILE}'.")
         data = json.load(f)
 except FileNotFoundError:
-    logging.error("'../data/indeed-applications.json' not found.")
+    logging.error(f"'{DATA_FILE}' not found.")
     exit()
 except json.JSONDecodeError:
-    logging.error("Error decoding JSON from '../data/indeed-applications.json'.")
+    logging.error(f"Error decoding JSON from '{DATA_FILE}'.")
     exit()
 
 
@@ -35,10 +40,10 @@ for application in data['applications']:
         del application['sub_status']
 
 try:
-    with open('../data/indeed-applications.json', 'w') as f:
-        logging.info("Writing cleaned data to '../data/indeed-applications.json'.")
+    with open(DATA_FILE, 'w') as f:
+        logging.info(f"Writing cleaned data to '{DATA_FILE}'.")
         json.dump(data, f, indent=2)
 except IOError:
-    logging.error("Could not write to 'indeed-applications.json'.")
+    logging.error(f"Could not write to '{DATA_FILE}'.")
 
 logging.info("clean_json.py script finished successfully.")
