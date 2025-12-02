@@ -110,9 +110,14 @@ def main():
         # ID: Use index or data-id attribute if available
         app_data['id'] = index
         
-        # Job Title
+        # Job Title (FIXED: Removing accessibility text)
         title_elem = card.find(class_='atw-JobInfo-jobTitle')
-        app_data['title'] = title_elem.get_text(strip=True) if title_elem else "Unknown Title"
+        if title_elem:
+            raw_title = title_elem.get_text(strip=True)
+            # Replace the unwanted text and strip any remaining whitespace
+            app_data['title'] = raw_title.replace("job description opens in a new window", "").strip()
+        else:
+            app_data['title'] = "Unknown Title"
         
         # Company & Location
         # usually found in atw-JobInfo-companyLocation which has two spans
