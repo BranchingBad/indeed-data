@@ -19,11 +19,13 @@ RUN apk add --no-cache python3 py3-pip && \
 COPY src/ /usr/share/nginx/html/
 COPY data/ /usr/share/nginx/html/data/
 COPY scripts/ /app/scripts/
-COPY extract/ /app/extract/
 
-# Create necessary directories
-RUN mkdir -p /app/data && \
+# Create necessary directories (including extract)
+RUN mkdir -p /app/data /app/extract && \
     chmod +x /app/scripts/*.py
+
+# Copy extract directory if it exists (optional)
+COPY extract/ /app/extract/ 2>/dev/null || true
 
 # Copy custom nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
