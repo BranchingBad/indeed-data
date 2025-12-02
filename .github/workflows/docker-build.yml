@@ -79,15 +79,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ADD THIS STEP ------------------------------------------------
+      - name: Lowercase Image Name
+        run: |
+          echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
+      # --------------------------------------------------------------
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
-
-      - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
