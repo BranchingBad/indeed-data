@@ -1,34 +1,43 @@
 import json
 import logging
+import re
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+TARGET_FILE = '../data/indeed-applications.json'
+
 logging.info("Starting fix_json.py script.")
 
-try:
-    with open('indeed-applications.json', 'r') as f:
-        logging.info("Reading 'indeed-applications.json'.")
-        try:
-            data = json.load(f)
-        except json.JSONDecodeError as e:
-            logging.error(f"Error decoding JSON: {e}")
-            logging.info("Attempting to fix JSON by removing trailing commas.")
-            f.seek(0)
-            file_content = f.read()
-            # This is a bit of a hack, but it should work for this specific case
-            file_content = file_content.replace('},]', '}]')
-            data = json.loads(file_content)
-except FileNotFoundError:
-    logging.error("'indeed-applications.json' not found.")
+if not os.path.exists(TARGET_FILE):
+    logging.error(f"'{TARGET_FILE}' not found.")
     exit()
 
-
 try:
-    with open('indeed-applications.json', 'w') as f:
-        logging.info("Writing fixed data back to 'indeed-applications.json'.")
-        json.dump(data, f, indent=2)
-except IOError:
-    logging.error("Could not write to 'indeed-applications.json'.")
+    with open(TARGET_FILE, 'r') as f:
+        logging.info(f"Reading '{TARGET_FILE}'.")
+        file_content = f.read()
+        
+    try:
+        data = json.loads(file_content)
+        logging.info("JSON is already valid. No fixes needed.")
+    except json.JSONDecodeError as e:
+        logging.warning(f"JSON Error detected: {e}")
+        logging.info("Attempting to fix trailing commas using Regex...")
+        
+        # Regex to remove trailing commas before closing braces/brackets
+        # Matches a comma, followed by whitespace, followed by } or ]
+        fixed_content = re.sub(r',(\s*[}\]])', r'\1', file_content)
+        
+        data = json.loads(fixed_content)
+        logging.info("JSON successfully fixed and parsed.")
 
-logging.info("fix_json.py script finished successfully.")
+    with open(TARGET_FILE, 'w') as f:
+        logging.info(f"Writing sanitized data to '{TARGET_FILE}'.")
+        json.dump(data, f, indent=2)
+
+except Exception as e:
+    logging.error(f"Critical error: {e}")
+
+logging.info("fix_json.py script finished.")
