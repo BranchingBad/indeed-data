@@ -1,9 +1,9 @@
 {
   "meta": {
-    "export_date": "2025-12-02",
+    "export_date": "2025-12-04",
     "source": "Indeed Application History (HTML Extract)",
     "total_entries": 195,
-    "creation_timestamp": "2025-12-02T16:12:17.536776"
+    "creation_timestamp": "2025-12-04T12:39:13.331552"
   },
   "applications": [
     {
@@ -27,7 +27,7 @@
       "title": "Systems Administrator (Kingston)",
       "company": "Palmer & Associates Executive Search Firm",
       "location": "Ontario",
-      "status": "Applied",
+      "status": "Not selected by employer",
       "date_applied": "2025-12-02"
     },
     {
@@ -43,7 +43,7 @@
       "title": "IT Support Technician",
       "company": "CLARK FREIGHTWAYS",
       "location": "Coquitlam, BC",
-      "status": "Applied",
+      "status": "Not selected by employer",
       "date_applied": "2025-12-02"
     },
     {
@@ -99,7 +99,7 @@
       "title": "Information Security Analyst",
       "company": "Canadian Automobile Association",
       "location": "Remote",
-      "status": "Applied",
+      "status": "Not selected by employer",
       "date_applied": "m"
     },
     {
