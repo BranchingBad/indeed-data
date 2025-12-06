@@ -42,9 +42,9 @@ RUN mkdir -p /app/data /app/extract /usr/share/nginx/html/data && \
     chown -R appuser:appgroup /usr/share/nginx/html /app /var/cache/nginx /var/log/nginx && \
     chmod -R 755 /app
 
-# Copy data and extract directories if they exist
-COPY --chown=appuser:appgroup data/ /usr/share/nginx/html/data/ 2>/dev/null || true
-COPY --chown=appuser:appgroup extract/ /app/extract/ 2>/dev/null || true
+# Copy data and extract directories
+COPY --chown=appuser:appgroup data/ /usr/share/nginx/html/data/
+COPY --chown=appuser:appgroup extract/ /app/extract/
 
 # Copy custom nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
