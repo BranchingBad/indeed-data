@@ -17,6 +17,13 @@ function getColors(count) {
     return Array.from({length: count}, (_, i) => BASE_COLORS[i % BASE_COLORS.length]);
 }
 
+// Optimization Helper: Sorts by count desc and takes top N
+function getTopN(counts, n = 5) {
+    return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, n);
+}
+
 export function initializeCharts(applications, instances) {
     if (typeof Chart === 'undefined') return;
 
@@ -47,7 +54,8 @@ export function initializeCharts(applications, instances) {
 
     // 2. Top Locations
     const locCounts = countBy('location');
-    const sortedLocs = Object.entries(locCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+    const sortedLocs = getTopN(locCounts, 5);
+    
     instances.locationChart = new Chart(document.getElementById('locationChart'), {
         type: 'bar',
         data: {
@@ -63,7 +71,8 @@ export function initializeCharts(applications, instances) {
 
     // 3. Top Titles
     const titleCounts = countBy('title');
-    const sortedTitles = Object.entries(titleCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+    const sortedTitles = getTopN(titleCounts, 5);
+    
     instances.titleChart = new Chart(document.getElementById('titleChart'), {
         type: 'bar',
         data: {

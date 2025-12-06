@@ -4,6 +4,14 @@
  * Decoupled from the DOM for easy testing.
  */
 
+// --- Helper for Timezone Safe Dates ---
+function getLocalDateString(date) {
+    // Returns YYYY-MM-DD in the user's local timezone, NOT UTC
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - (offset * 60 * 1000));
+    return localDate.toISOString().split('T')[0];
+}
+
 // --- KPI Calculations ---
 
 export function calculateResponseRate(applications) {
@@ -28,10 +36,10 @@ export function calculateLocationRate(applications, locationQuery) {
     return calculateResponseRate(targetApps);
 }
 
-// --- Date Parsing (Replaces Python Logic) ---
+// --- Date Parsing ---
 
 export function parseIndeedDate(text) {
-    if (!text) return new Date().toISOString().split('T')[0];
+    if (!text) return getLocalDateString(new Date());
 
     const today = new Date();
     // Clean text: remove "Applied", "on Indeed", etc.
@@ -41,18 +49,17 @@ export function parseIndeedDate(text) {
 
     // 1. Handle "Today"
     if (cleanText.includes('today')) {
-        return today.toISOString().split('T')[0];
+        return getLocalDateString(today);
     }
 
     // 2. Handle "Yesterday"
     if (cleanText.includes('yesterday')) {
         const d = new Date(today);
         d.setDate(d.getDate() - 1);
-        return d.toISOString().split('T')[0];
+        return getLocalDateString(d);
     }
 
     // 3. Handle Day of Week (e.g., "Mon", "Tuesday")
-    // Logic: If today is Fri and text says "Mon", it was the previous Monday.
     const daysMap = { 'mon': 1, 'tue': 2, 'wed': 3, 'thu': 4, 'fri': 5, 'sat': 6, 'sun': 0 };
     const dayMatch = Object.keys(daysMap).find(d => cleanText.startsWith(d));
     
@@ -67,11 +74,10 @@ export function parseIndeedDate(text) {
         
         const d = new Date(today);
         d.setDate(d.getDate() - daysAgo);
-        return d.toISOString().split('T')[0];
+        return getLocalDateString(d);
     }
 
     // 4. Handle "Sep 16" format
-    // Simple heuristic: If month/day is in the future relative to now, assume last year.
     const monthDayRegex = /([a-z]{3})\s+(\d{1,2})/;
     const match = cleanText.match(monthDayRegex);
     if (match) {
@@ -87,15 +93,15 @@ export function parseIndeedDate(text) {
             if (parsedDate > today) {
                 parsedDate.setFullYear(currentYear - 1);
             }
-            return parsedDate.toISOString().split('T')[0];
+            return getLocalDateString(parsedDate);
         }
     }
 
     // Fallback: Return today or original text if it looks like ISO
-    return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : today.toISOString().split('T')[0];
+    return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : getLocalDateString(today);
 }
 
-// --- HTML Extraction (Replaces PyScript) ---
+// --- HTML Extraction ---
 
 export function extractApplicationsFromHTML(doc) {
     // Expects a DOM Document object (from DOMParser)

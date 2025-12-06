@@ -8,6 +8,7 @@ import os
 import json
 import sys
 import logging
+import argparse
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 
@@ -39,7 +40,6 @@ POSSIBLE_INPUTS = [
     'My jobs _ Indeed.html'
 ]
 OUTPUT_FILE = '../src/data/indeed-applications.json'
-BACKUP_OUTPUT = '../src/data/indeed-applications.backup.json'
 
 
 class DateParser:
@@ -49,11 +49,6 @@ class DateParser:
     def parse(text: str) -> str:
         """
         Parses Indeed's date text into YYYY-MM-DD format.
-        
-        Examples:
-            - "Applied today on Indeed" -> "2024-12-06"
-            - "Applied on Indeed on Sep 16" -> "2024-09-16"
-            - "Applied on Indeed on Mon" -> "2024-12-02"
         """
         today = datetime.now()
         text_lower = text.lower()
@@ -291,8 +286,22 @@ def main():
     """Main extraction workflow."""
     logger.info("Starting Indeed Application Data Extraction")
     
-    # 1. Find input file
-    input_path = find_input_file()
+    # NEW: Command line argument parsing
+    parser = argparse.ArgumentParser(description='Extract job application data from Indeed HTML.')
+    parser.add_argument('input_file', nargs='?', help='Path to the Indeed HTML file')
+    args = parser.parse_args()
+
+    # 1. Determine input file path
+    input_path = None
+    if args.input_file:
+        if os.path.exists(args.input_file):
+            input_path = args.input_file
+        else:
+            logger.error(f"Provided input file not found: {args.input_file}")
+            sys.exit(1)
+    else:
+        input_path = find_input_file()
+    
     if not input_path:
         sys.exit(1)
     

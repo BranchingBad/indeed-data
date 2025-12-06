@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         fileSelector: document.getElementById('file-selector'),
         dropZone: document.getElementById('drop-zone'),
         fileInput: document.getElementById('file-upload-input'),
-        htmlInput: document.getElementById('html-upload'), // New HTML input ref
+        htmlInput: document.getElementById('html-upload'),
         loadingIndicator: document.getElementById('loading-indicator'),
         exportBtn: document.getElementById('export-btn'),
         timestamp: document.getElementById('creation-timestamp'),
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             elements.timestamp.textContent = new Date(ts).toLocaleString();
         }
 
-        // 2. Update KPIs (Using new Logic Module)
+        // 2. Update KPIs
         if (elements.kpis.total) {
             elements.kpis.total.innerText = applications.length.toLocaleString();
             elements.kpis.responseRate.innerText = calculateResponseRate(applications) + "%";
@@ -66,8 +66,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         // 4. Render Table
         // Sort by date descending first
         const sortedApps = [...applications].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
-        renderTable(sortedApps);
-        setupTableEventListeners(sortedApps); // Pass fresh data to table module
+        
+        // Fix: Do NOT call renderTable directly. setupTableEventListeners handles initial render
+        // and ensures filters are respected immediately.
+        setupTableEventListeners(sortedApps);
     }
 
     async function handleDataLoad(input) {
@@ -90,13 +92,19 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         } catch (error) {
             console.error("Dashboard Update Error:", error);
-            alert(`Failed to load data: ${error.message}`);
+            const errorDiv = document.getElementById('error-message');
+            if (errorDiv) {
+                document.getElementById('error-text').textContent = error.message;
+                errorDiv.classList.remove('hidden');
+            } else {
+                alert(`Failed to load data: ${error.message}`);
+            }
         } finally {
             if (elements.loadingIndicator) elements.loadingIndicator.classList.add('hidden');
         }
     }
 
-    // --- HTML Parsing Handler (Replaces Python) ---
+    // --- HTML Parsing Handler ---
     async function handleHTMLFile(file) {
         if (elements.loadingIndicator) elements.loadingIndicator.classList.remove('hidden');
         
