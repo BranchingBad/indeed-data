@@ -2,7 +2,9 @@
 # Optimized for size and security
 
 # Stage 1: Builder (Python dependencies)
-FROM python:3.11-alpine as builder
+# Updated 'as' to 'AS' to fix warning
+# Pinned to alpine3.20 for stability
+FROM python:3.11-alpine3.20 AS builder
 
 WORKDIR /build
 
@@ -17,7 +19,8 @@ COPY scripts/requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 
 # Stage 2: Production
-FROM nginx:alpine
+# Pinned to alpine3.20 for stability
+FROM nginx:alpine3.20
 
 # Install runtime dependencies only
 RUN apk add --no-cache python3
