@@ -1,28 +1,12 @@
 import { fetchData } from './js/api.js';
 import { destroyCharts, initializeCharts } from './js/charts.js';
 import { renderTable, setupTableEventListeners, exportToCSV } from './js/table.js';
-
-// Debounce utility for performance
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+import { calculateResponseRate, calculateLocationRate, extractApplicationsFromHTML } from './js/logic.js';
 
 // Performance monitoring
 const performanceMonitor = {
     marks: {},
-    
-    start(label) {
-        this.marks[label] = performance.now();
-    },
-    
+    start(label) { this.marks[label] = performance.now(); },
     end(label) {
         if (this.marks[label]) {
             const duration = performance.now() - this.marks[label];
@@ -35,18 +19,17 @@ const performanceMonitor = {
 
 document.addEventListener('DOMContentLoaded', async function() {
     console.info("Dashboard script started.");
-    performanceMonitor.start('initialization');
     
     // Register Chart.js plugins
     if (window.Chart && window.ChartDataLabels) {
         window.Chart.register(window.ChartDataLabels);
     }
 
-    // Cache DOM elements
     const elements = {
         fileSelector: document.getElementById('file-selector'),
         dropZone: document.getElementById('drop-zone'),
         fileInput: document.getElementById('file-upload-input'),
+        htmlInput: document.getElementById('html-upload'), // New HTML input ref
         loadingIndicator: document.getElementById('loading-indicator'),
         exportBtn: document.getElementById('export-btn'),
         timestamp: document.getElementById('creation-timestamp'),
@@ -60,275 +43,135 @@ document.addEventListener('DOMContentLoaded', async function() {
     let chartInstances = {};
     let allApplications = [];
 
-    // --- Core Logic ---
+    // --- Core UI Logic ---
 
-    function updateKPIs(applications) {
-        performanceMonitor.start('kpi-update');
-        
-        if (!applications || applications.length === 0) {
-            elements.kpis.total.innerText = "0";
-            elements.kpis.responseRate.innerText = "0%";
-            elements.kpis.torontoRate.innerText = "0%";
-            performanceMonitor.end('kpi-update');
-            return;
+    function updateDashboardUI(applications, meta = {}) {
+        // 1. Update Timestamp
+        if (elements.timestamp) {
+            const ts = meta.creation_timestamp || new Date().toISOString();
+            elements.timestamp.textContent = new Date(ts).toLocaleString();
         }
-        
-        // Calculate response rate (any status except 'Applied')
-        const responsiveOutcomes = applications.filter(app => {
-            const s = (app.status || "").toLowerCase();
-            return s !== 'applied' && s !== 'unknown';
-        }).length;
 
-        const rate = ((responsiveOutcomes / applications.length) * 100).toFixed(1);
-        
-        elements.kpis.total.innerText = applications.length.toLocaleString();
-        elements.kpis.responseRate.innerText = `${rate}%`;
-
-        // Toronto-specific response rate
-        const torontoApplications = applications.filter(app => 
-            (app.location || "").toLowerCase().includes("toronto")
-        );
-
-        if (torontoApplications.length > 0) {
-            const torontoResponsiveOutcomes = torontoApplications.filter(app => {
-                const s = (app.status || "").toLowerCase();
-                return s !== 'applied' && s !== 'unknown';
-            }).length;
-            
-            const torontoRate = ((torontoResponsiveOutcomes / torontoApplications.length) * 100).toFixed(1);
-            elements.kpis.torontoRate.innerText = `${torontoRate}%`;
-        } else {
-            elements.kpis.torontoRate.innerText = "0%";
+        // 2. Update KPIs (Using new Logic Module)
+        if (elements.kpis.total) {
+            elements.kpis.total.innerText = applications.length.toLocaleString();
+            elements.kpis.responseRate.innerText = calculateResponseRate(applications) + "%";
+            elements.kpis.torontoRate.innerText = calculateLocationRate(applications, "Toronto") + "%";
         }
-        
-        performanceMonitor.end('kpi-update');
+
+        // 3. Render Charts
+        destroyCharts(chartInstances);
+        initializeCharts(applications, chartInstances);
+
+        // 4. Render Table
+        // Sort by date descending first
+        const sortedApps = [...applications].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
+        renderTable(sortedApps);
+        setupTableEventListeners(sortedApps); // Pass fresh data to table module
     }
 
-    function updateTimestamp(rawData) {
-        if (rawData.meta && rawData.meta.creation_timestamp && elements.timestamp) {
-            try {
-                const date = new Date(rawData.meta.creation_timestamp);
-                elements.timestamp.textContent = date.toLocaleString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric', 
-                    hour: 'numeric', 
-                    minute: '2-digit' 
-                });
-            } catch (e) {
-                elements.timestamp.textContent = "Invalid Date";
-            }
-        } else if (elements.timestamp) {
-            elements.timestamp.textContent = "N/A";
-        }
-    }
-
-    async function updateDashboard(input) {
-        performanceMonitor.start('dashboard-update');
-        
-        if (elements.loadingIndicator) {
-            elements.loadingIndicator.classList.remove('hidden');
-        }
-
-        let rawData = null;
+    async function handleDataLoad(input) {
+        if (elements.loadingIndicator) elements.loadingIndicator.classList.remove('hidden');
 
         try {
-            // Handle string (filename) or object (parsed data)
+            let rawData = null;
+
             if (typeof input === 'string') {
-                performanceMonitor.start('data-fetch');
                 rawData = await fetchData(input);
-                performanceMonitor.end('data-fetch');
             } else if (typeof input === 'object') {
                 rawData = input;
             }
 
-            if (!rawData || !rawData.applications) {
-                throw new Error("Invalid data format");
-            }
+            if (!rawData || !rawData.applications) throw new Error("Invalid data format");
 
-            // Destroy existing charts
-            performanceMonitor.start('chart-destroy');
-            destroyCharts(chartInstances);
-            performanceMonitor.end('chart-destroy');
-
-            const applications = rawData.applications;
-            
-            console.info(`Processing ${applications.length} applications...`);
-            
-            // Update timestamp
-            updateTimestamp(rawData);
-
-            // Sort by date descending (most recent first)
-            performanceMonitor.start('data-sort');
-            allApplications = [...applications].sort((a, b) => {
-                const dateA = new Date(a.date_applied);
-                const dateB = new Date(b.date_applied);
-                return dateB - dateA;
-            });
-            performanceMonitor.end('data-sort');
-            
-            // Render UI components
-            updateKPIs(allApplications);
-            
-            performanceMonitor.start('table-render');
-            renderTable(allApplications);
-            performanceMonitor.end('table-render');
-            
-            setupTableEventListeners(allApplications);
-            
-            performanceMonitor.start('charts-render');
-            initializeCharts(applications, chartInstances);
-            performanceMonitor.end('charts-render');
-            
+            allApplications = rawData.applications;
+            updateDashboardUI(allApplications, rawData.meta);
             console.info("✓ Dashboard updated successfully");
-            
+
         } catch (error) {
             console.error("Dashboard Update Error:", error);
-            showError(`Failed to load data: ${error.message}`);
+            alert(`Failed to load data: ${error.message}`);
         } finally {
-            if (elements.loadingIndicator) {
-                elements.loadingIndicator.classList.add('hidden');
-            }
-            performanceMonitor.end('dashboard-update');
+            if (elements.loadingIndicator) elements.loadingIndicator.classList.add('hidden');
         }
     }
 
-    function showError(message) {
-        const errorDiv = document.getElementById('error-message');
-        const errorText = document.getElementById('error-text');
-        if (errorDiv && errorText) {
-            errorText.textContent = message;
-            errorDiv.classList.remove('hidden');
+    // --- HTML Parsing Handler (Replaces Python) ---
+    async function handleHTMLFile(file) {
+        if (elements.loadingIndicator) elements.loadingIndicator.classList.remove('hidden');
+        
+        try {
+            const text = await file.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
             
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                errorDiv.classList.add('hidden');
-            }, 5000);
+            const apps = extractApplicationsFromHTML(doc);
+            
+            if (apps.length === 0) throw new Error("No applications found in HTML");
+
+            const data = {
+                meta: {
+                    source: "Indeed HTML (Browser Extracted)",
+                    creation_timestamp: new Date().toISOString(),
+                    total_entries: apps.length
+                },
+                applications: apps
+            };
+
+            handleDataLoad(data);
+        } catch (e) {
+            alert(`Error parsing HTML: ${e.message}`);
+        } finally {
+            if (elements.loadingIndicator) elements.loadingIndicator.classList.add('hidden');
         }
     }
 
     // --- Event Listeners ---
 
-    // 1. Drop Zone & File Input
-    if (elements.dropZone && elements.fileInput) {
-        // Highlight on drag
-        ['dragenter', 'dragover'].forEach(eventName => {
-            elements.dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                elements.dropZone.classList.add('border-indigo-500', 'bg-indigo-50');
-            }, false);
-        });
-
-        // Remove highlight
-        ['dragleave', 'drop'].forEach(eventName => {
-            elements.dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                elements.dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
-            }, false);
-        });
-
-        // Handle Drop
+    // JSON File Drop/Select
+    if (elements.dropZone) {
+        elements.dropZone.addEventListener('dragover', (e) => { e.preventDefault(); elements.dropZone.classList.add('bg-indigo-50'); });
+        elements.dropZone.addEventListener('dragleave', (e) => { e.preventDefault(); elements.dropZone.classList.remove('bg-indigo-50'); });
         elements.dropZone.addEventListener('drop', (e) => {
-            const files = e.dataTransfer.files;
-            handleFiles(files);
-        }, false);
-
-        // Handle Click
-        elements.dropZone.addEventListener('click', () => {
-            elements.fileInput.click();
+            e.preventDefault();
+            elements.dropZone.classList.remove('bg-indigo-50');
+            if (e.dataTransfer.files.length) {
+                const file = e.dataTransfer.files[0];
+                const reader = new FileReader();
+                reader.onload = (ev) => handleDataLoad(JSON.parse(ev.target.result));
+                reader.readAsText(file);
+            }
         });
-        
+        elements.dropZone.addEventListener('click', () => elements.fileInput.click());
+    }
+
+    if (elements.fileInput) {
         elements.fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
+            if (e.target.files.length) {
+                const reader = new FileReader();
+                reader.onload = (ev) => handleDataLoad(JSON.parse(ev.target.result));
+                reader.readAsText(e.target.files[0]);
+            }
         });
     }
 
-    function handleFiles(files) {
-        if (files.length === 0) return;
-        
-        const file = files[0];
-        
-        // Validate file type
-        if (!file.name.endsWith('.json')) {
-            showError('Please upload a JSON file');
-            return;
-        }
-        
-        // Check file size (max 10MB)
-        const maxSize = 10 * 1024 * 1024;
-        if (file.size > maxSize) {
-            showError('File too large. Maximum size is 10MB');
-            return;
-        }
-        
-        const reader = new FileReader();
-        
-        reader.onload = (e) => {
-            try {
-                const json = JSON.parse(e.target.result);
-                updateDashboard(json);
-            } catch (err) {
-                showError(`Error parsing JSON file: ${err.message}`);
+    // HTML Import Listener
+    if (elements.htmlInput) {
+        elements.htmlInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleHTMLFile(e.target.files[0]);
             }
-        };
-        
-        reader.onerror = () => {
-            showError('Error reading file');
-        };
-        
-        reader.readAsText(file);
+        });
     }
 
-    // 2. File Selector
     if (elements.fileSelector) {
-        elements.fileSelector.addEventListener('change', (event) => {
-            if (event.target.value) {
-                updateDashboard(event.target.value);
-            }
-        });
+        elements.fileSelector.addEventListener('change', (e) => handleDataLoad(e.target.value));
     }
 
-    // 3. Export Button
     if (elements.exportBtn) {
-        elements.exportBtn.addEventListener('click', () => {
-            performanceMonitor.start('csv-export');
-            exportToCSV();
-            performanceMonitor.end('csv-export');
-        });
+        elements.exportBtn.addEventListener('click', exportToCSV);
     }
-
-    // 4. Keyboard Shortcuts
-    document.addEventListener('keydown', (e) => {
-        // Ctrl/Cmd + E for Export
-        if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-            e.preventDefault();
-            exportToCSV();
-        }
-        
-        // Ctrl/Cmd + R for Refresh
-        if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
-            e.preventDefault();
-            if (elements.fileSelector && elements.fileSelector.value) {
-                updateDashboard(elements.fileSelector.value);
-            }
-        }
-    });
-
-    // 5. Connection Status Monitor
-    window.addEventListener('online', () => {
-        console.info('✓ Connection restored');
-    });
-
-    window.addEventListener('offline', () => {
-        console.warn('⚠️ Connection lost - working offline');
-    });
 
     // Initial Load
-    const defaultFile = elements.fileSelector ? elements.fileSelector.value : 'indeed-applications.json';
-    await updateDashboard(defaultFile);
-    
-    performanceMonitor.end('initialization');
-    console.info('✓ Dashboard initialization complete');
+    handleDataLoad('indeed-applications.json');
 });
