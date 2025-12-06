@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (!applications || applications.length === 0) {
             document.getElementById('total-count').innerText = "0";
             document.getElementById('response-rate').innerText = "0%";
+            document.getElementById('toronto-response-rate').innerText = "0%";
             return;
         }
         
@@ -32,6 +33,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         document.getElementById('total-count').innerText = applications.length;
         document.getElementById('response-rate').innerText = `${rate}%`;
+
+        // Toronto response rate
+        const torontoApplications = applications.filter(app => 
+            (app.location || "").toLowerCase().includes("toronto")
+        );
+
+        if (torontoApplications.length > 0) {
+            const torontoResponsiveOutcomes = torontoApplications.filter(app => {
+                const s = (app.status || "").toLowerCase();
+                return s !== 'applied' && s !== 'unknown';
+            }).length;
+            
+            const torontoRate = ((torontoResponsiveOutcomes / torontoApplications.length) * 100).toFixed(1);
+            document.getElementById('toronto-response-rate').innerText = `${torontoRate}%`;
+        } else {
+            document.getElementById('toronto-response-rate').innerText = "0%";
+        }
     }
 
     // Handles both Filename (fetching) and Raw Data Object (drag & drop)
