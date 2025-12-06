@@ -1,176 +1,339 @@
+#!/usr/bin/env python3
+"""
+Enhanced Indeed Job Application HTML Extractor
+Extracts job application data from saved Indeed HTML pages with improved error handling.
+"""
+
 import os
 import json
-import re
+import sys
+import logging
 from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Tuple
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('extraction.log', mode='a')
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 # Try to import BeautifulSoup
 try:
     from bs4 import BeautifulSoup
 except ImportError:
-    print("Error: BeautifulSoup4 is not installed.")
+    logger.error("BeautifulSoup4 is not installed.")
     print("Please install it using: pip install beautifulsoup4")
-    exit(1)
+    sys.exit(1)
 
 # --- Configuration ---
-# Possible locations for the HTML file (relative to this script)
 POSSIBLE_INPUTS = [
     '../extract/My jobs _ Indeed.html',
     '../My jobs _ Indeed.html',
     '../data/My jobs _ Indeed.html',
     'My jobs _ Indeed.html'
 ]
-OUTPUT_FILE = '../data/indeed-applications.json'
+OUTPUT_FILE = '../src/data/indeed-applications.json'
+BACKUP_OUTPUT = '../src/data/indeed-applications.backup.json'
 
-def get_date_from_text(text):
-    """
-    Parses Indeed's relative date text into YYYY-MM-DD format.
-    Examples of Indeed text: 
-    - "Applied today on Indeed"
-    - "Applied on Indeed on Sep 16"
-    - "Applied on Indeed on Sun"
-    """
-    today = datetime.now()
-    text = text.lower()
+
+class DateParser:
+    """Handles parsing of Indeed's relative date formats."""
     
-    # Clean the string
-    clean_text = text.replace("applied", "").replace("on indeed", "").replace("on", "").strip()
-    
-    try:
-        if "today" in clean_text:
+    @staticmethod
+    def parse(text: str) -> str:
+        """
+        Parses Indeed's date text into YYYY-MM-DD format.
+        
+        Examples:
+            - "Applied today on Indeed" -> "2024-12-06"
+            - "Applied on Indeed on Sep 16" -> "2024-09-16"
+            - "Applied on Indeed on Mon" -> "2024-12-02"
+        """
+        today = datetime.now()
+        text_lower = text.lower()
+        
+        # Clean the string
+        clean_text = text_lower.replace("applied", "").replace("on indeed", "").replace("on", "").strip()
+        
+        if not clean_text:
             return today.strftime("%Y-%m-%d")
         
-        if "yesterday" in clean_text:
-            d = today - timedelta(days=1)
-            return d.strftime("%Y-%m-%d")
-
-        # Handle "Sep 16" format
-        # We assume the current year. If the month is in the future relative to today, subtract a year.
         try:
-            # Try parsing "Mon DD"
-            dt = datetime.strptime(clean_text, "%b %d")
-            dt = dt.replace(year=today.year)
-            if dt > today:
-                dt = dt.replace(year=today.year - 1)
-            return dt.strftime("%Y-%m-%d")
-        except ValueError:
-            pass
-
-        # Handle Day of Week (e.g., "Sun", "Mon")
-        # This usually means the most recent occurrence of that day
-        days_of_week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
-        clean_text_abbr = clean_text[:3]
-        if clean_text_abbr in days_of_week:
-            target_idx = days_of_week.index(clean_text_abbr)
-            current_idx = today.weekday()
+            # Handle "today"
+            if "today" in clean_text:
+                return today.strftime("%Y-%m-%d")
             
-            days_ago = (current_idx - target_idx) % 7
-            if days_ago == 0:
-                days_ago = 7 # Assume it wasn't today if it says "Sun" and today is Sun
+            # Handle "yesterday"
+            if "yesterday" in clean_text:
+                return (today - timedelta(days=1)).strftime("%Y-%m-%d")
             
-            d = today - timedelta(days=days_ago)
-            return d.strftime("%Y-%m-%d")
+            # Handle "Mon DD" format (e.g., "Sep 16")
+            try:
+                dt = datetime.strptime(clean_text, "%b %d")
+                dt = dt.replace(year=today.year)
+                
+                # If date is in future, assume previous year
+                if dt > today:
+                    dt = dt.replace(year=today.year - 1)
+                
+                return dt.strftime("%Y-%m-%d")
+            except ValueError:
+                pass
+            
+            # Handle day of week (e.g., "Mon", "Tue")
+            days_map = {
+                'mon': 0, 'tue': 1, 'wed': 2, 'thu': 3,
+                'fri': 4, 'sat': 5, 'sun': 6
+            }
+            
+            day_abbr = clean_text[:3]
+            if day_abbr in days_map:
+                target_weekday = days_map[day_abbr]
+                current_weekday = today.weekday()
+                
+                days_ago = (current_weekday - target_weekday) % 7
+                if days_ago == 0:
+                    days_ago = 7  # Assume last week if same day
+                
+                return (today - timedelta(days=days_ago)).strftime("%Y-%m-%d")
+        
+        except Exception as e:
+            logger.warning(f"Date parsing error for '{text}': {e}")
+        
+        # Fallback
+        return today.strftime("%Y-%m-%d")
 
-    except Exception as e:
-        print(f"Warning: Could not parse date '{text}'. Using raw string.")
+
+class IndeedExtractor:
+    """Extracts job application data from Indeed HTML."""
     
-    return clean_text or datetime.now().strftime("%Y-%m-%d")
+    def __init__(self, html_path: str):
+        self.html_path = html_path
+        self.soup = None
+        self.stats = {
+            'total_cards': 0,
+            'successful': 0,
+            'warnings': 0,
+            'errors': 0
+        }
+    
+    def load_html(self) -> bool:
+        """Load and parse HTML file."""
+        try:
+            with open(self.html_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                self.soup = BeautifulSoup(content, 'html.parser')
+            logger.info(f"Successfully loaded HTML from: {self.html_path}")
+            return True
+        except FileNotFoundError:
+            logger.error(f"File not found: {self.html_path}")
+            return False
+        except Exception as e:
+            logger.error(f"Error loading HTML: {e}")
+            return False
+    
+    def extract_title(self, card) -> str:
+        """Extract job title from card."""
+        try:
+            title_elem = card.find(class_='atw-JobInfo-jobTitle')
+            if title_elem:
+                raw_title = title_elem.get_text(strip=True)
+                # Remove accessibility text
+                return raw_title.replace("job description opens in a new window", "").strip()
+        except Exception as e:
+            logger.warning(f"Error extracting title: {e}")
+        return "Unknown Title"
+    
+    def extract_company_location(self, card) -> Tuple[str, str]:
+        """Extract company and location from card."""
+        company = "Unknown Company"
+        location = "Unknown Location"
+        
+        try:
+            container = card.find(class_='atw-JobInfo-companyLocation')
+            if container:
+                spans = container.find_all('span')
+                if len(spans) >= 1:
+                    company = spans[0].get_text(strip=True)
+                if len(spans) >= 2:
+                    location = spans[1].get_text(strip=True)
+        except Exception as e:
+            logger.warning(f"Error extracting company/location: {e}")
+        
+        return company, location
+    
+    def extract_status(self, card) -> str:
+        """Extract application status from card."""
+        try:
+            status_elem = card.find(class_='atw-StatusTag-description')
+            if status_elem:
+                return status_elem.get_text(strip=True)
+        except Exception as e:
+            logger.warning(f"Error extracting status: {e}")
+        return "Applied"
+    
+    def extract_date(self, card) -> str:
+        """Extract and parse application date from card."""
+        try:
+            date_elem = card.find(attrs={"data-testid": "jobStatusDateShort"})
+            if date_elem:
+                raw_date = date_elem.get_text(strip=True)
+                return DateParser.parse(raw_date)
+        except Exception as e:
+            logger.warning(f"Error extracting date: {e}")
+        
+        return datetime.now().strftime("%Y-%m-%d")
+    
+    def extract_applications(self) -> List[Dict]:
+        """Extract all job applications from HTML."""
+        if not self.soup:
+            logger.error("HTML not loaded. Call load_html() first.")
+            return []
+        
+        cards = self.soup.find_all(class_='atw-AppCard')
+        self.stats['total_cards'] = len(cards)
+        
+        logger.info(f"Found {len(cards)} job cards. Processing...")
+        
+        applications = []
+        
+        for index, card in enumerate(cards, 1):
+            try:
+                app_data = {
+                    'id': index,
+                    'title': self.extract_title(card),
+                    'status': self.extract_status(card),
+                    'date_applied': self.extract_date(card)
+                }
+                
+                company, location = self.extract_company_location(card)
+                app_data['company'] = company
+                app_data['location'] = location
+                
+                applications.append(app_data)
+                self.stats['successful'] += 1
+                
+            except Exception as e:
+                logger.error(f"Error processing card {index}: {e}")
+                self.stats['errors'] += 1
+        
+        return applications
+    
+    def print_stats(self):
+        """Print extraction statistics."""
+        logger.info("=" * 50)
+        logger.info("EXTRACTION STATISTICS")
+        logger.info("=" * 50)
+        logger.info(f"Total cards found: {self.stats['total_cards']}")
+        logger.info(f"Successfully extracted: {self.stats['successful']}")
+        logger.info(f"Warnings: {self.stats['warnings']}")
+        logger.info(f"Errors: {self.stats['errors']}")
+        logger.info("=" * 50)
 
-def main():
-    # 1. Locate Input File
-    input_path = None
-    # Resolve script directory to ensure relative paths work
+
+def backup_existing_data(output_path: str) -> bool:
+    """Create backup of existing data file."""
+    if os.path.exists(output_path):
+        try:
+            import shutil
+            backup_path = output_path.replace('.json', f'.backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json')
+            shutil.copy2(output_path, backup_path)
+            logger.info(f"Created backup: {backup_path}")
+            return True
+        except Exception as e:
+            logger.warning(f"Could not create backup: {e}")
+            return False
+    return True
+
+
+def save_json(data: Dict, output_path: str) -> bool:
+    """Save data to JSON file with validation."""
+    try:
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        
+        # Validate JSON before saving
+        json_str = json.dumps(data, indent=2, ensure_ascii=False)
+        
+        # Write to file
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(json_str)
+        
+        logger.info(f"Data saved to: {output_path}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Error saving JSON: {e}")
+        return False
+
+
+def find_input_file() -> Optional[str]:
+    """Locate the HTML input file."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
     for path in POSSIBLE_INPUTS:
         full_path = os.path.join(script_dir, path)
         if os.path.exists(full_path):
-            input_path = full_path
-            break
+            return full_path
     
+    logger.error("Could not find 'My jobs _ Indeed.html'")
+    logger.error(f"Checked paths: {POSSIBLE_INPUTS}")
+    return None
+
+
+def main():
+    """Main extraction workflow."""
+    logger.info("Starting Indeed Application Data Extraction")
+    
+    # 1. Find input file
+    input_path = find_input_file()
     if not input_path:
-        print("Error: Could not find 'My jobs _ Indeed.html'.")
-        print(f"Checked paths: {POSSIBLE_INPUTS}")
-        return
-
-    print(f"Reading HTML from: {input_path}")
+        sys.exit(1)
     
-    with open(input_path, 'r', encoding='utf-8') as f:
-        soup = BeautifulSoup(f, 'html.parser')
-
-    # 2. Extract Applications
-    apps_list = []
-    # Indeed uses 'atw-AppCard' class for the job cards
-    cards = soup.find_all(class_='atw-AppCard')
+    # 2. Initialize extractor
+    extractor = IndeedExtractor(input_path)
     
-    print(f"Found {len(cards)} job cards. Processing...")
-
-    for index, card in enumerate(cards, 1):
-        app_data = {}
-        
-        # ID: Use index or data-id attribute if available
-        app_data['id'] = index
-        
-        # Job Title (FIXED: Removing accessibility text)
-        title_elem = card.find(class_='atw-JobInfo-jobTitle')
-        if title_elem:
-            raw_title = title_elem.get_text(strip=True)
-            # Replace the unwanted text and strip any remaining whitespace
-            app_data['title'] = raw_title.replace("job description opens in a new window", "").strip()
-        else:
-            app_data['title'] = "Unknown Title"
-        
-        # Company & Location
-        # usually found in atw-JobInfo-companyLocation which has two spans
-        company_loc_container = card.find(class_='atw-JobInfo-companyLocation')
-        if company_loc_container:
-            spans = company_loc_container.find_all('span')
-            if len(spans) >= 1:
-                app_data['company'] = spans[0].get_text(strip=True)
-            else:
-                app_data['company'] = "Unknown Company"
-                
-            if len(spans) >= 2:
-                app_data['location'] = spans[1].get_text(strip=True)
-            else:
-                app_data['location'] = "Remote/Unknown"
-        else:
-            app_data['company'] = "Unknown Company"
-            app_data['location'] = "Unknown"
-
-        # Status
-        status_elem = card.find(class_='atw-StatusTag-description')
-        app_data['status'] = status_elem.get_text(strip=True) if status_elem else "Applied"
-
-        # Date Applied
-        # Often found in a generic text element or specifically marked with data-testid
-        date_elem = card.find(attrs={"data-testid": "jobStatusDateShort"})
-        raw_date = date_elem.get_text(strip=True) if date_elem else "today"
-        app_data['date_applied'] = get_date_from_text(raw_date)
-
-        apps_list.append(app_data)
-
-    # 3. Construct Final JSON Structure
-    final_data = {
+    if not extractor.load_html():
+        sys.exit(1)
+    
+    # 3. Extract applications
+    applications = extractor.extract_applications()
+    
+    if not applications:
+        logger.error("No applications extracted. Exiting.")
+        sys.exit(1)
+    
+    # 4. Create output structure
+    output_data = {
         "meta": {
             "export_date": datetime.now().strftime("%Y-%m-%d"),
             "source": "Indeed Application History (HTML Extract)",
-            "total_entries": len(apps_list),
-            "creation_timestamp": datetime.now().isoformat()
+            "total_entries": len(applications),
+            "creation_timestamp": datetime.now().isoformat(),
+            "extractor_version": "2.0"
         },
-        "applications": apps_list
+        "applications": applications
     }
-
-    # 4. Save to File
-    output_full_path = os.path.join(script_dir, OUTPUT_FILE)
     
-    # Ensure directory exists
-    os.makedirs(os.path.dirname(output_full_path), exist_ok=True)
+    # 5. Backup existing data
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(script_dir, OUTPUT_FILE)
+    backup_existing_data(output_path)
     
-    with open(output_full_path, 'w', encoding='utf-8') as f:
-        json.dump(final_data, f, indent=2)
+    # 6. Save to file
+    if save_json(output_data, output_path):
+        extractor.print_stats()
+        logger.info(f"✓ Successfully extracted {len(applications)} applications")
+    else:
+        logger.error("Failed to save data")
+        sys.exit(1)
 
-    print(f"Successfully extracted {len(apps_list)} applications.")
-    print(f"Data saved to: {output_full_path}")
 
 if __name__ == "__main__":
     main()

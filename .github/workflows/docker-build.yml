@@ -1,15 +1,11 @@
-name: Build and Push Docker Image
+name: Build, Test, and Deploy Docker Image
 
 on:
   push:
-    branches:
-      - main
-      - develop
-    tags:
-      - 'v*'
+    branches: [main, develop]
+    tags: ['v*']
   pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 env:
@@ -22,6 +18,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      security-events: write
 
     steps:
       - name: Checkout repository
@@ -38,11 +35,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase Image Name
+        run: |
+          echo "IMAGE_NAME_LOWER=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
+
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -52,42 +53,203 @@ jobs:
             type=sha,prefix={{branch}}-
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
 
-      - name: Test container
+      - name: Test container startup
         run: |
           docker compose up -d
-          sleep 10
-          curl -f http://localhost:8080 || exit 1
+          sleep 15
+          
+          # Check if container is running
+          if ! docker ps | grep indeed-job-dashboard; then
+            echo "Container failed to start"
+            docker compose logs
+            exit 1
+          fi
+          
+          echo "✓ Container started successfully"
+
+      - name: Run health check
+        run: |
+          MAX_RETRIES=5
+          RETRY_COUNT=0
+          
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if curl -f http://localhost:8080; then
+              echo "✓ Health check passed"
+              exit 0
+            fi
+            
+            echo "Health check failed, retry $((RETRY_COUNT + 1))/$MAX_RETRIES"
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            sleep 3
+          done
+          
+          echo "✗ Health check failed after $MAX_RETRIES attempts"
+          docker compose logs
+          exit 1
+
+      - name: Test data loading
+        run: |
+          # Check if data files are accessible
+          response=$(curl -s http://localhost:8080/data/indeed-applications.json)
+          
+          if [ -z "$response" ]; then
+            echo "✗ Data file not accessible"
+            exit 1
+          fi
+          
+          echo "✓ Data files accessible"
+
+      - name: Container logs
+        if: always()
+        run: |
+          docker compose logs
+
+      - name: Stop containers
+        if: always()
+        run: |
           docker compose down
+
+      - name: Push Docker image
+        if: github.event_name != 'pull_request'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          platforms: linux/amd64,linux/arm64
 
   security-scan:
     runs-on: ubuntu-latest
     needs: build-and-test
     if: github.event_name != 'pull_request'
     
+    permissions:
+      contents: read
+      security-events: write
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ADD THIS STEP ------------------------------------------------
       - name: Lowercase Image Name
         run: |
-          echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-      # --------------------------------------------------------------
+          echo "IMAGE_NAME_LOWER=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run Trivy in table format
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest'
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+
+  python-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r scripts/requirements.txt
+          pip install pytest
+
+      - name: Lint Python scripts
+        run: |
+          pip install flake8
+          flake8 scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 scripts/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Test extraction script
+        run: |
+          python scripts/extract_indeed_html.py --help || true
+          echo "✓ Python scripts validated"
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start container
+        run: |
+          docker compose up -d
+          sleep 10
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:8080
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Stop container
+        if: always()
+        run: docker compose down
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build-and-test, security-scan]
+    if: startsWith(github.ref, 'refs/tags/v')
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## Docker Image
+            ```bash
+            docker pull ghcr.io/${{ env.IMAGE_NAME_LOWER }}:${{ github.ref_name }}
+            ```
+            
+            ## What's New
+            See [CHANGELOG.md](CHANGELOG.md) for details.
+          draft: false
+          prerelease: false

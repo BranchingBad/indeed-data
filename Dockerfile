@@ -1,40 +1,68 @@
 # Multi-stage build for Indeed Job Application Dashboard
+# Optimized for size and security
 
-# Stage 1: Build stage (if needed for future enhancements)
-FROM python:3.11-slim as builder
+# Stage 1: Builder (Python dependencies)
+FROM python:3.11-alpine as builder
 
-WORKDIR /app
+WORKDIR /build
 
-# Install dependencies for extraction script
-RUN pip install --no-cache-dir beautifulsoup4
+# Install build dependencies
+RUN apk add --no-cache --virtual .build-deps \
+    gcc \
+    musl-dev \
+    libffi-dev
 
-# Stage 2: Production stage
+# Install Python packages
+COPY scripts/requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Stage 2: Production
 FROM nginx:alpine
 
-# Install Python for the extraction script
-RUN apk add --no-cache python3 py3-beautifulsoup4
+# Install runtime dependencies only
+RUN apk add --no-cache python3
+
+# Copy Python packages from builder
+COPY --from=builder /root/.local /root/.local
+
+# Make sure scripts are in path
+ENV PATH=/root/.local/bin:$PATH
 
 # Copy application files
 COPY src/ /usr/share/nginx/html/
-COPY data/ /usr/share/nginx/html/data/
 COPY scripts/ /app/scripts/
 
-# Create necessary directories (including extract)
-RUN mkdir -p /app/data /app/extract && \
-    chmod +x /app/scripts/*.py
+# Create directories with proper permissions
+RUN mkdir -p /app/data /app/extract /usr/share/nginx/html/data && \
+    chmod +x /app/scripts/*.py && \
+    # Create non-root user for better security
+    addgroup -g 1000 appgroup && \
+    adduser -D -u 1000 -G appgroup appuser && \
+    # Set permissions
+    chown -R appuser:appgroup /usr/share/nginx/html /app /var/cache/nginx /var/log/nginx && \
+    chmod -R 755 /app
 
-# Copy extract directory if it exists (optional)
-COPY extract/ /app/extract/
+# Copy data and extract directories if they exist
+COPY --chown=appuser:appgroup data/ /usr/share/nginx/html/data/ 2>/dev/null || true
+COPY --chown=appuser:appgroup extract/ /app/extract/ 2>/dev/null || true
 
 # Copy custom nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
-EXPOSE 80
+# Fix nginx to run as non-root
+RUN sed -i 's/user nginx;/user appuser;/' /etc/nginx/nginx.conf && \
+    touch /var/run/nginx.pid && \
+    chown -R appuser:appgroup /var/run/nginx.pid
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]

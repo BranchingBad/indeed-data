@@ -284,6 +284,36 @@ If you want to deploy this dashboard to production and eliminate the Tailwind CD
 
 For most personal use cases, the CDN version works perfectly fine!
 
+## 🧪 Testing
+
+This project uses [Jest](https://jestjs.io/) for unit and integration testing. The tests are located in the `tests/` directory and are configured to run in a Node.js environment.
+
+### Running Tests
+
+To run the entire test suite once, use the following command:
+
+```bash
+npm test
+```
+
+### Watch Mode
+
+For interactive development, you can run tests in watch mode. This will automatically re-run tests whenever a file is changed:
+
+```bash
+npm test:watch
+```
+
+### Test Coverage
+
+To generate a report of how much code is covered by the test suite, run:
+
+```bash
+npm run test:coverage
+```
+
+This will create a `coverage/` directory with an HTML report that you can view in your browser.
+
 ## 🐛 Troubleshooting
 
 ### Extraction Script Issues
