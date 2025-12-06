@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ADDED: Set up QEMU for multi-platform builds (Fixes ARM64 build error)
+      # Set up QEMU for multi-platform builds
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -161,7 +161,8 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        # UPDATED: Changed from @v3 to @v4 to fix deprecation warning
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
