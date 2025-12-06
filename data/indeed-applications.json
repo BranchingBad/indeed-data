@@ -1,13 +1,45 @@
 {
   "meta": {
-    "export_date": "2025-12-04",
+    "export_date": "2025-12-06",
     "source": "Indeed Application History (HTML Extract)",
-    "total_entries": 195,
-    "creation_timestamp": "2025-12-04T12:39:13.331552"
+    "total_entries": 199,
+    "creation_timestamp": "2025-12-06T10:54:21.633548"
   },
   "applications": [
     {
       "id": 1,
+      "title": "Product Support Engineer",
+      "company": "MONEXgroup",
+      "location": "North York, ON",
+      "status": "Applied",
+      "date_applied": "2025-12-06"
+    },
+    {
+      "id": 2,
+      "title": "Data Center- Linux Cisco",
+      "company": "APPTOZA INC.",
+      "location": "Markham, ON",
+      "status": "Applied",
+      "date_applied": "2025-12-06"
+    },
+    {
+      "id": 3,
+      "title": "Help Desk and Support - Fastfrate Group (Woodbridge)",
+      "company": "Challenger Motor Freight Inc",
+      "location": "Vaughan, ON",
+      "status": "Applied",
+      "date_applied": "2025-12-06"
+    },
+    {
+      "id": 4,
+      "title": "IT Support Specialist",
+      "company": "Agence Des Oliviers",
+      "location": "Montr\u00e9al, QC",
+      "status": "Applied",
+      "date_applied": "2025-12-06"
+    },
+    {
+      "id": 5,
       "title": "Cyber Security Specialist (SecOps & Platform)",
       "company": "Rimex Supply Ltd.",
       "location": "Langley, BC",
@@ -15,7 +47,7 @@
       "date_applied": "2025-12-02"
     },
     {
-      "id": 2,
+      "id": 6,
       "title": "IT Systems and Support Administrator",
       "company": "Simply Benefits",
       "location": "Kelowna, BC",
@@ -23,7 +55,7 @@
       "date_applied": "2025-12-02"
     },
     {
-      "id": 3,
+      "id": 7,
       "title": "Systems Administrator (Kingston)",
       "company": "Palmer & Associates Executive Search Firm",
       "location": "Ontario",
@@ -31,7 +63,7 @@
       "date_applied": "2025-12-02"
     },
     {
-      "id": 4,
+      "id": 8,
       "title": "Technical Support Engineer",
       "company": "k7zl Transport",
       "location": "Ottawa, ON",
@@ -39,7 +71,7 @@
       "date_applied": "2025-12-02"
     },
     {
-      "id": 5,
+      "id": 9,
       "title": "IT Support Technician",
       "company": "CLARK FREIGHTWAYS",
       "location": "Coquitlam, BC",
@@ -47,7 +79,7 @@
       "date_applied": "2025-12-02"
     },
     {
-      "id": 6,
+      "id": 10,
       "title": "Junior AppOps Technician, Application Development",
       "company": "First National Financial",
       "location": "Toronto, ON",
@@ -55,7 +87,7 @@
       "date_applied": "2025-12-02"
     },
     {
-      "id": 7,
+      "id": 11,
       "title": "Technical Service Agent",
       "company": "FavordMail Logistics",
       "location": "Pickering, ON",
@@ -63,7 +95,7 @@
       "date_applied": "m"
     },
     {
-      "id": 8,
+      "id": 12,
       "title": "Technical Support Associate",
       "company": "Al Johani Group Canada",
       "location": "Barrie, ON",
@@ -71,7 +103,7 @@
       "date_applied": "m"
     },
     {
-      "id": 9,
+      "id": 13,
       "title": "Network & Systems Administrator",
       "company": "Tecnet Canada Inc",
       "location": "Victoria, BC",
@@ -79,7 +111,7 @@
       "date_applied": "m"
     },
     {
-      "id": 10,
+      "id": 14,
       "title": "Cloud Support/DevOps Engineer",
       "company": "Toronto Regional Real Estate Board",
       "location": "North York, ON",
@@ -87,7 +119,7 @@
       "date_applied": "m"
     },
     {
-      "id": 11,
+      "id": 15,
       "title": "Senior Cloud and Unified Communications Specialist",
       "company": "Canadian Cancer Society",
       "location": "Ottawa, ON",
@@ -95,7 +127,7 @@
       "date_applied": "m"
     },
     {
-      "id": 12,
+      "id": 16,
       "title": "Information Security Analyst",
       "company": "Canadian Automobile Association",
       "location": "Remote",
@@ -103,7 +135,7 @@
       "date_applied": "m"
     },
     {
-      "id": 13,
+      "id": 17,
       "title": "Jr. Product Validation/QA Engineer \u2013 Cloud",
       "company": "Wind River",
       "location": "Kanata, ON",
@@ -111,7 +143,7 @@
       "date_applied": "2025-11-30"
     },
     {
-      "id": 14,
+      "id": 18,
       "title": "Cloud Architecture Specialist",
       "company": "Nanometrics Inc",
       "location": "Ottawa, ON",
@@ -119,7 +151,7 @@
       "date_applied": "2025-11-30"
     },
     {
-      "id": 15,
+      "id": 19,
       "title": "IT Consultant",
       "company": "Berniq",
       "location": "Ottawa, ON",
@@ -127,7 +159,7 @@
       "date_applied": "2025-11-30"
     },
     {
-      "id": 16,
+      "id": 20,
       "title": "Hybrid Cloud Specialist - Alberta",
       "company": "Reliant Technologies Solutions Group",
       "location": "Edmonton, AB",
@@ -135,7 +167,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 17,
+      "id": 21,
       "title": "NOC Analyst 1 (Overnight)",
       "company": "ICON Media Communications Inc.",
       "location": "Markham, ON",
@@ -143,7 +175,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 18,
+      "id": 22,
       "title": "Cloud Engineer",
       "company": "GPL Technologies",
       "location": "Toronto, ON",
@@ -151,7 +183,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 19,
+      "id": 23,
       "title": "Cloud DevOps Engineer",
       "company": "Scaleup Innovation Lab Inc",
       "location": "Toronto, ON",
@@ -159,7 +191,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 20,
+      "id": 24,
       "title": "Security Operation Centre L1",
       "company": "Nets-international Communication",
       "location": "Toronto, ON",
@@ -167,7 +199,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 21,
+      "id": 25,
       "title": "Infrastructure Integration 9014-2315",
       "company": "Foilcon",
       "location": "Toronto, ON",
@@ -175,7 +207,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 22,
+      "id": 26,
       "title": "Cloud SecOps",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
@@ -183,7 +215,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 23,
+      "id": 27,
       "title": "Linux Administartor",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
@@ -191,7 +223,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 24,
+      "id": 28,
       "title": "Cloud Engineer",
       "company": "iTMethods",
       "location": "Toronto, ON",
@@ -199,7 +231,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 25,
+      "id": 29,
       "title": "DevOps Platform Support Engineer",
       "company": "iTMethods",
       "location": "Toronto, ON",
@@ -207,7 +239,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 26,
+      "id": 30,
       "title": "Configuration Analyst",
       "company": "Forward Insurance Managers Ltd.",
       "location": "London, ON",
@@ -215,7 +247,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 27,
+      "id": 31,
       "title": "Technical Support Specialist",
       "company": "Hartmann Controls",
       "location": "Barrie, ON",
@@ -223,7 +255,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 28,
+      "id": 32,
       "title": "Implementation Specialist",
       "company": "Severion Inc",
       "location": "Mississauga, ON",
@@ -231,7 +263,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 29,
+      "id": 33,
       "title": "L1 Support Technician | SVI Support Team",
       "company": "StorageVault Canada Inc.",
       "location": "Gloucester, ON",
@@ -239,7 +271,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 30,
+      "id": 34,
       "title": "Senior Service Desk Technician",
       "company": "LAN Solutions Corp",
       "location": "Calgary, AB",
@@ -247,7 +279,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 31,
+      "id": 35,
       "title": "I.T Support Analyst",
       "company": "Walters Group",
       "location": "Hamilton, ON",
@@ -255,7 +287,7 @@
       "date_applied": "2025-11-25"
     },
     {
-      "id": 32,
+      "id": 36,
       "title": "Technical Services Analyst",
       "company": "Horizon School Division #205",
       "location": "Humboldt, SK",
@@ -263,7 +295,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 33,
+      "id": 37,
       "title": "Intermediate MSP Analyst",
       "company": "Vencer Group Inc.",
       "location": "Calgary, AB",
@@ -271,7 +303,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 34,
+      "id": 38,
       "title": "Senior Systems Administrator",
       "company": "PC eSolutions",
       "location": "Edmonton, AB",
@@ -279,7 +311,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 35,
+      "id": 39,
       "title": "IT Support Analyst | Copperleaf | 12-month Contract",
       "company": "IFS",
       "location": "Vancouver, BC",
@@ -287,7 +319,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 36,
+      "id": 40,
       "title": "Technical Support Representative",
       "company": "Barracuda Networks Inc.",
       "location": "Ottawa, ON",
@@ -295,7 +327,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 37,
+      "id": 41,
       "title": "L1 Desktop Support Specialist",
       "company": "Intega IT",
       "location": "Ottawa, ON",
@@ -303,7 +335,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 38,
+      "id": 42,
       "title": "Technical Support Specialist",
       "company": "AG Globe Services",
       "location": "Ontario",
@@ -311,7 +343,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 39,
+      "id": 43,
       "title": "Help Desk Agent",
       "company": "Render-Up",
       "location": "Toronto, ON",
@@ -319,7 +351,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 40,
+      "id": 44,
       "title": "IT Service Desk Analyst",
       "company": "Horn IT Solutions Inc.",
       "location": "Greater Toronto Area, ON",
@@ -327,7 +359,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 41,
+      "id": 45,
       "title": "Help Desk Specialist",
       "company": "Hoya Vision Care",
       "location": "Mississauga, ON",
@@ -335,7 +367,7 @@
       "date_applied": "2025-11-18"
     },
     {
-      "id": 42,
+      "id": 46,
       "title": "Network and Systems Administrator!",
       "company": "Confidential",
       "location": "Toronto, ON",
@@ -343,7 +375,7 @@
       "date_applied": "2025-11-16"
     },
     {
-      "id": 43,
+      "id": 47,
       "title": "Cloud Infrastructure Engineer",
       "company": "Embross",
       "location": "Richmond Hill, ON",
@@ -351,7 +383,7 @@
       "date_applied": "2025-11-16"
     },
     {
-      "id": 44,
+      "id": 48,
       "title": "Network Engineer",
       "company": "Dexterra Group",
       "location": "Mississauga, ON",
@@ -359,7 +391,7 @@
       "date_applied": "2025-11-16"
     },
     {
-      "id": 45,
+      "id": 49,
       "title": "Systems & Automation Specialist",
       "company": "Seasons Retirement Communities LP",
       "location": "Oakville, ON",
@@ -367,7 +399,7 @@
       "date_applied": "2025-11-16"
     },
     {
-      "id": 46,
+      "id": 50,
       "title": "System Administrator, Retail (1 Year Contract)",
       "company": "Talize",
       "location": "Toronto, ON",
@@ -375,7 +407,7 @@
       "date_applied": "2025-11-16"
     },
     {
-      "id": 47,
+      "id": 51,
       "title": "Network Administrator",
       "company": "GL2Cloud Inc",
       "location": "Markham, ON",
@@ -383,7 +415,7 @@
       "date_applied": "2025-11-16"
     },
     {
-      "id": 48,
+      "id": 52,
       "title": "Infrastructure Integration Specialist 9170-1612",
       "company": "Foilcon",
       "location": "Toronto, ON",
@@ -391,7 +423,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 49,
+      "id": 53,
       "title": "L1/ L2 Production Support",
       "company": "spruceinfotech",
       "location": "Toronto, ON",
@@ -399,7 +431,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 50,
+      "id": 54,
       "title": "Cloud Platform Engineer",
       "company": "League Inc.",
       "location": "Toronto, ON",
@@ -407,7 +439,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 51,
+      "id": 55,
       "title": "Lab Admin/System Engineer - Linux",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
@@ -415,7 +447,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 52,
+      "id": 56,
       "title": "Senior Cybersecurity Engineer- Offensive",
       "company": "CAAT Pension Plan",
       "location": "Toronto, ON",
@@ -423,7 +455,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 53,
+      "id": 57,
       "title": "IT Technician - Technical Services",
       "company": "EC Managed IT",
       "location": "Oakville, ON",
@@ -431,7 +463,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 54,
+      "id": 58,
       "title": "System Administrator",
       "company": "Tuor Networks Inc.",
       "location": "Toronto, ON",
@@ -439,7 +471,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 55,
+      "id": 59,
       "title": "IT Onsite Technician",
       "company": "Hemmersbach Nordamerika",
       "location": "Guelph, ON",
@@ -447,7 +479,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 56,
+      "id": 60,
       "title": "Junior Service Technician",
       "company": "Canada Computers Inc.",
       "location": "Unionville, ON",
@@ -455,7 +487,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 57,
+      "id": 61,
       "title": "IT Solutions Specialist",
       "company": "Simcotron SecureSolutions Inc",
       "location": "Toronto, ON",
@@ -463,7 +495,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 58,
+      "id": 62,
       "title": "Desktop Support Technician",
       "company": "Pomeroy",
       "location": "Toronto, ON",
@@ -471,7 +503,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 59,
+      "id": 63,
       "title": "EV Chargers Test Specialist",
       "company": "United Chargers Inc.",
       "location": "Richmond Hill, ON",
@@ -479,7 +511,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 60,
+      "id": 64,
       "title": "Platform DevSecOps Engineer",
       "company": "KUBRA",
       "location": "Mississauga, ON",
@@ -487,7 +519,7 @@
       "date_applied": "2025-11-15"
     },
     {
-      "id": 61,
+      "id": 65,
       "title": "Information Security Risk Specialist",
       "company": "Beanfield Technologies Inc.",
       "location": "Toronto, ON",
@@ -495,7 +527,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 62,
+      "id": 66,
       "title": "Systems Administrator",
       "company": "WiseTechGroup Inc.",
       "location": "Concord, ON",
@@ -503,7 +535,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 63,
+      "id": 67,
       "title": "Information Security Operations Specialist",
       "company": "Beanfield Technologies Inc.",
       "location": "Toronto, ON",
@@ -511,7 +543,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 64,
+      "id": 68,
       "title": "NOC Analyst, Level 1",
       "company": "Beanfield Technologies Inc.",
       "location": "Toronto, ON",
@@ -519,7 +551,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 65,
+      "id": 69,
       "title": "Future Workplace Specialist",
       "company": "Flynn Group of Companies",
       "location": "Mississauga, ON",
@@ -527,7 +559,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 66,
+      "id": 70,
       "title": "Application Support Engineer - 1568",
       "company": "APPTOZA INC.",
       "location": "Toronto, ON",
@@ -535,7 +567,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 67,
+      "id": 71,
       "title": "Cloud Engineer",
       "company": "Robert Half",
       "location": "Toronto, ON",
@@ -543,7 +575,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 68,
+      "id": 72,
       "title": "Software Support Product Specialist \u2013 Product Engineering Group",
       "company": "Leading Manufacturer of equipment used in Grocery Industry",
       "location": "Concord, ON",
@@ -551,7 +583,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 69,
+      "id": 73,
       "title": "IT Security Analyst",
       "company": "Tekstaff IT Solutions",
       "location": "Scarborough, ON",
@@ -559,7 +591,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 70,
+      "id": 74,
       "title": "IT Support Technician",
       "company": "Jungbunzlauer Canada Inc.",
       "location": "Port Colborne, ON",
@@ -567,7 +599,7 @@
       "date_applied": "2025-11-07"
     },
     {
-      "id": 71,
+      "id": 75,
       "title": "Network Support Engineer",
       "company": "MIR Digital Solutions Inc",
       "location": "Concord, ON",
@@ -575,7 +607,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 72,
+      "id": 76,
       "title": "LMS Software Support Specialist (1-year Contract)",
       "company": "Ainsworth Inc.",
       "location": "Toronto, ON",
@@ -583,7 +615,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 73,
+      "id": 77,
       "title": "Service Desk Analyst",
       "company": "Commerx Computer Systems",
       "location": "Mississauga, ON",
@@ -591,7 +623,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 74,
+      "id": 78,
       "title": "Rogers Customer Service Representative",
       "company": "Mississauga Connect",
       "location": "Mississauga, ON",
@@ -599,7 +631,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 75,
+      "id": 79,
       "title": "Azure SRE",
       "company": "E-Solutionts",
       "location": "Toronto, ON",
@@ -607,7 +639,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 76,
+      "id": 80,
       "title": "Network Operations Center L1",
       "company": "Nets-international Communication",
       "location": "Toronto, ON",
@@ -615,7 +647,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 77,
+      "id": 81,
       "title": "AI Systems & Automation Specialist",
       "company": "Deliverect",
       "location": "Toronto, ON",
@@ -623,7 +655,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 78,
+      "id": 82,
       "title": "Technical Support Specialist - I",
       "company": "Connexall",
       "location": "Toronto, ON",
@@ -631,7 +663,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 79,
+      "id": 83,
       "title": "DevOps Specialist",
       "company": "Helm Operations Software inc",
       "location": "Remote",
@@ -639,7 +671,7 @@
       "date_applied": "2025-11-06"
     },
     {
-      "id": 80,
+      "id": 84,
       "title": "SENIOR NETWORK INFRASTRUCTURE SPECIALIST",
       "company": "Buchanan Technologies",
       "location": "Brampton, ON",
@@ -647,7 +679,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 81,
+      "id": 85,
       "title": "Cloud/Data Migration Engineer",
       "company": "Procom",
       "location": "Toronto, ON",
@@ -655,7 +687,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 82,
+      "id": 86,
       "title": "Senior LLMOps Engineer -Cloud / AI Infrastructure",
       "company": "Talent To Hire Inc.",
       "location": "Toronto, ON",
@@ -663,7 +695,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 83,
+      "id": 87,
       "title": "GCP Data Engineer \u2013 Informatica Product 360 , Python , ETL",
       "company": "APPTOZA INC.",
       "location": "Scarborough, ON",
@@ -671,7 +703,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 84,
+      "id": 88,
       "title": "Auto Parts Incoming Call Center Agent",
       "company": "Auto Parts Centres (APC)",
       "location": "London, ON",
@@ -679,7 +711,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 85,
+      "id": 89,
       "title": "Data Analyst #984199",
       "company": "DISYS",
       "location": "Toronto, ON",
@@ -687,7 +719,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 86,
+      "id": 90,
       "title": "IT Technician - Level 1",
       "company": "Procom",
       "location": "Toronto, ON",
@@ -695,7 +727,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 87,
+      "id": 91,
       "title": "Test Analyst",
       "company": "Infosys",
       "location": "Mississauga, ON",
@@ -703,7 +735,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 88,
+      "id": 92,
       "title": "Senior Information Security Analyst",
       "company": "CAAT Pension Plan",
       "location": "Toronto, ON",
@@ -711,7 +743,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 89,
+      "id": 93,
       "title": "Technical Implementation Analyst",
       "company": "Achievers",
       "location": "Toronto, ON",
@@ -719,7 +751,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 90,
+      "id": 94,
       "title": "Network Analyst",
       "company": "Imperial Dade",
       "location": "Mississauga, ON",
@@ -727,7 +759,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 91,
+      "id": 95,
       "title": "Network operation Center L2",
       "company": "Nets-international Communication",
       "location": "Toronto, ON",
@@ -735,7 +767,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 92,
+      "id": 96,
       "title": "Jr. Analyst, Infrastructure",
       "company": "Great Gulf Group",
       "location": "Toronto, ON",
@@ -743,7 +775,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 93,
+      "id": 97,
       "title": "Technical Services Coordinator \u2013 Networking Specialist (STF)",
       "company": "MSP OPERATIONAL CORP",
       "location": "Guelph, ON",
@@ -751,7 +783,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 94,
+      "id": 98,
       "title": "Network Engineer",
       "company": "TekFormix",
       "location": "Toronto, ON",
@@ -759,7 +791,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 95,
+      "id": 99,
       "title": "Sr. Analyst, Infrastructure",
       "company": "Great Gulf Group",
       "location": "Toronto, ON",
@@ -767,7 +799,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 96,
+      "id": 100,
       "title": "SOC Analyst",
       "company": "MIR Digital Solutions Inc",
       "location": "Concord, ON",
@@ -775,7 +807,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 97,
+      "id": 101,
       "title": "Infrastructure Automation and Scripting Specialist",
       "company": "Flynn Group of Companies",
       "location": "Mississauga, ON",
@@ -783,7 +815,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 98,
+      "id": 102,
       "title": "Analyst, Plant Support",
       "company": "Samuel, Son & Co.",
       "location": "Oakville, ON",
@@ -791,7 +823,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 99,
+      "id": 103,
       "title": "Cloud Operations Engineer",
       "company": "G Adventures",
       "location": "Toronto, ON",
@@ -799,7 +831,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 100,
+      "id": 104,
       "title": "Application Engineer",
       "company": "Litmus Automation",
       "location": "Toronto, ON",
@@ -807,7 +839,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 101,
+      "id": 105,
       "title": "Senior Developer - Python/SRE",
       "company": "AstraNorth",
       "location": "Toronto, ON",
@@ -815,7 +847,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 102,
+      "id": 106,
       "title": "DevOps Specialist",
       "company": "Kepler Communications",
       "location": "Toronto, ON",
@@ -823,7 +855,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 103,
+      "id": 107,
       "title": "DevOps/Infrastructure Engineer",
       "company": "RideCo",
       "location": "Waterloo, ON",
@@ -831,7 +863,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 104,
+      "id": 108,
       "title": "IT Support Specialist",
       "company": "Gay Lea Foods",
       "location": "Toronto, ON",
@@ -839,7 +871,7 @@
       "date_applied": "2025-11-05"
     },
     {
-      "id": 105,
+      "id": 109,
       "title": "IT Operations, Senior Analyst (2025-8668)",
       "company": "Grand & Toy",
       "location": "Vaughan, ON",
@@ -847,7 +879,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 106,
+      "id": 110,
       "title": "Senior Technician \u2013 Cybersecurity & IT Services",
       "company": "PAVLIKS.COM",
       "location": "Barrie, ON",
@@ -855,7 +887,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 107,
+      "id": 111,
       "title": "Network and Cloud Admin Instructor",
       "company": "Metro College of Technology",
       "location": "North York, ON",
@@ -863,7 +895,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 108,
+      "id": 112,
       "title": "Linux Administrator",
       "company": "SIMNET Inc",
       "location": "Whitby, ON",
@@ -871,7 +903,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 109,
+      "id": 113,
       "title": "Cloud Engineer",
       "company": "Spait Infotech Private Limited",
       "location": "Toronto, ON",
@@ -879,7 +911,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 110,
+      "id": 114,
       "title": "Cyber Security Engineer",
       "company": "Spait Infotech Private Limited",
       "location": "Toronto, ON",
@@ -887,7 +919,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 111,
+      "id": 115,
       "title": "Network Analyst",
       "company": "QHR Technologies Inc",
       "location": "Toronto, ON",
@@ -895,7 +927,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 112,
+      "id": 116,
       "title": "IT Support Specialist",
       "company": "Ellainer Food Corp.",
       "location": "North York, ON",
@@ -903,7 +935,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 113,
+      "id": 117,
       "title": "Sr. Linux Administrator",
       "company": "SIMNET Inc",
       "location": "Whitby, ON",
@@ -911,7 +943,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 114,
+      "id": 118,
       "title": "NOC Analyst 1",
       "company": "ICON Media Communications Inc.",
       "location": "Markham, ON",
@@ -919,7 +951,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 115,
+      "id": 119,
       "title": "Network Administrator",
       "company": "Sanctuary AI",
       "location": "Vancouver, BC",
@@ -927,7 +959,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 116,
+      "id": 120,
       "title": "IT Administrator",
       "company": "Flipp",
       "location": "Toronto, ON",
@@ -935,7 +967,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 117,
+      "id": 121,
       "title": "IT Support Analyst",
       "company": "Richardson Wealth Ltd",
       "location": "Toronto, ON",
@@ -943,7 +975,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 118,
+      "id": 122,
       "title": "Systems Administrator Operations Support Specialist (Junior) 0164-1517",
       "company": "Foilcon",
       "location": "Toronto, ON",
@@ -951,7 +983,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 119,
+      "id": 123,
       "title": "IT Systems Support Analyst",
       "company": "NORR",
       "location": "Toronto, ON",
@@ -959,7 +991,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 120,
+      "id": 124,
       "title": "Technical Analyst",
       "company": "360insights",
       "location": "Whitby, ON",
@@ -967,7 +999,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 121,
+      "id": 125,
       "title": "Information Security Engineer",
       "company": "T&T Supermarket Inc.",
       "location": "Markham, ON",
@@ -975,7 +1007,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 122,
+      "id": 126,
       "title": "Network Engineer",
       "company": "ISG Search Inc",
       "location": "Toronto, ON",
@@ -983,7 +1015,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 123,
+      "id": 127,
       "title": "IT Onsite Technician",
       "company": "Hemmersbach Nordamerika",
       "location": "Guelph, ON",
@@ -991,7 +1023,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 124,
+      "id": 128,
       "title": "IT Support Specialist",
       "company": "Maverick InfoSec Solutions Ltd.",
       "location": "Langley, BC",
@@ -999,7 +1031,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 125,
+      "id": 129,
       "title": "Application Support Analyst",
       "company": "Alliance Search Partners",
       "location": "Toronto, ON",
@@ -1007,7 +1039,7 @@
       "date_applied": "2025-11-04"
     },
     {
-      "id": 126,
+      "id": 130,
       "title": "IT Onsite Technician",
       "company": "Hemmersbach Nordamerika",
       "location": "Markham, ON",
@@ -1015,7 +1047,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 127,
+      "id": 131,
       "title": "IT Support - Systems Administrator",
       "company": "Rotor Maxx Support Ltd",
       "location": "Parksville, BC",
@@ -1023,7 +1055,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 128,
+      "id": 132,
       "title": "IT Support Analyst (Tier 1)",
       "company": "Davinci AI Solutions",
       "location": "Calgary, AB",
@@ -1031,7 +1063,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 129,
+      "id": 133,
       "title": "IT Support Technician Tier 1",
       "company": "Stubbe's Workforce Inc",
       "location": "Harley, ON",
@@ -1039,7 +1071,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 130,
+      "id": 134,
       "title": "Technical IT Consultant",
       "company": "OfficePort",
       "location": "Tantallon, NS",
@@ -1047,7 +1079,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 131,
+      "id": 135,
       "title": "Junior IT Technician",
       "company": "Alma Mater Society of Queen's University",
       "location": "Kingston, ON",
@@ -1055,7 +1087,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 132,
+      "id": 136,
       "title": "Support Engineer in Test",
       "company": "YuJa Inc.",
       "location": "North York, ON",
@@ -1063,7 +1095,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 133,
+      "id": 137,
       "title": "IT Support Analyst",
       "company": "SIMNET Inc",
       "location": "Whitby, ON",
@@ -1071,7 +1103,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 134,
+      "id": 138,
       "title": "Desktop Support Technician (TAC)",
       "company": "Leon's Furniture",
       "location": "Toronto, ON",
@@ -1079,7 +1111,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 135,
+      "id": 139,
       "title": "Information Technology - IT Generalist",
       "company": "Wirelessdna",
       "location": "Toronto, ON",
@@ -1087,7 +1119,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 136,
+      "id": 140,
       "title": "IT Support Specialist",
       "company": "Conpute",
       "location": "Whitby, ON",
@@ -1095,7 +1127,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 137,
+      "id": 141,
       "title": "IT Support Technician \u2014 Part-Time / Contract \u2014 Toronto, ON",
       "company": "Brand M3dia Group",
       "location": "Toronto, ON",
@@ -1103,7 +1135,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 138,
+      "id": 142,
       "title": "IT Systems & Support Specialist",
       "company": "Goway Travel Limited",
       "location": "Toronto, ON",
@@ -1111,7 +1143,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 139,
+      "id": 143,
       "title": "Service Desk Analyst",
       "company": "McCarthy T\u00e9trault LLP",
       "location": "Toronto, ON",
@@ -1119,7 +1151,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 140,
+      "id": 144,
       "title": "Technical Specialist",
       "company": "a.p.i Alarm Inc",
       "location": "Etobicoke, ON",
@@ -1127,7 +1159,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 141,
+      "id": 145,
       "title": "IT Infrastructure Analyst",
       "company": "TS Retail Enterprises Inc.",
       "location": "Toronto, ON",
@@ -1135,7 +1167,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 142,
+      "id": 146,
       "title": "Cloud & DevOps Engineer (AWS / Azure)",
       "company": "QBuild Corporation",
       "location": "Markham, ON",
@@ -1143,7 +1175,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 143,
+      "id": 147,
       "title": "Product Support Specialist",
       "company": "Tracker by The Bridge Network",
       "location": "North York, ON",
@@ -1151,7 +1183,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 144,
+      "id": 148,
       "title": "IT Support Technician",
       "company": "Continual Energy Inc.",
       "location": "Greater Toronto Area, ON",
@@ -1159,7 +1191,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 145,
+      "id": 149,
       "title": "Product Support Specialist",
       "company": "Jonas Club Software",
       "location": "Unionville, ON",
@@ -1167,7 +1199,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 146,
+      "id": 150,
       "title": "Jr. IT Support Technician",
       "company": "Amico Infrastructures",
       "location": "Mississauga, ON",
@@ -1175,7 +1207,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 147,
+      "id": 151,
       "title": "IT Infrastructure Reporting Specialist",
       "company": "Unio Tech Solutions",
       "location": "Markham, ON",
@@ -1183,7 +1215,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 148,
+      "id": 152,
       "title": "Application & Systems Support Technician",
       "company": "West Canadian Digital Imaging",
       "location": "Calgary, AB",
@@ -1191,7 +1223,7 @@
       "date_applied": "2025-11-03"
     },
     {
-      "id": 149,
+      "id": 153,
       "title": "Zoom SME",
       "company": "Dacaro Software Services Inc",
       "location": "Toronto, ON",
@@ -1199,7 +1231,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 150,
+      "id": 154,
       "title": "Cyber Security Analyst",
       "company": "JumpDEMAND Inc.",
       "location": "Calgary, AB",
@@ -1207,7 +1239,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 151,
+      "id": 155,
       "title": "IT Technical Analyst",
       "company": "ABM Integrated Solutions",
       "location": "Dartmouth, NS",
@@ -1215,7 +1247,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 152,
+      "id": 156,
       "title": "IT Onsite Technician",
       "company": "Hemmersbach Nordamerika",
       "location": "Toronto, ON",
@@ -1223,7 +1255,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 153,
+      "id": 157,
       "title": "IT System Administrator",
       "company": "Pricedex Software Inc.",
       "location": "Brockville, ON",
@@ -1231,7 +1263,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 154,
+      "id": 158,
       "title": "Linux Administrator",
       "company": "GAM Creative Marketing",
       "location": "Woodbridge, ON",
@@ -1239,7 +1271,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 155,
+      "id": 159,
       "title": "Cloud Infrastructure Specialist",
       "company": "Embross",
       "location": "Richmond Hill, ON",
@@ -1247,7 +1279,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 156,
+      "id": 160,
       "title": "Support Technician",
       "company": "Hudson Technology Corp.",
       "location": "Toronto, ON",
@@ -1255,7 +1287,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 157,
+      "id": 161,
       "title": "Service Technician",
       "company": "Canada Computers Inc.",
       "location": "Brampton, ON",
@@ -1263,7 +1295,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 158,
+      "id": 162,
       "title": "Service Technician",
       "company": "Canada Computers Inc.",
       "location": "Vaughan, ON",
@@ -1271,7 +1303,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 159,
+      "id": 163,
       "title": "Cloud Security Engineer",
       "company": "The Printing House",
       "location": "Toronto, ON",
@@ -1279,7 +1311,7 @@
       "date_applied": "2025-11-02"
     },
     {
-      "id": 160,
+      "id": 164,
       "title": "Tier Two Technical Support",
       "company": "WaterlooIT",
       "location": "Waterloo, ON",
@@ -1287,7 +1319,7 @@
       "date_applied": "2025-11-01"
     },
     {
-      "id": 161,
+      "id": 165,
       "title": "Sr. Systems Administrator",
       "company": "Liftow Limited",
       "location": "Mississauga, ON",
@@ -1295,7 +1327,7 @@
       "date_applied": "2025-11-01"
     },
     {
-      "id": 162,
+      "id": 166,
       "title": "B2B SaaS Customer Support Specialist",
       "company": "Hosted~FTP~",
       "location": "Toronto, ON",
@@ -1303,7 +1335,7 @@
       "date_applied": "2025-11-01"
     },
     {
-      "id": 163,
+      "id": 167,
       "title": "Customer Success and Support",
       "company": "Gnxcor Inc.",
       "location": "Cambridge, ON",
@@ -1311,7 +1343,7 @@
       "date_applied": "2025-10-27"
     },
     {
-      "id": 164,
+      "id": 168,
       "title": "Cyber Security Administrator",
       "company": "Commerx",
       "location": "Mississauga, ON",
@@ -1319,7 +1351,7 @@
       "date_applied": "2025-10-27"
     },
     {
-      "id": 165,
+      "id": 169,
       "title": "Systems Administrator",
       "company": "I3E Information Technology Resources Ltd",
       "location": "Barrie, ON",
@@ -1327,7 +1359,7 @@
       "date_applied": "2025-10-27"
     },
     {
-      "id": 166,
+      "id": 170,
       "title": "Software Support Specialist",
       "company": "Mondex Corporation",
       "location": "Toronto, ON",
@@ -1335,7 +1367,7 @@
       "date_applied": "2025-10-27"
     },
     {
-      "id": 167,
+      "id": 171,
       "title": "Linux System Administrator",
       "company": "Commerx",
       "location": "Mississauga, ON",
@@ -1343,7 +1375,7 @@
       "date_applied": "2025-10-27"
     },
     {
-      "id": 168,
+      "id": 172,
       "title": "Technical Support Specialist",
       "company": "MONEXgroup",
       "location": "North York, ON",
@@ -1351,7 +1383,7 @@
       "date_applied": "2025-10-27"
     },
     {
-      "id": 169,
+      "id": 173,
       "title": "Technical Support Analyst \u2013 Payment Systems",
       "company": "Advanced Mobile Payment (AMP)",
       "location": "Markham, ON",
@@ -1359,7 +1391,7 @@
       "date_applied": "2025-10-19"
     },
     {
-      "id": 170,
+      "id": 174,
       "title": "Level 3 Computer & Network Support Technician",
       "company": "Tier 3 I.T. Solutions",
       "location": "Edmonton, AB",
@@ -1367,7 +1399,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 171,
+      "id": 175,
       "title": "Hardware & Networking Engineer - Fortinet",
       "company": "Ekxpert Placement Services",
       "location": "Concord, ON",
@@ -1375,7 +1407,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 172,
+      "id": 176,
       "title": "Infrastructure and Cybersecurity Specialist (Permanent Part-Time)",
       "company": "International Business University",
       "location": "Toronto, ON",
@@ -1383,7 +1415,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 173,
+      "id": 177,
       "title": "IT Support Specialist - Clear Code",
       "company": "MC3 Manufacturing Inc",
       "location": "Ruthven, ON",
@@ -1391,7 +1423,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 174,
+      "id": 178,
       "title": "IT Systems Engineer",
       "company": "FutureTel Service Centre",
       "location": "Markham, ON",
@@ -1399,7 +1431,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 175,
+      "id": 179,
       "title": "Part-Time Technical Support Specialist",
       "company": "Association of Canadian Occupational Therapy Regulatory Organizations",
       "location": "Toronto, ON",
@@ -1407,7 +1439,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 176,
+      "id": 180,
       "title": "SOC Engineer",
       "company": "AutoTrader.ca",
       "location": "Greater Toronto Area, ON",
@@ -1415,7 +1447,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 177,
+      "id": 181,
       "title": "IT Technical Analyst",
       "company": "Campbellford Memorial Hospital",
       "location": "Campbellford, ON",
@@ -1423,7 +1455,7 @@
       "date_applied": "2025-09-16"
     },
     {
-      "id": 178,
+      "id": 182,
       "title": "IT Operations Specialist",
       "company": "Embross",
       "location": "Richmond Hill, ON",
@@ -1431,7 +1463,7 @@
       "date_applied": "2025-09-06"
     },
     {
-      "id": 179,
+      "id": 183,
       "title": "Technical Support",
       "company": "GlassHouse Systems",
       "location": "Toronto, ON",
@@ -1439,7 +1471,7 @@
       "date_applied": "2025-09-06"
     },
     {
-      "id": 180,
+      "id": 184,
       "title": "GCP Administrator",
       "company": "Lawlabs Inc.",
       "location": "Ontario",
@@ -1447,7 +1479,7 @@
       "date_applied": "2025-09-06"
     },
     {
-      "id": 181,
+      "id": 185,
       "title": "Information Systems Specialist/Network Administrator",
       "company": "ERTH Corporation",
       "location": "Ingersoll, ON",
@@ -1455,7 +1487,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 182,
+      "id": 186,
       "title": "Junior Systems Administrator",
       "company": "Think Logistics Inc.",
       "location": "Mississauga, ON",
@@ -1463,7 +1495,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 183,
+      "id": 187,
       "title": "Datastage Developer - Linux shell scripting\"",
       "company": "AstraNorth",
       "location": "Toronto, ON",
@@ -1471,7 +1503,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 184,
+      "id": 188,
       "title": "System Administrator / L2 Production Support",
       "company": "Atlantis IT group",
       "location": "Toronto, ON",
@@ -1479,7 +1511,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 185,
+      "id": 189,
       "title": "DevOps Engineer",
       "company": "Dyna Info Services",
       "location": "Toronto, ON",
@@ -1487,7 +1519,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 186,
+      "id": 190,
       "title": "AWS Cloud Administrator",
       "company": "Chemtrade",
       "location": "Toronto, ON",
@@ -1495,7 +1527,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 187,
+      "id": 191,
       "title": "Sr. Linux Server Infrastructure Specialist",
       "company": "Buchanan Technologies",
       "location": "Brampton, ON",
@@ -1503,7 +1535,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 188,
+      "id": 192,
       "title": "Murex Environment support consultant",
       "company": "Jconnect Infotech Pvt. Ltd",
       "location": "Toronto, ON",
@@ -1511,7 +1543,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 189,
+      "id": 193,
       "title": "Customer Experience Specialist",
       "company": "Autolux Ltd Rapid City Transport",
       "location": "Oshawa, ON",
@@ -1519,7 +1551,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 190,
+      "id": 194,
       "title": "Data Technician",
       "company": "Capital Sewer Services",
       "location": "Vaughan, ON",
@@ -1527,7 +1559,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 191,
+      "id": 195,
       "title": "Cloud Support Analyst",
       "company": "Charger Logistics Inc",
       "location": "Brampton, ON",
@@ -1535,7 +1567,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 192,
+      "id": 196,
       "title": "Cyber Security Engineer",
       "company": "ISG Search Inc",
       "location": "Toronto, ON",
@@ -1543,7 +1575,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 193,
+      "id": 197,
       "title": "Technical Application Support Analyst",
       "company": "Pala Interactive Canada",
       "location": "North York, ON",
@@ -1551,7 +1583,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 194,
+      "id": 198,
       "title": "IT Support Technician",
       "company": "The Urban Plumber",
       "location": "Toronto, ON",
@@ -1559,7 +1591,7 @@
       "date_applied": "2025-09-05"
     },
     {
-      "id": 195,
+      "id": 199,
       "title": "Microsoft IT Specialist",
       "company": "Cube Packaging Solutions",
       "location": "Aurora, ON",

@@ -2,6 +2,10 @@
 
 A modern, interactive web dashboard for visualizing and analyzing job application data exported from Indeed. Built with vanilla JavaScript, Chart.js, and Tailwind CSS—no frameworks required.
 
+## 🖼️ Dashboard Preview
+
+![Dashboard](examples/dashboard.png)
+
 ## ✨ Features
 
 ### 📊 Visual Analytics
