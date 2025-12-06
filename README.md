@@ -4,7 +4,9 @@ A modern, interactive web dashboard for visualizing and analyzing job applicatio
 
 ## 🖼️ Dashboard Preview
 
-![Dashboard](examples/dashboard.png)
+![Dashboard](examples/dashboard01.png)
+![Dashboard](examples/dashboard02.png)
+![Dashboard](examples/dashboard03.png)
 
 ## ✨ Features
 
