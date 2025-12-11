@@ -37,11 +37,32 @@ document.addEventListener('DOMContentLoaded', async function() {
             total: document.getElementById('total-count'),
             responseRate: document.getElementById('response-rate'),
             torontoRate: document.getElementById('toronto-response-rate')
-        }
+        },
+        dataSourceSelection: document.getElementById('data-source-selection'),
+        uploadSection: document.getElementById('upload-section'),
+        dashboardContent: document.getElementById('dashboard-content'),
+        useExampleDataBtn: document.getElementById('use-example-data'),
+        uploadOwnFileBtn: document.getElementById('upload-own-file'),
+        resetDataBtn: document.getElementById('reset-data'),
+        resetDataBtn2: document.getElementById('reset-data-2')
     };
 
     let chartInstances = {};
     let allApplications = [];
+
+    // --- UI State Logic ---
+    function showDashboard() {
+        elements.dataSourceSelection.classList.add('hidden');
+        elements.uploadSection.classList.add('hidden');
+        elements.dashboardContent.classList.remove('hidden');
+    }
+
+    function showDataSourceSelection() {
+        elements.dataSourceSelection.classList.remove('hidden');
+        elements.uploadSection.classList.add('hidden');
+        elements.dashboardContent.classList.add('hidden');
+        destroyCharts(chartInstances);
+    }
 
     // --- Core UI Logic ---
 
@@ -88,6 +109,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             allApplications = rawData.applications;
             updateDashboardUI(allApplications, rawData.meta);
+            showDashboard();
             console.info("✓ Dashboard updated successfully");
 
         } catch (error) {
@@ -136,6 +158,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // --- Event Listeners ---
 
+    elements.useExampleDataBtn.addEventListener('click', () => {
+        handleDataLoad('indeed-applications.json');
+    });
+
+    elements.uploadOwnFileBtn.addEventListener('click', () => {
+        elements.uploadSection.classList.remove('hidden');
+    });
+
+    elements.resetDataBtn.addEventListener('click', showDataSourceSelection);
+    elements.resetDataBtn2.addEventListener('click', showDataSourceSelection);
+
     // JSON File Drop/Select
     if (elements.dropZone) {
         elements.dropZone.addEventListener('dragover', (e) => { e.preventDefault(); elements.dropZone.classList.add('bg-indigo-50'); });
@@ -179,8 +212,4 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (elements.exportBtn) {
         elements.exportBtn.addEventListener('click', exportToCSV);
     }
-
-    setTimeout(() => {
-        handleDataLoad('indeed-applications.json');
-    }, 0);
 });

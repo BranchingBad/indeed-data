@@ -13,8 +13,19 @@ const rowsPerPage = 10;
 let currentFilteredApps = [];
 let masterDataset = []; // The source of truth
 
+let sortColumn = 'date_applied';
+let sortDirection = 'desc';
+
 export function renderTable(apps, isPagination = false) {
     if (!isPagination) {
+        // Sort the data
+        apps.sort((a, b) => {
+            const aValue = a[sortColumn] || '';
+            const bValue = b[sortColumn] || '';
+            if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
         currentFilteredApps = apps;
         currentPage = 1;
     }
@@ -75,6 +86,20 @@ export function renderTable(apps, isPagination = false) {
             tr.innerHTML += `<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-900 whitespace-nowrap">${app.company || ''}</td>`;
             tr.innerHTML += `<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-900 whitespace-nowrap">${app.location || ''}</td>`;
             
+            tr.addEventListener('click', () => {
+                const modal = document.getElementById('details-modal');
+                const modalTitle = document.getElementById('modal-title');
+                const modalContent = document.getElementById('modal-content');
+                
+                modalTitle.textContent = app.title;
+                modalContent.innerHTML = `
+                    <p><strong>Company:</strong> ${app.company}</p>
+                    <p><strong>Location:</strong> ${app.location}</p>
+                    <p><strong>Status:</strong> ${app.status}</p>
+                    <p><strong>Date Applied:</strong> ${app.date_applied}</p>
+                `;
+                modal.classList.remove('hidden');
+            });
             tbody.appendChild(tr);
         });
     }
@@ -84,6 +109,18 @@ export function renderTable(apps, isPagination = false) {
     const nextBtn = document.getElementById('next-btn');
     if(prevBtn) prevBtn.disabled = currentPage === 1;
     if(nextBtn) nextBtn.disabled = end >= total;
+}
+
+function populateDropdown(selectId, values) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    select.innerHTML = `<option value="">All ${selectId.split('-')[1]}s</option>`;
+    values.forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+    });
 }
 
 // Global filter handler that uses the masterDataset
@@ -108,8 +145,24 @@ function handleFilterChange() {
     renderTable(filtered);
 }
 
+function clearFilters() {
+    document.getElementById('filter-date-start').value = '';
+    document.getElementById('filter-date-end').value = '';
+    document.getElementById('filter-status').value = '';
+    document.getElementById('filter-title').value = '';
+    document.getElementById('filter-company').value = '';
+    document.getElementById('filter-location').value = '';
+    handleFilterChange();
+}
+
 export function setupTableEventListeners(applications) {
     masterDataset = applications; // Update source of truth
+
+    // Populate dropdowns
+    const uniqueStatuses = [...new Set(applications.map(app => app.status).filter(Boolean))];
+    const uniqueLocations = [...new Set(applications.map(app => app.location).filter(Boolean))];
+    populateDropdown('filter-status', uniqueStatuses);
+    populateDropdown('filter-location', uniqueLocations);
     
     // Attach listeners only once
     if (window._tableListenersAttached) {
@@ -121,6 +174,21 @@ export function setupTableEventListeners(applications) {
     ['filter-date-start', 'filter-date-end', 'filter-status', 'filter-title', 'filter-company', 'filter-location']
         .forEach(id => document.getElementById(id)?.addEventListener('input', handleFilterChange));
 
+    document.getElementById('clear-filters-btn')?.addEventListener('click', clearFilters);
+
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+            const newSortColumn = th.dataset.sort;
+            if (sortColumn === newSortColumn) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = newSortColumn;
+                sortDirection = 'asc';
+            }
+            renderTable(currentFilteredApps);
+        });
+    });
+
     document.getElementById('prev-btn')?.addEventListener('click', () => {
         if(currentPage > 1) { currentPage--; renderTable(currentFilteredApps, true); }
     });
@@ -128,6 +196,10 @@ export function setupTableEventListeners(applications) {
     document.getElementById('next-btn')?.addEventListener('click', () => {
         const total = currentFilteredApps.length;
         if((currentPage * rowsPerPage) < total) { currentPage++; renderTable(currentFilteredApps, true); }
+    });
+
+    document.getElementById('modal-close-btn')?.addEventListener('click', () => {
+        document.getElementById('details-modal').classList.add('hidden');
     });
 
     window._tableListenersAttached = true;
