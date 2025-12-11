@@ -43,9 +43,8 @@ Before using the dashboard, you need to export your application history from Ind
 1. **Log into Indeed**
    - Navigate to [indeed.com](https://www.indeed.com) and sign in to your account
 
-2. **Access Your Applications**
-   - Click the **"My Jobs"** ribbon icon in the top navigation bar
-   - Click on the **"Applied"** tab to view your application history
+2. **Go to Your "Applied" Page**
+   - Navigate directly to [myjobs.indeed.com/applied](https://myjobs.indeed.com/applied) to see your full application history.
 
 3. **Save the Webpage**
    - Right-click anywhere on the page and select **"Save As..."** (or press `Ctrl+S` / `Cmd+S`)
