@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         elements.exportBtn.addEventListener('click', exportToCSV);
     }
 
-    // Initial Load
-    handleDataLoad('indeed-applications.json');
+    setTimeout(() => {
+        handleDataLoad('indeed-applications.json');
+    }, 0);
 });

@@ -24,10 +24,12 @@ export function renderTable(apps, isPagination = false) {
     const start = (currentPage - 1) * rowsPerPage;
     const end = Math.min(start + rowsPerPage, total);
     
-    document.getElementById('interaction-count').innerText = total;
+    const totalEntriesElement = document.getElementById('total-entries');
+    if (totalEntriesElement) {
+        totalEntriesElement.innerText = total;
+    }
     document.getElementById('page-start').innerText = total > 0 ? start + 1 : 0;
     document.getElementById('page-end').innerText = end;
-    document.getElementById('total-entries').innerText = total;
 
     // Empty State Toggle
     const tableSection = document.getElementById('table-section');
